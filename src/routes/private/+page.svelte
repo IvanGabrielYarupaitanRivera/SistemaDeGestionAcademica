@@ -3,7 +3,7 @@
 	import type { EventHandler } from 'svelte/elements';
 
 	let { data } = $props();
-	let { notes, supabase, user } = $derived(data);
+	let { notes, supabase, user, session } = $derived(data);
 
 	const handleSubmit: EventHandler<SubmitEvent, HTMLFormElement> = async (evt) => {
 		evt.preventDefault();
@@ -53,3 +53,6 @@
 		>Enviar</button
 	>
 </form>
+
+<p>{user?.id}</p>
+<p>{session?.access_token}</p>
