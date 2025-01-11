@@ -77,98 +77,102 @@
 	</div>
 {/if}
 
-<div class="mb-6 grid grid-cols-2 gap-2 rounded-lg bg-neutral-200 p-1">
-	<button
-		class="rounded-md px-4 py-2 text-sm font-medium transition-all
+<div class=" mx-0 md:mx-32 xl:mx-64">
+	<div class="mb-6 grid grid-cols-2 gap-2 rounded-lg bg-neutral-200 p-1">
+		<button
+			class="rounded-md px-4 py-2 text-sm font-medium transition-all
         {activeTab === 'login' ? 'bg-white text-neutral-800' : 'text-neutral-600'}"
-		onclick={() => (activeTab = 'login')}
-	>
-		<h2>Iniciar Sesión</h2>
-	</button>
-	<button
-		class="rounded-md px-4 py-2 text-sm font-medium transition-all
+			onclick={() => (activeTab = 'login')}
+		>
+			<h2>Iniciar Sesión</h2>
+		</button>
+		<button
+			class="rounded-md px-4 py-2 text-sm font-medium transition-all
         {activeTab === 'signup' ? 'bg-white text-neutral-800' : 'text-neutral-600'}"
-		onclick={() => (activeTab = 'signup')}
-	>
-		<h2>Crear Cuenta</h2>
-	</button>
+			onclick={() => (activeTab = 'signup')}
+		>
+			<h2>Crear Cuenta</h2>
+		</button>
+	</div>
+
+	{#if activeTab === 'login'}
+		<section aria-labelledby="login-title">
+			<form method="POST" action="?/login" class="space-y-6" use:enhance={handleLogin}>
+				<fieldset class="space-y-4">
+					<legend class="sr-only">Credenciales de acceso</legend>
+
+					<div>
+						<label for="login-email" class="block text-sm font-medium text-gray-700"> Email </label>
+						<input
+							id="login-email"
+							name="email"
+							type="email"
+							required
+							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+						/>
+					</div>
+
+					<div>
+						<label for="login-password" class="block text-sm font-medium text-gray-700">
+							Contraseña
+						</label>
+						<input
+							id="login-password"
+							name="password"
+							type="password"
+							required
+							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+						/>
+					</div>
+				</fieldset>
+
+				<button
+					type="submit"
+					class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+				>
+					{ingresando ? 'Ingresando...' : 'Ingresar'}
+				</button>
+			</form>
+		</section>
+	{:else}
+		<section aria-labelledby="signup-title">
+			<form method="POST" action="?/signup" class="space-y-6" use:enhance={handleRegister}>
+				<fieldset class="space-y-4">
+					<legend class="sr-only">Datos de registro</legend>
+
+					<div>
+						<label for="signup-email" class="block text-sm font-medium text-gray-700">
+							Email
+						</label>
+						<input
+							id="signup-email"
+							name="email"
+							type="email"
+							required
+							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+						/>
+					</div>
+
+					<div>
+						<label for="signup-password" class="block text-sm font-medium text-gray-700">
+							Contraseña
+						</label>
+						<input
+							id="signup-password"
+							name="password"
+							type="password"
+							required
+							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+						/>
+					</div>
+				</fieldset>
+				<button
+					type="submit"
+					class="w-full rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+				>
+					Crear Cuenta
+				</button>
+			</form>
+		</section>
+	{/if}
 </div>
-
-{#if activeTab === 'login'}
-	<section aria-labelledby="login-title">
-		<form method="POST" action="?/login" class="space-y-6" use:enhance={handleLogin}>
-			<fieldset class="space-y-4">
-				<legend class="sr-only">Credenciales de acceso</legend>
-
-				<div>
-					<label for="login-email" class="block text-sm font-medium text-gray-700"> Email </label>
-					<input
-						id="login-email"
-						name="email"
-						type="email"
-						required
-						class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-					/>
-				</div>
-
-				<div>
-					<label for="login-password" class="block text-sm font-medium text-gray-700">
-						Contraseña
-					</label>
-					<input
-						id="login-password"
-						name="password"
-						type="password"
-						required
-						class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-					/>
-				</div>
-			</fieldset>
-
-			<button
-				type="submit"
-				class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-			>
-				{ingresando ? 'Ingresando...' : 'Ingresar'}
-			</button>
-		</form>
-	</section>
-{:else}
-	<section aria-labelledby="signup-title">
-		<form method="POST" action="?/signup" class="space-y-6" use:enhance={handleRegister}>
-			<fieldset class="space-y-4">
-				<legend class="sr-only">Datos de registro</legend>
-
-				<div>
-					<label for="signup-email" class="block text-sm font-medium text-gray-700"> Email </label>
-					<input
-						id="signup-email"
-						name="email"
-						type="email"
-						required
-						class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-					/>
-				</div>
-
-				<div>
-					<label for="signup-password" class="block text-sm font-medium text-gray-700">
-						Contraseña
-					</label>
-					<input
-						id="signup-password"
-						name="password"
-						type="password"
-						required
-						class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-					/>
-				</div>
-			</fieldset>
-			<button
-				type="submit"
-				class="w-full rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-			>
-				Crear Cuenta
-			</button>
-		</form>
-	</section>
-{/if}
