@@ -81,7 +81,7 @@
 				<h2 class="mb-2 text-sm font-semibold text-gray-400">Usuario</h2>
 				{#if session}
 					<a
-						href="/"
+						href="/privado/perfil"
 						class="block rounded p-2 text-sm text-white hover:bg-neutral-700"
 						onclick={toggleMobileMenu}
 					>
