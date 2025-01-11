@@ -110,7 +110,7 @@
 		</footer>
 	</aside>
 
-	<main class="flex-1 bg-yellow-100 p-4 transition-all duration-300 lg:ml-64 lg:p-8">
+	<main class="flex-1 bg-neutral-50 p-4 transition-all duration-300 lg:ml-64 lg:p-8">
 		{@render children()}
 	</main>
 
