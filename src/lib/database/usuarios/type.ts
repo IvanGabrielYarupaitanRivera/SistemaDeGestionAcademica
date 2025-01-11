@@ -1,13 +1,4 @@
-export type RolUsuario = 'Administrador' | 'Estudiante' | 'Profesor';
-
-export interface Perfil {
-	id: string;
-	nombres: string;
-	apellido_paterno: string;
-	apellido_materno: string;
-	dni: string;
-	rol: RolUsuario;
+export interface Usuario {
 	email: string;
-	fecha_creacion: string;
-	fecha_actualizacion: string;
+	password: string;
 }
