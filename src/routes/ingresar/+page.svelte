@@ -3,8 +3,10 @@
 	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { fly } from 'svelte/transition';
+	import { Loader } from 'lucide-svelte';
 
 	let activeTab = $state('login');
+	let ingresando = $state(false);
 	let { form } = $props();
 	let showToast = $state(false);
 
@@ -14,7 +16,7 @@
 
 			const toastTimer = setTimeout(() => {
 				showToast = false;
-			}, 3000);
+			}, 2000);
 
 			return () => {
 				clearTimeout(toastTimer);
@@ -23,8 +25,12 @@
 	});
 
 	const handleLogin = () => {
+		ingresando = true;
+
 		return async ({ result, update }: { result: ActionResult; update: () => Promise<void> }) => {
 			await update();
+
+			ingresando = false;
 
 			if (result.type === 'success') {
 				await goto(`/privado`);
@@ -33,8 +39,12 @@
 	};
 
 	const handleRegister = () => {
+		ingresando = true;
+
 		return async ({ result, update }: { result: ActionResult; update: () => Promise<void> }) => {
 			await update();
+
+			ingresando = false;
 
 			if (result.type === 'success') {
 				await goto(`/`);
@@ -55,6 +65,15 @@
 	>
 		<span>❌</span>
 		{form.error}
+	</div>
+{/if}
+
+{#if ingresando}
+	<div
+		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm"
+	>
+		<Loader class="animate-spin  text-white" size={40} />
+		<p class="mt-2 font-medium text-white">Ingresando...</p>
 	</div>
 {/if}
 
@@ -110,7 +129,7 @@
 				type="submit"
 				class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 			>
-				Iniciar Sesión
+				{ingresando ? 'Ingresando...' : 'Ingresar'}
 			</button>
 		</form>
 	</section>
