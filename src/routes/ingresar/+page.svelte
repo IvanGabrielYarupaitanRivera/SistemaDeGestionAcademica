@@ -27,7 +27,7 @@
 			await update();
 
 			if (result.type === 'success') {
-				await goto(`/private`);
+				await goto(`/privado`);
 			}
 		};
 	};
