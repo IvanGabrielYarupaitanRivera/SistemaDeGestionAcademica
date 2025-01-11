@@ -50,7 +50,7 @@
 		<header class="border-b border-neutral-700 p-4">
 			<a href="/" class="flex flex-col items-center" onclick={toggleMobileMenu}>
 				<img src="/logo/logo-colegio.webp" alt="Logo del Colegio" class="w-16 lg:w-20" />
-				<h1 class="mt-2 text-lg font-bold text-white lg:text-xl">Dashboard</h1>
+				<h2 class="mt-2 text-lg font-bold text-white lg:text-xl">Dashboard</h2>
 			</a>
 		</header>
 
@@ -110,7 +110,7 @@
 		</footer>
 	</aside>
 
-	<main class="flex-1 bg-neutral-50 p-4 transition-all duration-300 lg:ml-64 lg:p-8">
+	<main class="flex-1 bg-neutral-100 p-4 transition-all duration-300 lg:ml-64 lg:p-8">
 		{@render children()}
 	</main>
 
