@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Perfil } from '$lib/database/perfiles/type';
+	let { data } = $props();
+	let { perfil } = $derived(data);
 </script>
 
 <header>
@@ -11,31 +12,31 @@
 	<h2 id="datos-perfil" class="sr-only">Datos del perfil</h2>
 	<dl>
 		<dt>ID</dt>
-		<!-- <dd>{perfil.id}</dd> -->
+		<dd>{perfil.id}</dd>
 
 		<dt>Nombres</dt>
-		<!-- <dd>{perfil.nombres}</dd> -->
+		<dd>{perfil.nombres}</dd>
 
 		<dt>Apellido Paterno</dt>
-		<!-- <dd>{perfil.apellido_paterno}</dd> -->
+		<dd>{perfil.apellido_paterno}</dd>
 
 		<dt>Apellido Materno</dt>
-		<!-- <dd>{perfil.apellido_materno}</dd> -->
+		<dd>{perfil.apellido_materno}</dd>
 
 		<dt>DNI</dt>
-		<!-- <dd>{perfil.dni}</dd> -->
+		<dd>{perfil.dni}</dd>
 
 		<dt>Rol de Usuario</dt>
-		<!-- <dd>{perfil.rol}</dd> -->
+		<dd>{perfil.rol}</dd>
 
 		<dt>Email</dt>
-		<!-- <dd>{perfil.email}</dd> -->
+		<dd>{perfil.email}</dd>
 
 		<dt>Fecha de Creación</dt>
-		<!-- <dd>{perfil.fecha_creacion}</dd> -->
+		<dd>{perfil.fecha_creacion}</dd>
 
 		<dt>Fecha de Actualización</dt>
-		<!-- <dd>{perfil.fecha_actualizacion}</dd> -->
+		<dd>{perfil.fecha_actualizacion}</dd>
 	</dl>
 </section>
 
