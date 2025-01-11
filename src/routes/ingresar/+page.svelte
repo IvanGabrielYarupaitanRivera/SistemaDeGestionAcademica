@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
-	import { fade, slide } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	let activeTab = $state('login');
 	let { form } = $props();
@@ -49,8 +49,7 @@
 
 {#if showToast && form?.error}
 	<div
-		in:fade
-		out:slide
+		transition:fly={{ x: 20 }}
 		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-neutral-800 px-4 py-3 text-sm text-white"
 		role="alert"
 	>

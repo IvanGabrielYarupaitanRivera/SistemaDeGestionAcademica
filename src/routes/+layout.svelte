@@ -68,7 +68,7 @@
 
 				{#if session}
 					<a
-						href="/private"
+						href="/privado"
 						class="block rounded p-2 text-sm text-white hover:bg-neutral-700"
 						onclick={toggleMobileMenu}
 					>
@@ -95,7 +95,7 @@
 					</button>
 				{:else}
 					<a
-						href="/auth"
+						href="/ingresar"
 						class="block rounded p-2 text-sm text-white hover:bg-neutral-700"
 						onclick={toggleMobileMenu}
 					>
