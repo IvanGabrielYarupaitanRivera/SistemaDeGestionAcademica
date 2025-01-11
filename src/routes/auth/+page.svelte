@@ -2,9 +2,25 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
+	import { slide } from 'svelte/transition';
 
 	let activeTab = $state('login');
 	let { form } = $props();
+	let showToast = $state(false);
+
+	$effect(() => {
+		if (form?.error) {
+			showToast = true;
+
+			const toastTimer = setTimeout(() => {
+				showToast = false;
+			}, 3000);
+
+			return () => {
+				clearTimeout(toastTimer);
+			};
+		}
+	});
 
 	const handleLogin = () => {
 		return async ({ result, update }: { result: ActionResult; update: () => Promise<void> }) => {
@@ -15,11 +31,31 @@
 			}
 		};
 	};
+
+	const handleRegister = () => {
+		return async ({ result, update }: { result: ActionResult; update: () => Promise<void> }) => {
+			await update();
+
+			if (result.type === 'success') {
+				await goto(`/`);
+			}
+		};
+	};
 </script>
 
 <h1 class="mb-8 text-center text-2xl font-bold text-neutral-800 sm:text-3xl lg:text-4xl">
 	Bienvenido
 </h1>
+
+{#if showToast && form?.error}
+	<div
+		transition:slide
+		class="fixed bottom-4 right-4 rounded bg-red-500 px-4 py-2 text-white shadow-lg"
+		role="alert"
+	>
+		{form.error}
+	</div>
+{/if}
 
 <div class="mb-6 grid grid-cols-2 gap-2 rounded-lg bg-neutral-200 p-1">
 	<button
@@ -79,7 +115,7 @@
 	</section>
 {:else}
 	<section aria-labelledby="signup-title">
-		<form method="POST" action="?/signup" class="space-y-6">
+		<form method="POST" action="?/signup" class="space-y-6" use:enhance={handleRegister}>
 			<fieldset class="space-y-4">
 				<legend class="sr-only">Datos de registro</legend>
 
