@@ -1,7 +1,7 @@
 import { fail } from '@sveltejs/kit';
+import type { Actions } from './$types';
 import { UsuarioDB } from '$lib/database/usuarios/db';
 import type { Usuario } from '$lib/database/usuarios/type';
-import type { Actions } from './$types';
 
 export const actions = {
 	signup: async ({ request, locals: { supabase } }) => {
