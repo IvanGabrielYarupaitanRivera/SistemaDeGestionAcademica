@@ -211,7 +211,7 @@
 		<button
 			type="button"
 			onclick={toggleEditModal}
-			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-opacity-50"
+			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700"
 			aria-label="Editar Información"
 		>
 			Editar Información
@@ -219,7 +219,7 @@
 		<button
 			type="button"
 			onclick={toggleChangePasswordModal}
-			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-opacity-50"
+			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700"
 			aria-label="Cambiar Contraseña"
 		>
 			Cambiar Contraseña
@@ -227,7 +227,7 @@
 		<button
 			type="button"
 			onclick={toggleDeleteAccountModal}
-			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-opacity-50"
+			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700"
 			aria-label="Eliminar Cuenta"
 		>
 			Eliminar Cuenta
@@ -311,13 +311,13 @@
 					<button
 						type="button"
 						onclick={toggleEditModal}
-						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
 					>
 						Cancelar
 					</button>
 					<button
 						type="submit"
-						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
 					>
 						Guardar
 					</button>
@@ -386,14 +386,14 @@
 					<button
 						type="button"
 						onclick={toggleChangePasswordModal}
-						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
 					>
 						Cancelar
 					</button>
 					<button
 						type="submit"
 						onclick={toggleChangePasswordModal}
-						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
 					>
 						Cambiar
 					</button>
@@ -424,14 +424,14 @@
 					<button
 						type="submit"
 						onclick={toggleDeleteAccountModal}
-						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
 					>
 						Eliminar
 					</button>
 					<button
 						type="button"
 						onclick={toggleDeleteAccountModal}
-						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
 					>
 						Cancelar
 					</button>
