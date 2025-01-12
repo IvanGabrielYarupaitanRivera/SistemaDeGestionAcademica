@@ -4,7 +4,7 @@ export const validar = {
 			throw new Error('El nombre es requerido');
 		}
 
-		const regexNombre = /^[a-zA-Z]+( [a-zA-Z]+)*$/;
+		const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚ]+( [a-zA-ZáéíóúÁÉÍÓÚ]+)*$/;
 		if (!regexNombre.test(nombre)) {
 			throw new Error(
 				'El nombre solo debe contener letras y un solo espacio entre palabras. Puede ser un nombre o varios nombres.'
