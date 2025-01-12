@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { fly } from 'svelte/transition';
-	import { Loader } from 'lucide-svelte';
+	import { Loader, Lock, Mail } from 'lucide-svelte';
 
 	let activeTab = $state('login');
 	let ingresando = $state(false);
@@ -100,33 +100,40 @@
 					<legend class="sr-only">Credenciales de acceso</legend>
 
 					<div>
-						<label for="login-email" class="block text-sm font-medium text-gray-700"> Email </label>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="login-email">
+							<Mail class="h-5 w-5" /> <span>Email</span>
+						</label>
 						<input
+							placeholder="correo@ejemplo.com"
 							id="login-email"
 							name="email"
 							type="email"
 							required
-							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
 						/>
 					</div>
 
 					<div>
-						<label for="login-password" class="block text-sm font-medium text-gray-700">
-							Contraseña
+						<label
+							class="flex items-center space-x-2 text-sm text-neutral-600"
+							for="login-password"
+						>
+							<Lock class="h-5 w-5" /> <span>Contraseña</span>
 						</label>
 						<input
+							placeholder="********"
 							id="login-password"
 							name="password"
 							type="password"
 							required
-							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
 						/>
 					</div>
 				</fieldset>
 
 				<button
 					type="submit"
-					class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+					class="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
 				>
 					{ingresando ? 'Ingresando...' : 'Ingresar'}
 				</button>
@@ -139,34 +146,39 @@
 					<legend class="sr-only">Datos de registro</legend>
 
 					<div>
-						<label for="signup-email" class="block text-sm font-medium text-gray-700">
-							Email
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="login-email">
+							<Mail class="h-5 w-5" /> <span>Email</span>
 						</label>
 						<input
-							id="signup-email"
+							placeholder="correo@ejemplo.com"
+							id="login-email"
 							name="email"
 							type="email"
 							required
-							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
 						/>
 					</div>
 
 					<div>
-						<label for="signup-password" class="block text-sm font-medium text-gray-700">
-							Contraseña
+						<label
+							class="flex items-center space-x-2 text-sm text-neutral-600"
+							for="login-password"
+						>
+							<Lock class="h-5 w-5" /> <span>Contraseña</span>
 						</label>
 						<input
-							id="signup-password"
+							placeholder="********"
+							id="login-password"
 							name="password"
 							type="password"
 							required
-							class="mt-1 block w-full rounded-md p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
 						/>
 					</div>
 				</fieldset>
 				<button
 					type="submit"
-					class="w-full rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+					class="w-full rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700"
 				>
 					Crear Cuenta
 				</button>
