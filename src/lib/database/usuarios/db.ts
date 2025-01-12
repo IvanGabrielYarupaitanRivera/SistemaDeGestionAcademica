@@ -7,7 +7,7 @@ import { validar } from './validaciones';
 export const UsuarioDB = {
 	async registrarUsuario(supabase: SupabaseClient, { email, password }: Usuario) {
 		validar.validarEmail(email);
-		// validar.validarPassword(password);
+		validar.validarPassword(password);
 
 		const { data, error } = await supabase.auth.signUp({ email, password });
 
@@ -44,5 +44,26 @@ export const UsuarioDB = {
 		const { error } = await supabase.auth.signInWithPassword({ email, password });
 
 		if (error) throw new Error('Error al iniciar sesión.');
+	},
+
+	async cambiarContrasena(
+		supabase: SupabaseClient,
+		email: string,
+		currentPassword: string,
+		newPassword: string,
+		confirmPassword: string
+	) {
+		await validar.validarCurrentPassword(supabase, email, currentPassword);
+		validar.validarNewPassword(currentPassword, newPassword, confirmPassword);
+
+		const { error: updateError } = await supabase.auth.updateUser({
+			password: newPassword
+		});
+
+		if (updateError) {
+			throw new Error('Error al actualizar la contraseña');
+		}
+
+		return { success: 'Contraseña actualizada correctamente' };
 	}
 };
