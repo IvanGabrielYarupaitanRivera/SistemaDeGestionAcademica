@@ -6,8 +6,8 @@ export interface Perfil {
 	apellido_paterno: string;
 	apellido_materno: string;
 	dni: string;
-	rol: RolUsuario;
-	email: string;
-	fecha_creacion: string;
+	rol?: RolUsuario;
+	email?: string;
+	fecha_creacion?: string;
 	fecha_actualizacion: string;
 }
