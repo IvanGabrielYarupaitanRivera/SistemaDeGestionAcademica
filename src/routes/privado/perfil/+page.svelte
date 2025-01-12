@@ -1,12 +1,20 @@
 <script lang="ts">
-	import { User, Mail, Calendar, Shield, IdCard, X, Lock } from 'lucide-svelte';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
+	import type { ActionResult } from '@sveltejs/kit';
+	import { User, Mail, Calendar, Shield, IdCard, X, Lock, Loader } from 'lucide-svelte';
+	import { fly } from 'svelte/transition';
 
-	let { data } = $props();
+	let { data, form } = $props();
 	let { perfil } = $derived(data);
+
+	let showToast = $state(false);
 
 	let showEditModal = $state(false);
 	let showChangePasswordModal = $state(false);
 	let showDeleteAccountModal = $state(false);
+
+	let editando = $state(false);
 
 	function toggleEditModal() {
 		showEditModal = !showEditModal;
@@ -20,7 +28,10 @@
 		showDeleteAccountModal = !showDeleteAccountModal;
 	}
 
-	function formatFechaPeruana(fechaISO: string): string {
+	function formatFechaPeruana(fechaISO: string | undefined): string {
+		if (!fechaISO) {
+			return 'Fecha no disponible';
+		}
 		const opciones: Intl.DateTimeFormatOptions = {
 			year: 'numeric',
 			month: 'long',
@@ -31,14 +42,64 @@
 			hour12: true,
 			timeZone: 'America/Lima'
 		};
+
 		const fecha = new Date(fechaISO);
 		return fecha.toLocaleDateString('es-PE', opciones);
 	}
+
+	const handleEdit = () => {
+		toggleEditModal();
+		editando = true;
+
+		return async ({ result, update }: { result: ActionResult; update: () => Promise<void> }) => {
+			await update();
+
+			editando = false;
+
+			if (result.type === 'success') {
+				await goto(`/privado/perfil`);
+			}
+		};
+	};
+
+	$effect(() => {
+		if (form?.error) {
+			showToast = true;
+
+			const toastTimer = setTimeout(() => {
+				showToast = false;
+			}, 2000);
+
+			return () => {
+				clearTimeout(toastTimer);
+			};
+		}
+	});
 </script>
 
 <header class="bg-white p-4 shadow-md md:p-6 lg:p-8">
 	<h1 class="text-center text-xl font-bold text-neutral-800 md:text-2xl">Mi Perfil</h1>
 </header>
+
+{#if showToast && form?.error}
+	<div
+		transition:fly={{ x: 20 }}
+		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-neutral-800 px-4 py-3 text-sm text-white"
+		role="alert"
+	>
+		<span>❌</span>
+		{form.error}
+	</div>
+{/if}
+
+{#if editando}
+	<div
+		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+	>
+		<Loader class="animate-spin  text-white" size={40} />
+		<p class="mt-2 font-medium text-white">Editando su información...</p>
+	</div>
+{/if}
 
 <div class="mx-auto mt-8 xl:max-w-3xl">
 	<section aria-labelledby="datos-personales" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
@@ -146,7 +207,7 @@
 		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
 	>
 		<dialog open class=":max-w-sm mx-auto w-full rounded-lg bg-white p-6 md:max-w-xl">
-			<form method="dialog" class="space-y-8">
+			<form method="POST" class="space-y-8" use:enhance={handleEdit} action="?/editarPerfil">
 				<div class="flex items-center justify-between">
 					<h2 class="text-xl font-semibold">Editar Información</h2>
 					<button type="button" onclick={toggleEditModal} class="text-gray-500 hover:text-gray-700">
@@ -163,6 +224,7 @@
 						id="nombres"
 						type="text"
 						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						name="nombres"
 					/>
 				</div>
 				<div>
@@ -178,6 +240,7 @@
 						id="apellido_paterno"
 						type="text"
 						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						name="apellido_paterno"
 					/>
 				</div>
 				<div>
@@ -193,6 +256,7 @@
 						id="apellido_materno"
 						type="text"
 						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						name="apellido_materno"
 					/>
 				</div>
 				<div>
@@ -205,20 +269,10 @@
 						id="dni"
 						type="text"
 						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						name="dni"
 					/>
 				</div>
-				<div>
-					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="email">
-						<Mail class="h-5 w-5" /> <span>Email</span>
-					</label>
-					<input
-						value={perfil.email}
-						placeholder="Ingrese su email"
-						id="email"
-						type="email"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-					/>
-				</div>
+
 				<div class="flex justify-end space-x-2">
 					<button
 						type="button"
@@ -229,7 +283,6 @@
 					</button>
 					<button
 						type="submit"
-						onclick={toggleEditModal}
 						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
 					>
 						Guardar
