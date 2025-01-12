@@ -25,6 +25,7 @@
 	let showDeleteAccountModal = $state(false);
 
 	let editando = $state(false);
+	let cambiandoContraseña = $state(false);
 
 	function toggleEditModal() {
 		showEditModal = !showEditModal;
@@ -65,6 +66,21 @@
 			await update();
 
 			editando = false;
+
+			/* if (result.type === 'success') {
+				await goto(`/privado/perfil`);
+			} */
+		};
+	};
+
+	const handleChangePassword = () => {
+		toggleChangePasswordModal();
+		cambiandoContraseña = true;
+
+		return async ({ result, update }: { result: ActionResult; update: () => Promise<void> }) => {
+			await update();
+
+			cambiandoContraseña = false;
 
 			/* if (result.type === 'success') {
 				await goto(`/privado/perfil`);
@@ -129,6 +145,15 @@
 	>
 		<Loader class="animate-spin  text-white" size={40} />
 		<p class="mt-2 font-medium text-white">Editando su información...</p>
+	</div>
+{/if}
+
+{#if cambiandoContraseña}
+	<div
+		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+	>
+		<Loader class="animate-spin  text-white" size={40} />
+		<p class="mt-2 font-medium text-white">Cambiando su contraseña...</p>
 	</div>
 {/if}
 
@@ -330,7 +355,12 @@
 		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
 	>
 		<dialog open class="mx-4 w-full max-w-lg rounded-lg bg-white p-6 sm:mx-auto">
-			<form method="dialog" class="space-y-8">
+			<form
+				method="POST"
+				class="space-y-8"
+				use:enhance={handleChangePassword}
+				action="?/cambiarContrasena"
+			>
 				<div class="flex items-center justify-between">
 					<h2 class="text-xl font-semibold">Cambiar Contraseña</h2>
 					<button
@@ -353,6 +383,7 @@
 						id="current_password"
 						type="password"
 						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						name="current_password"
 					/>
 				</div>
 				<div>
@@ -364,6 +395,7 @@
 						id="new_password"
 						type="password"
 						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						name="new_password"
 					/>
 				</div>
 				<div>
@@ -378,6 +410,7 @@
 						id="confirm_password"
 						type="password"
 						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						name="confirm_password"
 					/>
 				</div>
 				<div class="flex justify-end space-x-2">
@@ -390,7 +423,6 @@
 					</button>
 					<button
 						type="submit"
-						onclick={toggleChangePasswordModal}
 						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
 					>
 						Cambiar
