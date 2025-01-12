@@ -1,19 +1,18 @@
 <script lang="ts">
+	import { User, Mail, Calendar, Shield, IdCard } from 'lucide-svelte';
+
 	let { data } = $props();
 	let { perfil } = $derived(data);
 </script>
 
 <header>
-	<h1 class="text-2xl font-bold">Mi Perfil</h1>
+	<h1 class="mb-8 text-center text-xl font-bold text-neutral-800 sm:text-2xl">Mi Perfil</h1>
 	<hr />
 </header>
 
 <section aria-labelledby="datos-perfil">
 	<h2 id="datos-perfil" class="sr-only">Datos del perfil</h2>
 	<dl>
-		<dt>ID</dt>
-		<dd>{perfil.id}</dd>
-
 		<dt>Nombres</dt>
 		<dd>{perfil.nombres}</dd>
 
