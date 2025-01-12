@@ -11,7 +11,9 @@ export const UsuarioDB = {
 
 		const { data, error } = await supabase.auth.signUp({ email, password });
 
-		if (error) throw new Error(`Error al crear la cuenta del usuario.`);
+		if (error) {
+			throw new Error(`Error al crear la cuenta del usuario.`);
+		}
 
 		const userId = data.user?.id;
 		const userEmail = data.user?.email;
@@ -28,7 +30,11 @@ export const UsuarioDB = {
 			fecha_actualizacion: new Date().toISOString()
 		};
 
-		await PerfilDB.crearPerfil(supabase, perfil);
+		try {
+			await PerfilDB.crearPerfil(supabase, perfil);
+		} catch (error) {
+			console.error('Error al crear el perfil del usuario:', error);
+		}
 	},
 
 	async iniciarSesion(supabase: SupabaseClient, { email, password }: Usuario) {
