@@ -1,8 +1,18 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
-	import { User, Mail, Calendar, Shield, IdCard, X, Lock, Loader } from 'lucide-svelte';
+	import {
+		User,
+		Mail,
+		Calendar,
+		Shield,
+		IdCard,
+		X,
+		Lock,
+		Loader,
+		XCircle,
+		CheckCircle
+	} from 'lucide-svelte';
 	import { fly } from 'svelte/transition';
 
 	let { data, form } = $props();
@@ -56,19 +66,31 @@
 
 			editando = false;
 
-			if (result.type === 'success') {
+			/* if (result.type === 'success') {
 				await goto(`/privado/perfil`);
-			}
+			} */
 		};
 	};
 
 	$effect(() => {
+		if (form?.success) {
+			showToast = true;
+
+			const toastTimer = setTimeout(() => {
+				showToast = false;
+			}, 3000);
+
+			return () => {
+				clearTimeout(toastTimer);
+			};
+		}
+
 		if (form?.error) {
 			showToast = true;
 
 			const toastTimer = setTimeout(() => {
 				showToast = false;
-			}, 2000);
+			}, 5000);
 
 			return () => {
 				clearTimeout(toastTimer);
@@ -84,11 +106,22 @@
 {#if showToast && form?.error}
 	<div
 		transition:fly={{ x: 20 }}
-		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-neutral-800 px-4 py-3 text-sm text-white"
+		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-red-600 px-4 py-3 text-sm text-white shadow-lg"
 		role="alert"
 	>
-		<span>❌</span>
-		{form.error}
+		<XCircle class="h-5 w-5" />
+		<span>{form.error}</span>
+	</div>
+{/if}
+
+{#if showToast && form?.success}
+	<div
+		transition:fly={{ x: 20 }}
+		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-green-600 px-4 py-3 text-sm text-white shadow-lg"
+		role="alert"
+	>
+		<CheckCircle class="h-5 w-5" />
+		<span>{form.success}</span>
 	</div>
 {/if}
 
