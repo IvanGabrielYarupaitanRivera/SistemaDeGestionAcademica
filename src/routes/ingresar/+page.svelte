@@ -68,7 +68,7 @@
 
 {#if ingresando}
 	<div
-		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm"
+		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
 	>
 		<Loader class="animate-spin  text-white" size={40} />
 		<p class="mt-2 font-medium text-white">Ingresando...</p>
