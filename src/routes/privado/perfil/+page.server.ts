@@ -3,6 +3,7 @@ import type { Actions } from './$types';
 import { error, fail } from '@sveltejs/kit';
 import { PerfilDB } from '$lib/database/perfiles/db';
 import type { Perfil } from '$lib/database/perfiles/type';
+import { UsuarioDB } from '$lib/database/usuarios/db';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase, user } = locals;
@@ -46,6 +47,32 @@ export const actions = {
 			await PerfilDB.editarPerfil(supabase, perfil.id, perfil);
 
 			return { success: 'Perfil actualizado correctamente' };
+		} catch (err) {
+			return fail(500, {
+				error: err instanceof Error ? err.message : 'Error en el servidor'
+			});
+		}
+	},
+
+	cambiarContrasena: async ({ request, locals: { supabase, user } }) => {
+		const formData = await request.formData();
+		const currentPassword = formData.get('current_password') as string;
+		const newPassword = formData.get('new_password') as string;
+		const confirmPassword = formData.get('confirm_password') as string;
+
+		try {
+			if (!user?.email) {
+				throw new Error('No autorizado');
+			}
+
+			const result = await UsuarioDB.cambiarContrasena(
+				supabase,
+				user.email,
+				currentPassword,
+				newPassword,
+				confirmPassword
+			);
+			return result;
 		} catch (err) {
 			return fail(500, {
 				error: err instanceof Error ? err.message : 'Error en el servidor'
