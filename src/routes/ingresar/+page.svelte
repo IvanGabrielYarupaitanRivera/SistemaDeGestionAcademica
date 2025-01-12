@@ -53,9 +53,7 @@
 	};
 </script>
 
-<h1 class="mb-8 text-center text-2xl font-bold text-neutral-800 sm:text-3xl lg:text-4xl">
-	Bienvenido
-</h1>
+<h1 class="mb-8 text-center text-xl font-bold text-neutral-800 sm:text-2xl">Bienvenido</h1>
 
 {#if showToast && form?.error}
 	<div
