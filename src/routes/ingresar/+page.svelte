@@ -75,7 +75,7 @@
 	</div>
 {/if}
 
-<div class=" mx-0 md:mx-32 xl:mx-64">
+<div class="mx-0 md:mx-32 xl:mx-64">
 	<div class="mb-6 grid grid-cols-2 gap-2 rounded-lg bg-neutral-200 p-1">
 		<button
 			class="rounded-md px-4 py-2 text-sm font-medium transition-all
