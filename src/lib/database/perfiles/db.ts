@@ -1,5 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Perfil } from './type';
+import { validar } from './validaciones';
 
 export const PerfilDB = {
 	async obtenerPerfilPorID(supabase: SupabaseClient, id: string) {
@@ -21,6 +22,11 @@ export const PerfilDB = {
 	},
 
 	async editarPerfil(supabase: SupabaseClient, id: string, perfil: Perfil) {
+		validar.validarNombre(perfil.nombres);
+		validar.validarApellidoPaterno(perfil.apellido_paterno);
+		validar.validarApellidoMaterno(perfil.apellido_materno);
+		validar.validarDNI(perfil.dni);
+
 		const { error } = await supabase.from('Perfiles').update(perfil).eq('id', id);
 
 		if (error) {
