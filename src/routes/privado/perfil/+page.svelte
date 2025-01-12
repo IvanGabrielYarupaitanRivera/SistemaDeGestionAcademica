@@ -99,9 +99,7 @@
 	});
 </script>
 
-<header class="bg-white p-4 shadow-md md:p-6 lg:p-8">
-	<h1 class="text-center text-xl font-bold text-neutral-800 md:text-2xl">Mi Perfil</h1>
-</header>
+<h1 class="mb-8 text-center text-xl font-bold text-neutral-800 sm:text-2xl">Mi Perfil</h1>
 
 {#if showToast && form?.error}
 	<div
@@ -134,7 +132,7 @@
 	</div>
 {/if}
 
-<div class="mx-auto mt-8 xl:max-w-3xl">
+<div class="mx-0 md:mx-32 xl:mx-64">
 	<section aria-labelledby="datos-personales" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
 		<h2 id="datos-personales" class="sr-only">Datos Personales</h2>
 		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
