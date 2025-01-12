@@ -44,6 +44,8 @@ export const actions = {
 
 		try {
 			await PerfilDB.editarPerfil(supabase, perfil.id, perfil);
+
+			return { success: 'Perfil actualizado correctamente' };
 		} catch (err) {
 			return fail(500, {
 				error: err instanceof Error ? err.message : 'Error en el servidor'
