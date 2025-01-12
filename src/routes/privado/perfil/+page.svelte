@@ -1,44 +1,355 @@
 <script lang="ts">
-	import { User, Mail, Calendar, Shield, IdCard } from 'lucide-svelte';
+	import { User, Mail, Calendar, Shield, IdCard, X, Lock } from 'lucide-svelte';
 
 	let { data } = $props();
 	let { perfil } = $derived(data);
+
+	let showEditModal = $state(false);
+	let showChangePasswordModal = $state(false);
+	let showDeleteAccountModal = $state(false);
+
+	function toggleEditModal() {
+		showEditModal = !showEditModal;
+	}
+
+	function toggleChangePasswordModal() {
+		showChangePasswordModal = !showChangePasswordModal;
+	}
+
+	function toggleDeleteAccountModal() {
+		showDeleteAccountModal = !showDeleteAccountModal;
+	}
+
+	function formatFechaPeruana(fechaISO: string): string {
+		const opciones: Intl.DateTimeFormatOptions = {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+			second: '2-digit',
+			hour12: true,
+			timeZone: 'America/Lima'
+		};
+		const fecha = new Date(fechaISO);
+		return fecha.toLocaleDateString('es-PE', opciones);
+	}
 </script>
 
-<header>
-	<h1 class="mb-8 text-center text-xl font-bold text-neutral-800 sm:text-2xl">Mi Perfil</h1>
-	<hr />
+<header class="bg-white p-4 shadow-md md:p-6 lg:p-8">
+	<h1 class="text-center text-xl font-bold text-neutral-800 md:text-2xl">Mi Perfil</h1>
 </header>
 
-<section aria-labelledby="datos-perfil">
-	<h2 id="datos-perfil" class="sr-only">Datos del perfil</h2>
-	<dl>
-		<dt>Nombres</dt>
-		<dd>{perfil.nombres}</dd>
+<div class="mx-auto mt-8 xl:max-w-3xl">
+	<section aria-labelledby="datos-personales" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
+		<h2 id="datos-personales" class="sr-only">Datos Personales</h2>
+		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<User class="h-5 w-5" /> <span>Nombres</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{perfil.nombres}</dd>
+			</div>
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<User class="h-5 w-5" /> <span>Apellido Paterno</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{perfil.apellido_paterno}</dd>
+			</div>
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<User class="h-5 w-5" /> <span>Apellido Materno</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{perfil.apellido_materno}</dd>
+			</div>
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<IdCard class="h-5 w-5" /> <span>DNI</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{perfil.dni}</dd>
+			</div>
+		</dl>
+	</section>
 
-		<dt>Apellido Paterno</dt>
-		<dd>{perfil.apellido_paterno}</dd>
+	<hr class="my-8 border-neutral-300" />
 
-		<dt>Apellido Materno</dt>
-		<dd>{perfil.apellido_materno}</dd>
+	<section aria-labelledby="datos-contacto" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
+		<h2 id="datos-contacto" class="sr-only">Datos de Contacto</h2>
+		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<Mail class="h-5 w-5" /> <span>Email</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{perfil.email}</dd>
+			</div>
+		</dl>
+	</section>
 
-		<dt>DNI</dt>
-		<dd>{perfil.dni}</dd>
+	<hr class="my-8 border-neutral-300" />
 
-		<dt>Rol de Usuario</dt>
-		<dd>{perfil.rol}</dd>
+	<section aria-labelledby="datos-cuenta" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
+		<h2 id="datos-cuenta" class="sr-only">Datos de la Cuenta</h2>
+		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<Shield class="h-5 w-5" /> <span>Rol de Usuario</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{perfil.rol}</dd>
+			</div>
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<Calendar class="h-5 w-5" /> <span>Fecha de Creación de la Cuenta</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_creacion)}</dd>
+			</div>
+			<div class="space-y-2">
+				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+					<Calendar class="h-5 w-5" /> <span>Fecha de Actualización de la Cuenta</span>
+				</dt>
+				<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_actualizacion)}</dd>
+			</div>
+		</dl>
+	</section>
 
-		<dt>Email</dt>
-		<dd>{perfil.email}</dd>
+	<hr class="my-8 border-neutral-300" />
 
-		<dt>Fecha de Creación</dt>
-		<dd>{perfil.fecha_creacion}</dd>
+	<footer class="mt-8 flex justify-end space-x-2">
+		<button
+			type="button"
+			onclick={toggleEditModal}
+			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-opacity-50"
+			aria-label="Editar Información"
+		>
+			Editar Información
+		</button>
+		<button
+			type="button"
+			onclick={toggleChangePasswordModal}
+			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-opacity-50"
+			aria-label="Cambiar Contraseña"
+		>
+			Cambiar Contraseña
+		</button>
+		<button
+			type="button"
+			onclick={toggleDeleteAccountModal}
+			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-opacity-50"
+			aria-label="Eliminar Cuenta"
+		>
+			Eliminar Cuenta
+		</button>
+	</footer>
+</div>
 
-		<dt>Fecha de Actualización</dt>
-		<dd>{perfil.fecha_actualizacion}</dd>
-	</dl>
-</section>
+{#if showEditModal}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+	>
+		<dialog open class=":max-w-sm mx-auto w-full rounded-lg bg-white p-6 md:max-w-xl">
+			<form method="dialog" class="space-y-8">
+				<div class="flex items-center justify-between">
+					<h2 class="text-xl font-semibold">Editar Información</h2>
+					<button type="button" onclick={toggleEditModal} class="text-gray-500 hover:text-gray-700">
+						<X class="h-6 w-6" />
+					</button>
+				</div>
+				<div>
+					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="nombres">
+						<User class="h-5 w-5" /> <span>Nombres</span>
+					</label>
+					<input
+						value={perfil.nombres}
+						placeholder="Ingrese sus nombres"
+						id="nombres"
+						type="text"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div>
+					<label
+						class="flex items-center space-x-2 text-sm text-neutral-600"
+						for="apellido_paterno"
+					>
+						<User class="h-5 w-5" /> <span>Apellido Paterno</span>
+					</label>
+					<input
+						value={perfil.apellido_paterno}
+						placeholder="Ingrese su apellido paterno"
+						id="apellido_paterno"
+						type="text"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div>
+					<label
+						class="flex items-center space-x-2 text-sm text-neutral-600"
+						for="apellido_materno"
+					>
+						<User class="h-5 w-5" /> <span>Apellido Materno</span>
+					</label>
+					<input
+						value={perfil.apellido_materno}
+						placeholder="Ingrese su apellido materno"
+						id="apellido_materno"
+						type="text"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div>
+					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="dni">
+						<IdCard class="h-5 w-5" /> <span>DNI</span>
+					</label>
+					<input
+						value={perfil.dni}
+						placeholder="Ingrese su DNI"
+						id="dni"
+						type="text"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div>
+					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="email">
+						<Mail class="h-5 w-5" /> <span>Email</span>
+					</label>
+					<input
+						value={perfil.email}
+						placeholder="Ingrese su email"
+						id="email"
+						type="email"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div class="flex justify-end space-x-2">
+					<button
+						type="button"
+						onclick={toggleEditModal}
+						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+					>
+						Cancelar
+					</button>
+					<button
+						type="submit"
+						onclick={toggleEditModal}
+						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+					>
+						Guardar
+					</button>
+				</div>
+			</form>
+		</dialog>
+	</div>
+{/if}
 
-<footer>
-	<button type="button">Editar Información</button>
-</footer>
+{#if showChangePasswordModal}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+	>
+		<dialog open class="mx-4 w-full max-w-lg rounded-lg bg-white p-6 sm:mx-auto">
+			<form method="dialog" class="space-y-8">
+				<div class="flex items-center justify-between">
+					<h2 class="text-xl font-semibold">Cambiar Contraseña</h2>
+					<button
+						type="button"
+						onclick={toggleChangePasswordModal}
+						class="text-gray-500 hover:text-gray-700"
+					>
+						<X class="h-6 w-6" />
+					</button>
+				</div>
+				<div>
+					<label
+						class="flex items-center space-x-2 text-sm text-neutral-600"
+						for="current_password"
+					>
+						<Lock class="h-5 w-5" /> <span>Contraseña Actual</span>
+					</label>
+					<input
+						placeholder="Ingrese su contraseña actual"
+						id="current_password"
+						type="password"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div>
+					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="new_password">
+						<Lock class="h-5 w-5" /> <span>Nueva Contraseña</span>
+					</label>
+					<input
+						placeholder="Ingrese su nueva contraseña"
+						id="new_password"
+						type="password"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div>
+					<label
+						class="flex items-center space-x-2 text-sm text-neutral-600"
+						for="confirm_password"
+					>
+						<Lock class="h-5 w-5" /> <span>Confirmar Nueva Contraseña</span>
+					</label>
+					<input
+						placeholder="Confirme su nueva contraseña"
+						id="confirm_password"
+						type="password"
+						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+					/>
+				</div>
+				<div class="flex justify-end space-x-2">
+					<button
+						type="button"
+						onclick={toggleChangePasswordModal}
+						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+					>
+						Cancelar
+					</button>
+					<button
+						type="submit"
+						onclick={toggleChangePasswordModal}
+						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+					>
+						Cambiar
+					</button>
+				</div>
+			</form>
+		</dialog>
+	</div>
+{/if}
+
+{#if showDeleteAccountModal}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+	>
+		<dialog open class="mx-4 w-full max-w-lg rounded-lg bg-white p-6 sm:mx-auto">
+			<form method="dialog" class="space-y-8">
+				<div class="flex items-center justify-between">
+					<h2 class="text-xl font-semibold">Eliminar Cuenta</h2>
+					<button
+						type="button"
+						onclick={toggleDeleteAccountModal}
+						class="text-gray-500 hover:text-gray-700"
+					>
+						<X class="h-6 w-6" />
+					</button>
+				</div>
+				<p>¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+				<div class="flex justify-end space-x-2">
+					<button
+						type="submit"
+						onclick={toggleDeleteAccountModal}
+						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+					>
+						Eliminar
+					</button>
+					<button
+						type="button"
+						onclick={toggleDeleteAccountModal}
+						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+					>
+						Cancelar
+					</button>
+				</div>
+			</form>
+		</dialog>
+	</div>
+{/if}
