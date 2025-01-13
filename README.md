@@ -1,38 +1,45 @@
-# sv
+# 🎓 Sistema de Gestión Académica
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+¡Hola! 👋 Bienvenido a mi proyecto full-stack de gestión académica.  
+Este sistema quiere modernizar la gestión educativa, facilitando la vida de estudiantes, profesores y administradores.
 
-## Creating a project
+## 💡 ¿Qué es esto?
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Gestión de calificaciones y tareas en línea
+- Administración de perfiles de usuario (Administrador, Profesor, Estudiante)
+- Protección de rutas según el rol de usuario
+- Integración con Supabase para la base de datos y autenticación
 
-```bash
-# create a new project in the current directory
-npx sv create
+## 🚀 Tecnologías Principales
 
-# create a new project in my-app
-npx sv create my-app
-```
+- **Frontend**: SvelteKit 5 + TypeScript
+- **Estilos**: Tailwind CSS
+- **Backend**: Supabase
+- **Iconos**: Lucide
 
-## Developing
+## 🏗️ Arquitectura y Estructura
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- **routes/**: Contiene las páginas de la aplicación
+- **lib/**: Código reutilizable y utilidades
+- **database/**: Manejo de datos y consultas a Supabase
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+## 🏃‍♂️ Inicio Rápido
 
 ```bash
-npm run build
+npm install    # Instalar dependencias
+npm run dev    # Iniciar servidor de desarrollo
 ```
 
-You can preview the production build with `npm run preview`.
+## 😉 Lo que se viene
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- Sistema de cursos y calendario académico
+- Syllabus digital para cada materia
+
+## 👨‍💻 Contribuir
+
+1. Haz un fork o clona el repositorio
+2. Crea tu rama (feature/nueva-funcionalidad)
+3. Realiza tus cambios
+4. Envía un pull request
+
+¡Y si te gusta este proyecto, no olvides dejar una estrella!
