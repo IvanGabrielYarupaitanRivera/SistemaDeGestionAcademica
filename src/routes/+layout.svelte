@@ -6,6 +6,7 @@
 	let { session, supabase } = $derived(data);
 
 	import '../app.css';
+	import { Home, Lock, LogIn, LogOut, User } from 'lucide-svelte';
 
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
@@ -60,19 +61,19 @@
 
 				<a
 					href="/"
-					class="block rounded p-2 text-sm text-white hover:bg-neutral-700"
+					class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
 					onclick={toggleMobileMenu}
 				>
-					🏠 Inicio
+					<Home size={18} /> <span>Inicio</span>
 				</a>
 
 				{#if session}
 					<a
 						href="/privado"
-						class="block rounded p-2 text-sm text-white hover:bg-neutral-700"
+						class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
 						onclick={toggleMobileMenu}
 					>
-						🔒 Privado
+						<Lock size={18} /> <span>Privado</span>
 					</a>
 				{/if}
 			</section>
@@ -82,24 +83,24 @@
 				{#if session}
 					<a
 						href="/privado/perfil"
-						class="block rounded p-2 text-sm text-white hover:bg-neutral-700"
+						class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
 						onclick={toggleMobileMenu}
 					>
-						🚹 Perfil
+						<User size={18} /> <span>Perfil</span>
 					</a>
 					<button
 						onclick={logout}
-						class="w-full rounded p-2 text-left text-sm text-white hover:bg-neutral-700"
+						class="flex w-full items-center gap-2 rounded p-2 text-left text-sm text-white hover:bg-neutral-700"
 					>
-						📤 Cerrar Sesión
+						<LogOut size={18} /> <span>Cerrar Sesión</span>
 					</button>
 				{:else}
 					<a
 						href="/ingresar"
-						class="block rounded p-2 text-sm text-white hover:bg-neutral-700"
+						class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
 						onclick={toggleMobileMenu}
 					>
-						🔑 Ingresar
+						<LogIn size={18} /> <span>Ingresar</span>
 					</a>
 				{/if}
 			</section>
