@@ -62,18 +62,31 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	event.locals.session = session;
 	event.locals.user = user;
 
-	const userRole = user?.user_metadata?.rol;
+	const userRole = user?.user_metadata?.rol as RolUsuario;
+	const currentPath = event.url.pathname;
 
-	if (!event.locals.session && event.url.pathname.startsWith(PROTECTED_ROUTES.PRIVATE)) {
+	if (!session && currentPath.startsWith(PROTECTED_ROUTES.PRIVATE)) {
 		redirect(303, PROTECTED_ROUTES.AUTH);
 	}
 
-	if (event.locals.session && event.url.pathname === PROTECTED_ROUTES.AUTH) {
+	if (session && currentPath === PROTECTED_ROUTES.AUTH) {
 		redirect(303, PROTECTED_ROUTES.PRIVATE);
 	}
 
-	if (event.url.pathname.startsWith(PROTECTED_ROUTES.ADMIN) && userRole !== ROLES.ADMIN) {
-		redirect(303, '/');
+	if (userRole === ROLES.ADMIN) {
+		return resolve(event);
+	}
+
+	if (currentPath.startsWith(PROTECTED_ROUTES.ADMIN)) {
+		redirect(303, PROTECTED_ROUTES.PRIVATE);
+	}
+
+	if (currentPath.startsWith(PROTECTED_ROUTES.PROFESOR) && userRole !== ROLES.PROFESOR) {
+		redirect(303, PROTECTED_ROUTES.PRIVATE);
+	}
+
+	if (currentPath.startsWith(PROTECTED_ROUTES.ESTUDIANTE) && userRole !== ROLES.ESTUDIANTE) {
+		redirect(303, PROTECTED_ROUTES.PRIVATE);
 	}
 
 	return resolve(event);
