@@ -67,12 +67,29 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	event.locals.session = session;
 	event.locals.user = user;
 
+	if (user) {
+		const { data } = await event.locals.supabase
+			.from('Perfiles')
+			.select('rol')
+			.eq('id', user.id)
+			.single();
+
+		event.locals.rol = data?.rol;
+	}
+
 	if (!event.locals.session && event.url.pathname.startsWith('/privado')) {
 		redirect(303, '/ingresar');
 	}
 
 	if (event.locals.session && event.url.pathname === '/ingresar') {
 		redirect(303, '/privado');
+	}
+
+	if (
+		event.url.pathname.startsWith('/privado/administrador') &&
+		event.locals.rol !== 'Administrador'
+	) {
+		redirect(303, '/');
 	}
 
 	return resolve(event);
