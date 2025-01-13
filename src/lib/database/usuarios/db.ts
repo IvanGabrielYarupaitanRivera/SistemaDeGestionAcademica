@@ -41,9 +41,26 @@ export const UsuarioDB = {
 		validar.validarEmail(email);
 		// validar.validarPassword(password);
 
-		const { error } = await supabase.auth.signInWithPassword({ email, password });
+		const {
+			data: { user },
+			error
+		} = await supabase.auth.signInWithPassword({ email, password });
 
 		if (error) throw new Error('Error al iniciar sesión.');
+
+		const { data: perfil, error: perfilError } = await supabase
+			.from('Perfiles')
+			.select('rol')
+			.eq('id', user?.id)
+			.single();
+
+		if (perfilError) throw new Error('Error al obtener el rol del usuario.');
+
+		const { error: metadataError } = await supabase.auth.updateUser({
+			data: { rol: perfil.rol }
+		});
+
+		if (metadataError) throw new Error('Error al actualizar el rol del usuario.');
 	},
 
 	async cambiarContrasena(
