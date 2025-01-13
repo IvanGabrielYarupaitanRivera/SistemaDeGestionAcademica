@@ -143,7 +143,7 @@
 	</div>
 {/if}
 
-<div class="mx-0 md:mx-32 xl:mx-64">
+<div class="mx-0 md:mx-32">
 	<section aria-labelledby="datos-personales" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
 		<h2 id="datos-personales" class="sr-only">Datos Personales</h2>
 		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
