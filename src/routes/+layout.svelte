@@ -3,10 +3,10 @@
 	import { onMount } from 'svelte';
 
 	let { data, children } = $props();
-	let { session, supabase } = $derived(data);
+	let { session, supabase, user } = $derived(data);
 
 	import '../app.css';
-	import { Home, Lock, LogIn, LogOut, User } from 'lucide-svelte';
+	import { Book, BookOpen, Home, Lock, LockKeyhole, LogIn, LogOut, User } from 'lucide-svelte';
 
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
@@ -75,6 +75,35 @@
 					>
 						<Lock size={18} /> <span>Privado</span>
 					</a>
+					{#if user?.user_metadata.rol === 'Administrador'}
+						<a
+							href="/privado/administrador"
+							class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
+							onclick={toggleMobileMenu}
+						>
+							<LockKeyhole size={18} /> <span>Administrador</span>
+						</a>
+					{/if}
+
+					{#if user?.user_metadata.rol === 'Estudiante'}
+						<a
+							href="/privado/estudiante"
+							class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
+							onclick={toggleMobileMenu}
+						>
+							<Book size={18} /> <span>Estudiante</span>
+						</a>
+					{/if}
+
+					{#if user?.user_metadata.rol === 'Profesor'}
+						<a
+							href="/privado/profesor"
+							class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
+							onclick={toggleMobileMenu}
+						>
+							<BookOpen size={18} /> <span>Profesor</span>
+						</a>
+					{/if}
 				{/if}
 			</section>
 
