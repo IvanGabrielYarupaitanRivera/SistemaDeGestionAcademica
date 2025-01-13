@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import '../app.css';
+	import { Book, BookOpen, Home, Lock, LockKeyhole, LogIn, LogOut, User } from 'lucide-svelte';
 
 	let { data, children } = $props();
 	let { session, supabase, user } = $derived(data);
-
-	import '../app.css';
-	import { Book, BookOpen, Home, Lock, LockKeyhole, LogIn, LogOut, User } from 'lucide-svelte';
 
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
@@ -20,6 +19,33 @@
 		}
 		goto('/');
 	};
+
+	const menuItems = [
+		{
+			href: '/privado',
+			icon: Lock,
+			label: 'Privado',
+			roles: ['Administrador', 'Profesor', 'Estudiante']
+		},
+		{
+			href: '/privado/administrador',
+			icon: LockKeyhole,
+			label: 'Administrador',
+			roles: ['Administrador']
+		},
+		{
+			href: '/privado/profesor',
+			icon: BookOpen,
+			label: 'Profesor',
+			roles: ['Profesor', 'Administrador']
+		},
+		{
+			href: '/privado/estudiante',
+			icon: Book,
+			label: 'Estudiante',
+			roles: ['Estudiante', 'Administrador']
+		}
+	];
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -68,42 +94,17 @@
 				</a>
 
 				{#if session}
-					<a
-						href="/privado"
-						class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
-						onclick={toggleMobileMenu}
-					>
-						<Lock size={18} /> <span>Privado</span>
-					</a>
-					{#if user?.user_metadata.rol === 'Administrador'}
-						<a
-							href="/privado/administrador"
-							class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
-							onclick={toggleMobileMenu}
-						>
-							<LockKeyhole size={18} /> <span>Administrador</span>
-						</a>
-					{/if}
-
-					{#if user?.user_metadata.rol === 'Estudiante'}
-						<a
-							href="/privado/estudiante"
-							class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
-							onclick={toggleMobileMenu}
-						>
-							<Book size={18} /> <span>Estudiante</span>
-						</a>
-					{/if}
-
-					{#if user?.user_metadata.rol === 'Profesor'}
-						<a
-							href="/privado/profesor"
-							class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
-							onclick={toggleMobileMenu}
-						>
-							<BookOpen size={18} /> <span>Profesor</span>
-						</a>
-					{/if}
+					{#each menuItems as { href, icon: Icon, label, roles }}
+						{#if roles.includes(user?.user_metadata?.rol)}
+							<a
+								{href}
+								class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
+								onclick={toggleMobileMenu}
+							>
+								<Icon size={18} /> <span>{label}</span>
+							</a>
+						{/if}
+					{/each}
 				{/if}
 			</section>
 
