@@ -10,7 +10,10 @@
 		LogIn,
 		Linkedin,
 		Instagram,
-		Facebook
+		Facebook,
+		User2,
+		MessageSquare,
+		Send
 	} from 'lucide-svelte';
 </script>
 
@@ -167,42 +170,59 @@
 	<section id="contacto" class="py-16" aria-labelledby="contact-title">
 		<h2 id="contact-title" class="text-center text-3xl font-bold text-neutral-800">Contacto</h2>
 		<div class="mt-12 grid gap-12 md:grid-cols-2">
-			<form class="space-y-6">
-				<div>
-					<label for="nombre" class="block text-sm font-medium text-neutral-700">Nombre</label>
-					<input
-						type="text"
-						id="nombre"
-						name="nombre"
-						required
-						class="mt-1 w-full rounded-lg border border-neutral-300 p-2"
-					/>
-				</div>
-				<div>
-					<label for="email" class="block text-sm font-medium text-neutral-700">Email</label>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						required
-						class="mt-1 w-full rounded-lg border border-neutral-300 p-2"
-					/>
-				</div>
-				<div>
-					<label for="mensaje" class="block text-sm font-medium text-neutral-700">Mensaje</label>
-					<textarea
-						id="mensaje"
-						name="mensaje"
-						required
-						rows="4"
-						class="mt-1 w-full rounded-lg border border-neutral-300 p-2"
-					></textarea>
-				</div>
+			<form method="POST" action="?/contact" class="space-y-6">
+				<fieldset class="space-y-4">
+					<legend class="sr-only">Formulario de contacto</legend>
+
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="nombre">
+							<User2 class="h-5 w-5" /> <span>Nombre</span>
+						</label>
+						<input
+							placeholder="Juan Pérez"
+							id="nombre"
+							name="nombre"
+							type="text"
+							required
+							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
+						/>
+					</div>
+
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="email">
+							<Mail class="h-5 w-5" /> <span>Email</span>
+						</label>
+						<input
+							placeholder="correo@ejemplo.com"
+							id="email"
+							name="email"
+							type="email"
+							required
+							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
+						/>
+					</div>
+
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="mensaje">
+							<MessageSquare class="h-5 w-5" /> <span>Mensaje</span>
+						</label>
+						<textarea
+							placeholder="Escribe tu mensaje aquí..."
+							id="mensaje"
+							name="mensaje"
+							required
+							rows="4"
+							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
+						></textarea>
+					</div>
+				</fieldset>
+
 				<button
 					type="submit"
-					class="w-full rounded-lg bg-neutral-800 px-6 py-3 text-white transition hover:bg-neutral-700"
+					class="flex w-full items-center justify-center gap-2 rounded-md bg-neutral-800 px-4 py-2 text-white hover:bg-neutral-700"
 				>
-					Enviar mensaje
+					<Send class="h-5 w-5" />
+					<span> Enviar mensaje </span>
 				</button>
 			</form>
 
