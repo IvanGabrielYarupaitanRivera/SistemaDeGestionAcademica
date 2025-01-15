@@ -226,17 +226,37 @@
 				</button>
 			</form>
 
-			<aside class="space-y-4">
-				<address class="not-italic">
-					<p class="flex items-center gap-2 text-neutral-600">
-						<MapPin size={18} /> Av. Educación 123, Huancayo
-					</p>
-					<p class="flex items-center gap-2 text-neutral-600"><Phone size={18} /> (01) 123-4567</p>
-					<p class="flex items-center gap-2 text-neutral-600">
-						<Mail size={18} /> contacto@colegio.edu.pe
+			<section class=" grid gap-3" aria-label="Información de contacto">
+				<address
+					class="flex flex-col items-center gap-3 rounded-lg border border-neutral-200 bg-white p-6 text-neutral-600 shadow-sm transition-shadow duration-200 hover:shadow-md"
+					aria-label="Dirección física"
+				>
+					<MapPin size={24} aria-hidden="true" />
+					<p class="text-center">Av. Educación 123, Huancayo</p>
+				</address>
+
+				<address
+					class="flex flex-col items-center gap-3 rounded-lg border border-neutral-200 bg-white p-6 text-neutral-600 shadow-sm transition-shadow duration-200 hover:shadow-md"
+					aria-label="Teléfono de contacto"
+				>
+					<Phone size={24} aria-hidden="true" />
+					<p class="text-center">
+						<a href="tel:+5101234567" class="hover:text-neutral-900">(01) 123-4567</a>
 					</p>
 				</address>
-			</aside>
+
+				<address
+					class="flex flex-col items-center gap-3 rounded-lg border border-neutral-200 bg-white p-6 text-neutral-600 shadow-sm transition-shadow duration-200 hover:shadow-md"
+					aria-label="Correo electrónico"
+				>
+					<Mail size={24} aria-hidden="true" />
+					<p class="text-center">
+						<a href="mailto:contacto@colegio.edu.pe" class="hover:text-neutral-900"
+							>contacto@colegio.edu.pe</a
+						>
+					</p>
+				</address>
+			</section>
 		</div>
 	</section>
 </main>
