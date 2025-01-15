@@ -5,10 +5,10 @@ Este sistema quiere modernizar la gestión educativa, facilitando la vida de est
 
 ## 💡 ¿Qué es esto?
 
-- Gestión de calificaciones y tareas en línea
-- Administración de perfiles de usuario (Administrador, Profesor, Estudiante)
-- Protección de rutas según el rol de usuario
-- Integración con Supabase para la base de datos y autenticación
+- Autenticación con Supabase para iniciar sesión
+- Rutas protegidas según el rol de usuario
+- El usuario puede editar su información personal (nombres, apellidos, DNI)
+- Puede cambiar su contraseña
 
 ## 🚀 Tecnologías Principales
 
@@ -29,11 +29,6 @@ Este sistema quiere modernizar la gestión educativa, facilitando la vida de est
 npm install    # Instalar dependencias
 npm run dev    # Iniciar servidor de desarrollo
 ```
-
-## 😉 Lo que se viene
-
-- Sistema de cursos y calendario académico
-- Syllabus digital para cada materia
 
 ## 👨‍💻 Contribuir
 
