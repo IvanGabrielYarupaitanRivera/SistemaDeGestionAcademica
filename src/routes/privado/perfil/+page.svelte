@@ -238,90 +238,109 @@
 
 {#if showEditModal}
 	<div
-		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 backdrop-blur-sm"
 	>
-		<dialog open class=":max-w-sm mx-auto w-full rounded-lg bg-white p-6 md:max-w-xl">
-			<form method="POST" class="space-y-8" use:enhance={handleEdit} action="?/editarPerfil">
-				<div class="flex items-center justify-between">
-					<h2 class="text-xl font-semibold">Editar Información</h2>
-					<button type="button" onclick={toggleEditModal} class="text-gray-500 hover:text-gray-700">
-						<X class="h-6 w-6" />
-					</button>
-				</div>
-				<div>
-					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="nombres">
-						<User class="h-5 w-5" /> <span>Nombres</span>
-					</label>
-					<input
-						value={perfil.nombres}
-						placeholder="Ingrese sus nombres"
-						id="nombres"
-						type="text"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						name="nombres"
-					/>
-				</div>
-				<div>
-					<label
-						class="flex items-center space-x-2 text-sm text-neutral-600"
-						for="apellido_paterno"
-					>
-						<User class="h-5 w-5" /> <span>Apellido Paterno</span>
-					</label>
-					<input
-						value={perfil.apellido_paterno}
-						placeholder="Ingrese su apellido paterno"
-						id="apellido_paterno"
-						type="text"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						name="apellido_paterno"
-					/>
-				</div>
-				<div>
-					<label
-						class="flex items-center space-x-2 text-sm text-neutral-600"
-						for="apellido_materno"
-					>
-						<User class="h-5 w-5" /> <span>Apellido Materno</span>
-					</label>
-					<input
-						value={perfil.apellido_materno}
-						placeholder="Ingrese su apellido materno"
-						id="apellido_materno"
-						type="text"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						name="apellido_materno"
-					/>
-				</div>
-				<div>
-					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="dni">
-						<IdCard class="h-5 w-5" /> <span>DNI</span>
-					</label>
-					<input
-						value={perfil.dni}
-						placeholder="Ingrese su DNI"
-						id="dni"
-						type="text"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						name="dni"
-						maxlength="8"
-					/>
+		<dialog open class="mx-auto w-full rounded-lg bg-white md:max-w-xl">
+			<form
+				method="POST"
+				class="flex h-[90vh] flex-col md:h-auto"
+				use:enhance={handleEdit}
+				action="?/editarPerfil"
+			>
+				<!-- Header fijo -->
+				<div class="border-b p-6">
+					<div class="flex items-center justify-between">
+						<h2 class="text-xl font-semibold">Editar Información</h2>
+						<button
+							type="button"
+							onclick={toggleEditModal}
+							class="text-gray-500 hover:text-gray-700"
+						>
+							<X class="h-6 w-6" />
+						</button>
+					</div>
 				</div>
 
-				<div class="flex justify-end space-x-2">
-					<button
-						type="button"
-						onclick={toggleEditModal}
-						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-					>
-						Cancelar
-					</button>
-					<button
-						type="submit"
-						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-					>
-						Guardar
-					</button>
+				<!-- Contenido scrolleable -->
+				<div class="flex-1 space-y-8 overflow-y-auto p-6">
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="nombres">
+							<User class="h-5 w-5" /> <span>Nombres</span>
+						</label>
+						<input
+							value={perfil.nombres}
+							placeholder="Ingrese sus nombres"
+							id="nombres"
+							type="text"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="nombres"
+						/>
+					</div>
+					<div>
+						<label
+							class="flex items-center space-x-2 text-sm text-neutral-600"
+							for="apellido_paterno"
+						>
+							<User class="h-5 w-5" /> <span>Apellido Paterno</span>
+						</label>
+						<input
+							value={perfil.apellido_paterno}
+							placeholder="Ingrese su apellido paterno"
+							id="apellido_paterno"
+							type="text"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="apellido_paterno"
+						/>
+					</div>
+					<div>
+						<label
+							class="flex items-center space-x-2 text-sm text-neutral-600"
+							for="apellido_materno"
+						>
+							<User class="h-5 w-5" /> <span>Apellido Materno</span>
+						</label>
+						<input
+							value={perfil.apellido_materno}
+							placeholder="Ingrese su apellido materno"
+							id="apellido_materno"
+							type="text"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="apellido_materno"
+						/>
+					</div>
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="dni">
+							<IdCard class="h-5 w-5" /> <span>DNI</span>
+						</label>
+						<input
+							value={perfil.dni}
+							placeholder="Ingrese su DNI"
+							id="dni"
+							type="text"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="dni"
+							maxlength="8"
+						/>
+					</div>
+				</div>
+
+				<!-- Footer fijo -->
+				<div class="border-t p-6">
+					<div class="flex justify-end space-x-2">
+						<button
+							type="button"
+							onclick={toggleEditModal}
+							class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+						>
+							Cancelar
+						</button>
+						<button
+							type="submit"
+							class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+						>
+							Guardar
+						</button>
+					</div>
 				</div>
 			</form>
 		</dialog>
@@ -330,81 +349,92 @@
 
 {#if showChangePasswordModal}
 	<div
-		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 backdrop-blur-sm"
 	>
-		<dialog open class="mx-4 w-full max-w-lg rounded-lg bg-white p-6 sm:mx-auto">
+		<dialog open class="mx-auto w-full rounded-lg bg-white md:max-w-xl">
 			<form
 				method="POST"
-				class="space-y-8"
+				class="flex h-[90vh] flex-col md:h-auto"
 				use:enhance={handleChangePassword}
 				action="?/cambiarContrasena"
 			>
-				<div class="flex items-center justify-between">
-					<h2 class="text-xl font-semibold">Cambiar Contraseña</h2>
-					<button
-						type="button"
-						onclick={toggleChangePasswordModal}
-						class="text-gray-500 hover:text-gray-700"
-					>
-						<X class="h-6 w-6" />
-					</button>
+				<!-- Header fijo -->
+				<div class="border-b p-6">
+					<div class="flex items-center justify-between">
+						<h2 class="text-xl font-semibold">Cambiar Contraseña</h2>
+						<button
+							type="button"
+							onclick={toggleChangePasswordModal}
+							class="text-gray-500 hover:text-gray-700"
+						>
+							<X class="h-6 w-6" />
+						</button>
+					</div>
 				</div>
-				<div>
-					<label
-						class="flex items-center space-x-2 text-sm text-neutral-600"
-						for="current_password"
-					>
-						<Lock class="h-5 w-5" /> <span>Contraseña Actual</span>
-					</label>
-					<input
-						placeholder="Ingrese su contraseña actual"
-						id="current_password"
-						type="password"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						name="current_password"
-					/>
+
+				<!-- Contenido scrolleable -->
+				<div class="flex-1 space-y-8 overflow-y-auto p-6">
+					<div>
+						<label
+							class="flex items-center space-x-2 text-sm text-neutral-600"
+							for="current_password"
+						>
+							<Lock class="h-5 w-5" /> <span>Contraseña Actual</span>
+						</label>
+						<input
+							placeholder="Ingrese su contraseña actual"
+							id="current_password"
+							type="password"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="current_password"
+						/>
+					</div>
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="new_password">
+							<Lock class="h-5 w-5" /> <span>Nueva Contraseña</span>
+						</label>
+						<input
+							placeholder="Ingrese su nueva contraseña"
+							id="new_password"
+							type="password"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="new_password"
+						/>
+					</div>
+					<div>
+						<label
+							class="flex items-center space-x-2 text-sm text-neutral-600"
+							for="confirm_password"
+						>
+							<Lock class="h-5 w-5" /> <span>Confirmar Nueva Contraseña</span>
+						</label>
+						<input
+							placeholder="Confirme su nueva contraseña"
+							id="confirm_password"
+							type="password"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="confirm_password"
+						/>
+					</div>
 				</div>
-				<div>
-					<label class="flex items-center space-x-2 text-sm text-neutral-600" for="new_password">
-						<Lock class="h-5 w-5" /> <span>Nueva Contraseña</span>
-					</label>
-					<input
-						placeholder="Ingrese su nueva contraseña"
-						id="new_password"
-						type="password"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						name="new_password"
-					/>
-				</div>
-				<div>
-					<label
-						class="flex items-center space-x-2 text-sm text-neutral-600"
-						for="confirm_password"
-					>
-						<Lock class="h-5 w-5" /> <span>Confirmar Nueva Contraseña</span>
-					</label>
-					<input
-						placeholder="Confirme su nueva contraseña"
-						id="confirm_password"
-						type="password"
-						class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						name="confirm_password"
-					/>
-				</div>
-				<div class="flex justify-end space-x-2">
-					<button
-						type="button"
-						onclick={toggleChangePasswordModal}
-						class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-					>
-						Cancelar
-					</button>
-					<button
-						type="submit"
-						class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-					>
-						Cambiar
-					</button>
+
+				<!-- Footer fijo -->
+				<div class="border-t p-6">
+					<div class="flex justify-end space-x-2">
+						<button
+							type="button"
+							onclick={toggleChangePasswordModal}
+							class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+						>
+							Cancelar
+						</button>
+						<button
+							type="submit"
+							class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+						>
+							Cambiar
+						</button>
+					</div>
 				</div>
 			</form>
 		</dialog>
