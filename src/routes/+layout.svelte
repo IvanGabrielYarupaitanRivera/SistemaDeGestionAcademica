@@ -141,7 +141,7 @@
 		</footer>
 	</aside>
 
-	<main class="relative flex-1 bg-neutral-100 p-4 transition-all duration-300 lg:ml-64 lg:p-8">
+	<main class="relative flex-1 bg-neutral-100 transition-all duration-300 lg:ml-64">
 		{@render children()}
 	</main>
 
