@@ -1,3 +1,5 @@
+import type { RolUsuario } from './type';
+
 export const validar = {
 	validarNombre(nombre: string) {
 		if (!nombre?.trim()) {

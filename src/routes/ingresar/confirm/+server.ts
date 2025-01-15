@@ -21,6 +21,24 @@ export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
 	if (token_hash && type) {
 		const { error } = await supabase.auth.verifyOtp({ type, token_hash });
 		if (!error) {
+			const {
+				data: { user }
+			} = await supabase.auth.getUser();
+
+			if (user) {
+				const { data: perfil } = await supabase
+					.from('Perfiles')
+					.select('rol')
+					.eq('id', user.id)
+					.single();
+
+				if (perfil) {
+					await supabase.auth.updateUser({
+						data: { rol: perfil.rol }
+					});
+				}
+			}
+
 			redirectTo.searchParams.delete('next');
 			redirect(303, redirectTo);
 		}

@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import type { RolUsuario } from '../perfiles/type';
 
 export const validar = {
 	validarEmail(email: string) {
@@ -63,6 +64,18 @@ export const validar = {
 
 		if (signInError) {
 			throw new Error('La contraseña actual es incorrecta');
+		}
+	},
+
+	validarRol(rol: string) {
+		if (!rol) {
+			throw new Error('El rol es requerido');
+		}
+
+		const rolesValidos: RolUsuario[] = ['Administrador', 'Estudiante', 'Profesor'];
+
+		if (!rolesValidos.includes(rol as RolUsuario)) {
+			throw new Error('Rol inválido.');
 		}
 	}
 };

@@ -3,13 +3,13 @@
 	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { fly } from 'svelte/transition';
-	import { ChevronDown, Loader, Lock, Mail, Users } from 'lucide-svelte';
+	import { CheckCircle, ChevronDown, Loader, Lock, Mail, Users, XCircle } from 'lucide-svelte';
 
 	let activeTab = $state('login');
 	let ingresando = $state(false);
+	let creando = $state(false);
 	let { form } = $props();
 	let showToast = $state(false);
-	let rolSeleccionado = $state('');
 
 	$effect(() => {
 		if (form?.error) {
@@ -18,6 +18,18 @@
 			const toastTimer = setTimeout(() => {
 				showToast = false;
 			}, 2000);
+
+			return () => {
+				clearTimeout(toastTimer);
+			};
+		}
+
+		if (form?.success) {
+			showToast = true;
+
+			const toastTimer = setTimeout(() => {
+				showToast = false;
+			}, 3000);
 
 			return () => {
 				clearTimeout(toastTimer);
@@ -40,16 +52,12 @@
 	};
 
 	const handleRegister = () => {
-		ingresando = true;
+		creando = true;
 
 		return async ({ result, update }: { result: ActionResult; update: () => Promise<void> }) => {
 			await update();
 
-			ingresando = false;
-
-			if (result.type === 'success') {
-				await goto(`/`);
-			}
+			creando = false;
 		};
 	};
 </script>
@@ -59,11 +67,22 @@
 {#if showToast && form?.error}
 	<div
 		transition:fly={{ x: 20 }}
-		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-neutral-800 px-4 py-3 text-sm text-white"
+		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-red-600 px-4 py-3 text-sm text-white shadow-lg"
 		role="alert"
 	>
-		<span>❌</span>
-		{form.error}
+		<XCircle class="h-5 w-5" />
+		<span>{form.error}</span>
+	</div>
+{/if}
+
+{#if showToast && form?.success}
+	<div
+		transition:fly={{ x: 20 }}
+		class="fixed right-4 top-4 flex items-center gap-2 rounded-lg bg-green-600 px-4 py-3 text-sm text-white shadow-lg"
+		role="alert"
+	>
+		<CheckCircle class="h-5 w-5" />
+		<span>{form.success}</span>
 	</div>
 {/if}
 
@@ -73,6 +92,15 @@
 	>
 		<Loader class="animate-spin  text-white" size={40} />
 		<p class="mt-2 font-medium text-white">Ingresando...</p>
+	</div>
+{/if}
+
+{#if creando}
+	<div
+		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+	>
+		<Loader class="animate-spin  text-white" size={40} />
+		<p class="mt-2 font-medium text-white">Se está creando su cuenta...</p>
 	</div>
 {/if}
 
@@ -147,6 +175,30 @@
 					<legend class="sr-only">Datos de registro</legend>
 
 					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="signUp-rol">
+							<Users class="h-5 w-5" /> <span>Rol</span>
+						</label>
+						<div class="relative">
+							<select
+								placeholder="Seleccione un rol"
+								id="signUp-rol"
+								name="rol"
+								required
+								class="mt-1 w-full cursor-pointer appearance-none rounded-md px-4 py-2 shadow-md"
+							>
+								<option value="" disabled selected class="hidden">Seleccione un rol</option>
+								<option value="Estudiante">Estudiante</option>
+								<option value="Profesor">Profesor</option>
+								<option value="Administrador">Administrador</option>
+							</select>
+							<ChevronDown
+								class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-hover:text-gray-700"
+								aria-hidden="true"
+							/>
+						</div>
+					</div>
+
+					<div>
 						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="signUp-email">
 							<Mail class="h-5 w-5" /> <span>Email</span>
 						</label>
@@ -175,31 +227,6 @@
 							required
 							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
 						/>
-					</div>
-
-					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="signUp-rol">
-							<Users class="h-5 w-5" /> <span>Rol</span>
-						</label>
-						<div class="relative">
-							<select
-								placeholder="Seleccione un rol"
-								id="signUp-rol"
-								name="rol"
-								bind:value={rolSeleccionado}
-								required
-								class="mt-1 w-full cursor-pointer appearance-none rounded-md px-4 py-2 shadow-md"
-							>
-								<option value="" disabled selected class="hidden">Seleccione un rol</option>
-								<option value="Estudiante">Estudiante</option>
-								<option value="Profesor">Profesor</option>
-								<option value="Administrador">Administrador</option>
-							</select>
-							<ChevronDown
-								class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-hover:text-gray-700"
-								aria-hidden="true"
-							/>
-						</div>
 					</div>
 				</fieldset>
 				<button
