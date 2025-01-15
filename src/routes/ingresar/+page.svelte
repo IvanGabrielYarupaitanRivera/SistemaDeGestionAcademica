@@ -29,7 +29,8 @@
 
 			const toastTimer = setTimeout(() => {
 				showToast = false;
-			}, 3000);
+				goto(`/`);
+			}, 5000);
 
 			return () => {
 				clearTimeout(toastTimer);
