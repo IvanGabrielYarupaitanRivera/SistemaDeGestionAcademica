@@ -3,12 +3,13 @@
 	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { fly } from 'svelte/transition';
-	import { Loader, Lock, Mail } from 'lucide-svelte';
+	import { ChevronDown, Loader, Lock, Mail, Users } from 'lucide-svelte';
 
 	let activeTab = $state('login');
 	let ingresando = $state(false);
 	let { form } = $props();
 	let showToast = $state(false);
+	let rolSeleccionado = $state('');
 
 	$effect(() => {
 		if (form?.error) {
@@ -109,7 +110,7 @@
 							name="email"
 							type="email"
 							required
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
 						/>
 					</div>
 
@@ -126,7 +127,7 @@
 							name="password"
 							type="password"
 							required
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
 						/>
 					</div>
 				</fieldset>
@@ -146,34 +147,59 @@
 					<legend class="sr-only">Datos de registro</legend>
 
 					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="login-email">
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="signUp-email">
 							<Mail class="h-5 w-5" /> <span>Email</span>
 						</label>
 						<input
 							placeholder="correo@ejemplo.com"
-							id="login-email"
+							id="signUp-email"
 							name="email"
 							type="email"
 							required
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
 						/>
 					</div>
 
 					<div>
 						<label
 							class="flex items-center space-x-2 text-sm text-neutral-600"
-							for="login-password"
+							for="signUp-password"
 						>
 							<Lock class="h-5 w-5" /> <span>Contraseña</span>
 						</label>
 						<input
 							placeholder="********"
-							id="login-password"
+							id="signUp-password"
 							name="password"
 							type="password"
 							required
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
 						/>
+					</div>
+
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="signUp-rol">
+							<Users class="h-5 w-5" /> <span>Rol</span>
+						</label>
+						<div class="relative">
+							<select
+								placeholder="Seleccione un rol"
+								id="signUp-rol"
+								name="rol"
+								bind:value={rolSeleccionado}
+								required
+								class="mt-1 w-full cursor-pointer appearance-none rounded-md px-4 py-2 shadow-md"
+							>
+								<option value="" disabled selected class="hidden">Seleccione un rol</option>
+								<option value="Estudiante">Estudiante</option>
+								<option value="Profesor">Profesor</option>
+								<option value="Administrador">Administrador</option>
+							</select>
+							<ChevronDown
+								class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-hover:text-gray-700"
+								aria-hidden="true"
+							/>
+						</div>
 					</div>
 				</fieldset>
 				<button
