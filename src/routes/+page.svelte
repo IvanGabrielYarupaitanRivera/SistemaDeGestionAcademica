@@ -21,13 +21,17 @@
 	} from 'lucide-svelte';
 </script>
 
+<!-- Header: Navegación principal fija -->
 <header class="sticky top-0 z-30 bg-white shadow-md">
+	<!-- Nav: Contenedor de navegación responsiva -->
 	<nav class="mx-auto flex max-w-7xl items-center justify-between p-4">
+		<!-- Logo y nombre del colegio -->
 		<a href="/" class="flex items-center gap-4">
 			<img src="/logo/logo-colegio.webp" alt="Logo Colegio" class="h-12 w-12" />
 			<span class="text-lg font-bold text-neutral-800">Colegio</span>
 		</a>
 
+		<!-- Lista de navegación - se oculta en móviles -->
 		<ul class="hidden items-center gap-8 md:flex">
 			<li>
 				<a
@@ -69,7 +73,7 @@
 	</nav>
 </header>
 
-<!-- Hero Section -->
+<!-- Hero Section: Banner principal con gradiente y CTA -->
 <section
 	id="inicio"
 	class="relative overflow-hidden bg-gradient-to-b from-amber-100 via-neutral-100 to-neutral-100 py-20 text-center md:py-32"
@@ -82,9 +86,11 @@
 		>
 			Colegio
 		</h1>
+
 		<p class="mx-auto mt-8 max-w-2xl text-lg text-neutral-600 md:text-xl">
 			Formando líderes del mañana con excelencia académica e innovación educativa
 		</p>
+
 		<a
 			href="/ingresar"
 			class="group mt-10 inline-flex items-center gap-2 rounded-lg bg-neutral-800 px-6 py-3 text-white transition-all duration-200 hover:bg-neutral-700"
@@ -95,7 +101,7 @@
 </section>
 
 <main class="mx-auto max-w-7xl px-4">
-	<!-- Nosotros Section -->
+	<!-- Sección Nosotros: Grid de 3 columnas con misión, visión y valores -->
 	<section id="nosotros" class="py-16" aria-labelledby="about-title">
 		<h2 id="about-title" class="text-center text-3xl font-bold text-neutral-800">
 			Nuestra Institución
@@ -137,11 +143,12 @@
 		</div>
 	</section>
 
-	<!-- Noticias Section -->
+	<!-- Sección Noticias: Grid responsivo de cards con imágenes -->
 	<section id="noticias" class="py-16" aria-labelledby="news-title">
 		<h2 id="news-title" class="text-center text-3xl font-bold text-neutral-800">
 			Últimas Noticias
 		</h2>
+		<!-- Grid de artículos con diferente número de columnas según viewport -->
 		<div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 			<article
 				class="group rounded-lg border border-neutral-200 p-6 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
@@ -196,11 +203,12 @@
 		</div>
 	</section>
 
-	<!-- Accesos Section -->
+	<!-- Sección Accesos: Portales de usuario con iconos y descripciones -->
 	<section id="accesos" class="py-16" aria-labelledby="access-title">
 		<h2 id="access-title" class="text-center text-3xl font-bold text-neutral-800">
 			Accesos Rápidos
 		</h2>
+		<!-- Grid responsivo de enlaces con hover effects -->
 		<nav class="mt-12">
 			<ul class="grid gap-6 sm:grid-cols-1 md:grid-cols-3">
 				<li>
@@ -243,10 +251,11 @@
 		</nav>
 	</section>
 
-	<!-- Contacto Section -->
-	<section id="contacto" class="py-16" aria-labelledby="contact-title">
+	<!-- Sección Contacto: Formulario y cards de información -->
+	<section id="contacto" class="mx-16 py-16" aria-labelledby="contact-title">
 		<h2 id="contact-title" class="text-center text-3xl font-bold text-neutral-800">Contacto</h2>
 		<div class="mt-12 grid gap-12 md:grid-cols-2">
+			<!-- Formulario de contacto con iconos -->
 			<form method="POST" action="?/contact" class="space-y-6">
 				<fieldset class="space-y-4">
 					<legend class="sr-only">Formulario de contacto</legend>
@@ -303,6 +312,7 @@
 				</button>
 			</form>
 
+			<!-- Cards de información de contacto con hover effects -->
 			<section class=" grid gap-3" aria-label="Información de contacto">
 				<address
 					class="flex flex-col items-center gap-3 rounded-lg border border-neutral-200 bg-white p-6 text-neutral-600 shadow-sm transition-shadow duration-200 hover:shadow-md"
@@ -338,6 +348,7 @@
 	</section>
 </main>
 
+<!-- Footer: Links sociales y copyright -->
 <footer class="border-t border-neutral-200 bg-white">
 	<div class="mx-auto max-w-7xl px-4 py-12">
 		<nav aria-label="Redes sociales" class="mb-8">
@@ -372,7 +383,7 @@
 			</ul>
 		</nav>
 		<p class="text-center text-sm text-neutral-600">
-			© {new Date().getFullYear()} Colegio San Marcos. Todos los derechos reservados.
+			© {new Date().getFullYear()} Colegio. Todos los derechos reservados.
 		</p>
 	</div>
 </footer>
