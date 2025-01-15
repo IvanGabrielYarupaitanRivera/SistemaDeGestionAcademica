@@ -100,6 +100,7 @@
 	</div>
 </section>
 
+<!-- Main Section -->
 <main class="mx-auto max-w-7xl px-4">
 	<!-- Sección Nosotros: Grid de 3 columnas con misión, visión y valores -->
 	<section id="nosotros" class="py-16" aria-labelledby="about-title">
