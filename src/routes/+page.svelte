@@ -7,17 +7,21 @@
 		Home,
 		Newspaper,
 		Users,
-		LogIn,
 		Linkedin,
 		Instagram,
 		Facebook,
 		User2,
 		MessageSquare,
-		Send
+		Send,
+		Users2,
+		UserCog,
+		Target,
+		Lightbulb,
+		Heart
 	} from 'lucide-svelte';
 </script>
 
-<header class="sticky top-0 z-40 bg-white shadow-md">
+<header class="sticky top-0 z-30 bg-white shadow-md">
 	<nav class="mx-auto flex max-w-7xl items-center justify-between p-4">
 		<a href="/" class="flex items-center gap-4">
 			<img src="/logo/logo-colegio.webp" alt="Logo Colegio" class="h-12 w-12" />
@@ -65,44 +69,64 @@
 	</nav>
 </header>
 
-<main class="mx-auto max-w-7xl px-4">
-	<!-- Hero Section -->
-	<section id="inicio" class="py-16 text-center md:py-24" aria-labelledby="hero-title">
-		<h1 id="hero-title" class="text-4xl font-bold text-neutral-800 md:text-5xl lg:text-6xl">
+<!-- Hero Section -->
+<section
+	id="inicio"
+	class="relative overflow-hidden bg-gradient-to-b from-amber-100 via-neutral-100 to-neutral-100 py-20 text-center md:py-32"
+	aria-labelledby="hero-title"
+>
+	<div class="relative z-10">
+		<h1
+			id="hero-title"
+			class="text-4xl font-bold tracking-tight text-neutral-800 md:text-5xl lg:text-6xl"
+		>
 			Colegio
 		</h1>
-		<p class="mx-auto mt-6 max-w-2xl text-xl text-neutral-600">
-			Formando líderes del mañana con excelencia académica
+		<p class="mx-auto mt-8 max-w-2xl text-lg text-neutral-600 md:text-xl">
+			Formando líderes del mañana con excelencia académica e innovación educativa
 		</p>
 		<a
 			href="/ingresar"
-			class="mt-8 inline-block rounded-lg bg-neutral-800 px-6 py-3 text-white transition hover:bg-neutral-700"
+			class="group mt-10 inline-flex items-center gap-2 rounded-lg bg-neutral-800 px-6 py-3 text-white transition-all duration-200 hover:bg-neutral-700"
 		>
-			Acceder al Sistema
+			<span>Acceder al Sistema</span>
 		</a>
-	</section>
+	</div>
+</section>
 
+<main class="mx-auto max-w-7xl px-4">
 	<!-- Nosotros Section -->
 	<section id="nosotros" class="py-16" aria-labelledby="about-title">
 		<h2 id="about-title" class="text-center text-3xl font-bold text-neutral-800">
 			Nuestra Institución
 		</h2>
 		<div class="mt-12 grid gap-8 md:grid-cols-3">
-			<article class="rounded-lg border border-neutral-200 p-6">
+			<article
+				class="group flex flex-col items-center rounded-lg border border-neutral-200 p-8 text-center shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+			>
+				<Target size={32} className="mb-4 text-neutral-600" />
 				<h3 class="text-xl font-semibold text-neutral-800">Misión</h3>
 				<p class="mt-4 text-neutral-600">
 					Formar estudiantes íntegros y competentes mediante una educación innovadora y
 					personalizada.
 				</p>
 			</article>
-			<article class="rounded-lg border border-neutral-200 p-6">
+
+			<article
+				class="group flex flex-col items-center rounded-lg border border-neutral-200 p-8 text-center shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+			>
+				<Lightbulb size={32} className="mb-4 text-neutral-600" />
 				<h3 class="text-xl font-semibold text-neutral-800">Visión</h3>
 				<p class="mt-4 text-neutral-600">
 					Ser referentes en educación innovadora, formando líderes que impacten positivamente en la
 					sociedad.
 				</p>
 			</article>
-			<article class="rounded-lg border border-neutral-200 p-6">
+
+			<article
+				class="group flex flex-col items-center rounded-lg border border-neutral-200 p-8 text-center shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+			>
+				<Heart size={32} className="mb-4 text-neutral-600" />
 				<h3 class="text-xl font-semibold text-neutral-800">Valores</h3>
 				<ul class="mt-4 space-y-2 text-neutral-600">
 					<li>• Excelencia académica</li>
@@ -119,13 +143,54 @@
 			Últimas Noticias
 		</h2>
 		<div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-			<article class="rounded-lg border border-neutral-200 p-6">
-				<time datetime="2024-03-20" class="text-sm text-neutral-500">20 de Enero, 2025</time>
-				<h3 class="mt-2 text-xl font-semibold text-neutral-800">
+			<article
+				class="group rounded-lg border border-neutral-200 p-6 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+			>
+				<img
+					src="/logo/logo-colegio.webp"
+					alt="Sistema de Gestión"
+					class="mb-4 h-48 w-full rounded-lg object-cover"
+				/>
+				<time datetime="2024-01-20" class="text-sm text-neutral-500">20 de Enero, 2025</time>
+				<h3 class="mt-2 text-xl font-semibold text-neutral-800 group-hover:text-neutral-900">
 					Implementación Sistema de Gestión
 				</h3>
 				<p class="mt-4 text-neutral-600">
 					Modernizando nuestra gestión académica para mejorar la experiencia educativa.
+				</p>
+			</article>
+
+			<article
+				class="group rounded-lg border border-neutral-200 p-6 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+			>
+				<img
+					src="/logo/logo-colegio.webp"
+					alt="Talleres de Verano"
+					class="mb-4 h-48 w-full rounded-lg object-cover"
+				/>
+				<time datetime="2024-01-15" class="text-sm text-neutral-500">15 de Enero, 2025</time>
+				<h3 class="mt-2 text-xl font-semibold text-neutral-800 group-hover:text-neutral-900">
+					Talleres de Verano 2025
+				</h3>
+				<p class="mt-4 text-neutral-600">
+					Inicio de inscripciones para nuestros talleres artísticos y deportivos.
+				</p>
+			</article>
+
+			<article
+				class="group rounded-lg border border-neutral-200 p-6 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
+			>
+				<img
+					src="/logo/logo-colegio.webp"
+					alt="Certificación Internacional"
+					class="mb-4 h-48 w-full rounded-lg object-cover"
+				/>
+				<time datetime="2024-01-10" class="text-sm text-neutral-500">10 de Enero, 2025</time>
+				<h3 class="mt-2 text-xl font-semibold text-neutral-800 group-hover:text-neutral-900">
+					Certificación Internacional
+				</h3>
+				<p class="mt-4 text-neutral-600">
+					Obtuvimos la certificación de calidad educativa ISO 21001:2018.
 				</p>
 			</article>
 		</div>
@@ -137,29 +202,41 @@
 			Accesos Rápidos
 		</h2>
 		<nav class="mt-12">
-			<ul class="grid gap-4 md:grid-cols-3">
+			<ul class="grid gap-6 sm:grid-cols-1 md:grid-cols-3">
 				<li>
 					<a
 						href="/ingresar"
-						class="flex items-center justify-center rounded-lg border border-neutral-200 p-6 text-neutral-800 transition hover:bg-neutral-50"
+						class="flex flex-col items-center gap-4 rounded-lg border border-neutral-200 p-6 text-neutral-800 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
 					>
-						Portal Estudiantes
+						<GraduationCap size={32} />
+						<div class="text-center">
+							<h3 class="font-semibold">Portal Estudiantes</h3>
+							<p class="mt-2 text-sm text-neutral-600">Accede a tus cursos y calificaciones</p>
+						</div>
 					</a>
 				</li>
 				<li>
 					<a
 						href="/ingresar"
-						class="flex items-center justify-center rounded-lg border border-neutral-200 p-6 text-neutral-800 transition hover:bg-neutral-50"
+						class="flex flex-col items-center gap-4 rounded-lg border border-neutral-200 p-6 text-neutral-800 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
 					>
-						Portal Docentes
+						<Users2 size={32} />
+						<div class="text-center">
+							<h3 class="font-semibold">Portal Docentes</h3>
+							<p class="mt-2 text-sm text-neutral-600">Gestiona tus clases y evaluaciones</p>
+						</div>
 					</a>
 				</li>
 				<li>
 					<a
 						href="/ingresar"
-						class="flex items-center justify-center rounded-lg border border-neutral-200 p-6 text-neutral-800 transition hover:bg-neutral-50"
+						class="flex flex-col items-center gap-4 rounded-lg border border-neutral-200 p-6 text-neutral-800 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
 					>
-						Portal Administrativo
+						<UserCog size={32} />
+						<div class="text-center">
+							<h3 class="font-semibold">Portal Administrativo</h3>
+							<p class="mt-2 text-sm text-neutral-600">Administra el sistema académico</p>
+						</div>
 					</a>
 				</li>
 			</ul>
