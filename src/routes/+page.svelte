@@ -5,14 +5,10 @@
 	import Footer from './components/Footer/Footer.svelte';
 </script>
 
-<!-- Header: Navegación principal fija -->
 <Header />
 
-<!-- Hero Section: Banner principal con gradiente y CTA -->
 <Hero />
 
-<!-- Main Section -->
 <Main />
 
-<!-- Footer: Links sociales y copyright -->
 <Footer />
