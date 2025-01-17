@@ -15,8 +15,9 @@
 		</h1>
 
 		<p class="mx-auto mt-8 max-w-2xl text-lg text-neutral-600 md:text-xl">
-			El sistema de gestión escolar es una herramienta que permite a los profesores, alumnos y
-			administrativos tener un control total de la información académica.
+			Nuestra plataforma integral facilita a profesores, estudiantes y personal administrativo la
+			gestión eficiente de toda la información académica, mejorando la comunicación y el rendimiento
+			escolar.
 		</p>
 
 		<a
