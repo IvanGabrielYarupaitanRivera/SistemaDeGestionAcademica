@@ -65,10 +65,6 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	const userRole = user?.user_metadata?.rol as RolUsuario;
 	const currentPath = event.url.pathname;
 
-	if (session && currentPath.startsWith(PROTECTED_ROUTES.AUTH)) {
-		redirect(303, PROTECTED_ROUTES.PRIVATE);
-	}
-
 	if (!session && currentPath.startsWith(PROTECTED_ROUTES.PRIVATE)) {
 		redirect(303, PROTECTED_ROUTES.AUTH);
 	}
