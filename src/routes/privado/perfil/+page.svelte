@@ -58,6 +58,7 @@
 
 		return async ({ update }: { update: () => Promise<void> }) => {
 			await update();
+
 			editando = false;
 		};
 	};
