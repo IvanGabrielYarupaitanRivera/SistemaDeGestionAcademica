@@ -19,7 +19,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 	try {
 		const perfil = await PerfilDB.obtenerPerfilPorID(supabase, user.id);
 
-		// Verifica si el perfil fue encontrado
 		if (!perfil) {
 			throw error(404, 'Perfil no encontrado.');
 		}
