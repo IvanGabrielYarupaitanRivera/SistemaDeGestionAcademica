@@ -5,13 +5,17 @@ import { PerfilDB } from '$lib/database/perfiles/db';
 import type { Perfil } from '$lib/database/perfiles/type';
 import { UsuarioDB } from '$lib/database/usuarios/db';
 
-export const load: PageServerLoad = async ({ locals, depends }) => {
-	depends('perfil:data');
-
+export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase, user } = locals;
 
 	if (!user) {
 		throw error(500, 'Error al obtener el perfil.');
+	}
+
+	const perfilCached = get(perfilStore);
+	if (perfilCached) {
+		console.log('📦 Usando datos de store');
+		return { perfil: perfilCached };
 	}
 
 	try {

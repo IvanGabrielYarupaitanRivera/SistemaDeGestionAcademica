@@ -1,9 +1,6 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-
 	let { data } = $props();
-
-	let user = data.user;
+	let { perfil } = $derived(data);
 
 	// Datos de ejemplo para las secciones
 	const eventos = [
@@ -22,11 +19,12 @@
 	];
 </script>
 
-<div class="p-8">
+<div class="px-4 py-8">
 	<!-- Encabezado -->
 	<header class="welcome-header">
 		<h1>Bienvenido</h1>
-		<p class="role-badge">{user?.user_metadata.rol}</p>
+		<p>{perfil.nombres}</p>
+		<p class="role-badge">{perfil.rol}</p>
 	</header>
 
 	<!-- Grid principal -->

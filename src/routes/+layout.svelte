@@ -99,6 +99,7 @@
 						{#if roles.includes(user?.user_metadata?.rol)}
 							<a
 								{href}
+								data-sveltekit-preload-data
 								class="flex items-center gap-2 rounded p-2 text-sm text-white hover:bg-neutral-700"
 								onclick={toggleMobileMenu}
 							>
