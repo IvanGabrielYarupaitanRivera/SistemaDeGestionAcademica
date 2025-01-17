@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidate } from '$app/navigation';
 	import {
 		User,
 		Mail,
@@ -58,7 +59,7 @@
 
 		return async ({ update }: { update: () => Promise<void> }) => {
 			await update();
-
+			await invalidate('perfil:data');
 			editando = false;
 		};
 	};
@@ -69,7 +70,7 @@
 
 		return async ({ update }: { update: () => Promise<void> }) => {
 			await update();
-
+			await invalidate('perfil:data');
 			cambiandoContraseña = false;
 		};
 	};

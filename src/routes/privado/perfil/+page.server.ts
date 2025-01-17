@@ -5,7 +5,9 @@ import { PerfilDB } from '$lib/database/perfiles/db';
 import type { Perfil } from '$lib/database/perfiles/type';
 import { UsuarioDB } from '$lib/database/usuarios/db';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, depends }) => {
+	depends('perfil:data');
+
 	const { supabase, user } = locals;
 
 	if (!user) {
