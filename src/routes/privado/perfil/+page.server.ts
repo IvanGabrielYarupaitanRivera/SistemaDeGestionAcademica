@@ -4,6 +4,8 @@ import { error, fail } from '@sveltejs/kit';
 import { PerfilDB } from '$lib/database/perfiles/db';
 import type { Perfil } from '$lib/database/perfiles/type';
 import { UsuarioDB } from '$lib/database/usuarios/db';
+import { perfilStore } from '$lib/stores/perfil';
+import { get } from 'svelte/store';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase, user } = locals;
@@ -25,6 +27,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			throw error(404, 'Perfil no encontrado.');
 		}
 
+		perfilStore.set(perfil);
 		return { perfil };
 	} catch (err) {
 		console.error('Error al obtener el perfil:', err);
