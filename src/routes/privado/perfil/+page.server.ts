@@ -16,7 +16,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	const perfilCached = get(perfilStore);
 	if (perfilCached) {
-		console.log('📦 Usando datos de store');
 		return { perfil: perfilCached };
 	}
 
@@ -30,7 +29,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		perfilStore.set(perfil);
 		return { perfil };
 	} catch (err) {
-		console.error('Error al obtener el perfil:', err);
+		console.error('❌ Error al obtener el perfil:', err);
 		throw error(500, 'Error al obtener el perfil.');
 	}
 };
@@ -54,7 +53,7 @@ export const actions = {
 
 		try {
 			await PerfilDB.editarPerfil(supabase, perfil.id, perfil);
-
+			perfilStore.set(null);
 			return { success: 'Perfil actualizado correctamente' };
 		} catch (err) {
 			return fail(500, {
