@@ -12,7 +12,8 @@
 		</h1>
 
 		<p class="mx-auto mt-8 max-w-2xl text-lg text-neutral-600 md:text-xl">
-			Formando líderes del mañana con excelencia académica e innovación educativa
+			Formando líderes con valores y conocimientos para un mundo globalizado. Colegio de educación
+			básica y media. Aportando a la formación integral de los estudiantes.
 		</p>
 
 		<a
