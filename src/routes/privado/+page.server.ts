@@ -13,22 +13,17 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	const perfilCached = get(perfilStore);
 	if (perfilCached) {
-		console.log('📦 Usando datos de store');
 		return { perfil: perfilCached };
 	}
 
 	try {
-		console.time('⏱️ Consulta Supabase');
 		const perfil = await PerfilDB.obtenerPerfilPorID(supabase, user.id);
-		console.timeEnd('⏱️ Consulta Supabase');
 
 		// Verifica si el perfil fue encontrado
 		if (!perfil) {
-			console.warn('⚠️ Perfil no encontrado para el usuario:', user.id);
 			throw error(404, 'Perfil no encontrado.');
 		}
 
-		console.log('✅ Perfil obtenido correctamente:', perfil);
 		perfilStore.set(perfil);
 		return { perfil };
 	} catch (err) {
