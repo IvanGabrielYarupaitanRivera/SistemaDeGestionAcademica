@@ -69,7 +69,7 @@ const authGuard: Handle = async ({ event, resolve }) => {
 		redirect(303, PROTECTED_ROUTES.AUTH);
 	}
 
-	if (session && currentPath === PROTECTED_ROUTES.AUTH) {
+	if (session && currentPath.startsWith(PROTECTED_ROUTES.AUTH)) {
 		redirect(303, PROTECTED_ROUTES.PRIVATE);
 	}
 
