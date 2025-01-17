@@ -22,23 +22,10 @@ const PROTECTED_ROUTES = {
 const supabase: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
 		cookies: {
-			get: (key) => event.cookies.get(key),
-			set: (key, value, options) => {
-				event.cookies.set(key, value, {
-					...options,
-					path: '/',
-					secure: true,
-					sameSite: 'lax',
-					domain: event.url.hostname === 'localhost' ? 'localhost' : '.vercel.app'
-				});
-			},
-			remove: (key, options) => {
-				event.cookies.delete(key, {
-					...options,
-					path: '/',
-					secure: true,
-					sameSite: 'lax',
-					domain: event.url.hostname === 'localhost' ? 'localhost' : '.vercel.app'
+			getAll: () => event.cookies.getAll(),
+			setAll: (cookiesToSet) => {
+				cookiesToSet.forEach(({ name, value, options }) => {
+					event.cookies.set(name, value, { ...options, path: '/' });
 				});
 			}
 		}
