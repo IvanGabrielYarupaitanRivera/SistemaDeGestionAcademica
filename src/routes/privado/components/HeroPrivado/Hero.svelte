@@ -14,7 +14,7 @@
 			Sistema de Gestión Escolar
 		</h1>
 
-		<p class="mx-auto mt-8 max-w-2xl text-lg text-neutral-600 md:text-xl">
+		<p class="mx-auto mt-8 max-w-2xl px-10 text-lg text-neutral-600 md:text-xl">
 			Nuestra plataforma integral facilita a profesores, estudiantes y personal administrativo la
 			gestión eficiente de toda la información académica, mejorando la comunicación y el rendimiento
 			escolar.

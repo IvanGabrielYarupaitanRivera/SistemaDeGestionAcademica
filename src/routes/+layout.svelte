@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { Book, BookOpen, Home, Lock, LockKeyhole, LogIn, LogOut, User } from 'lucide-svelte';
-	import { fade } from 'svelte/transition';
+	import { perfilStore } from '$lib/stores/perfil';
 
 	let { data, children } = $props();
 	let { session, supabase, user } = $derived(data);
@@ -14,10 +14,12 @@
 
 	const logout = async () => {
 		const { error } = await supabase.auth.signOut();
+
 		toggleMobileMenu();
 		if (error) {
 			console.error(error);
 		}
+
 		goto('/');
 	};
 

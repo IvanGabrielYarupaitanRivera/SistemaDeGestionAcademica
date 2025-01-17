@@ -3,6 +3,7 @@ import type { Actions } from './$types';
 import { UsuarioDB } from '$lib/database/usuarios/db';
 import type { Usuario } from '$lib/database/usuarios/type';
 import type { RolUsuario } from '$lib/database/perfiles/type';
+import { perfilStore } from '$lib/stores/perfil';
 
 export const actions = {
 	signup: async ({ request, locals: { supabase } }) => {
@@ -17,6 +18,7 @@ export const actions = {
 
 		try {
 			await UsuarioDB.registrarUsuario(supabase, usuario, rol);
+			perfilStore.set(null);
 			return {
 				success: 'Por favor revise su correo electrónico para confirmar su cuenta.'
 			};
@@ -37,6 +39,7 @@ export const actions = {
 
 		try {
 			await UsuarioDB.iniciarSesion(supabase, usuario);
+			perfilStore.set(null);
 		} catch (err) {
 			return fail(500, {
 				error: err instanceof Error ? err.message : 'Error en el servidor'
