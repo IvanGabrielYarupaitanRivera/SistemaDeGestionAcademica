@@ -1,5 +1,5 @@
 <script>
-	import { Calendar, FileText, GraduationCap, UserCircle } from 'lucide-svelte';
+	import { Bell, Calendar, FileText, GraduationCap, HelpCircle, UserCircle } from 'lucide-svelte';
 </script>
 
 <ul class="hidden items-center gap-8 md:flex">
@@ -12,33 +12,31 @@
 			<span>Mi Perfil</span>
 		</a>
 	</li>
-
 	<li>
 		<a
-			href="/horarios"
+			href="/notificaciones"
+			class="flex items-center gap-2 text-neutral-600 transition hover:text-neutral-900"
+		>
+			<Bell size={18} />
+			<span>Notificaciones</span>
+		</a>
+	</li>
+	<li>
+		<a
+			href="/calendario"
 			class="flex items-center gap-2 text-neutral-600 transition hover:text-neutral-900"
 		>
 			<Calendar size={18} />
-			<span>Horarios</span>
-		</a>
-	</li>
-
-	<li>
-		<a
-			href="/cursos"
-			class="flex items-center gap-2 text-neutral-600 transition hover:text-neutral-900"
-		>
-			<GraduationCap size={18} />
-			<span>Cursos</span>
+			<span>Calendario</span>
 		</a>
 	</li>
 	<li>
 		<a
-			href="/reportes"
+			href="/ayuda"
 			class="flex items-center gap-2 text-neutral-600 transition hover:text-neutral-900"
 		>
-			<FileText size={18} />
-			<span>Reportes</span>
+			<HelpCircle size={18} />
+			<span>Ayuda</span>
 		</a>
 	</li>
 </ul>
