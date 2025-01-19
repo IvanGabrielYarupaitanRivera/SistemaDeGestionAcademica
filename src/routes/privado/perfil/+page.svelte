@@ -12,7 +12,7 @@
 		XCircle,
 		CheckCircle
 	} from 'lucide-svelte';
-	import { blur } from 'svelte/transition';
+	import { blur, fly } from 'svelte/transition';
 
 	let { data, form } = $props();
 	let { perfil } = $derived(data);
