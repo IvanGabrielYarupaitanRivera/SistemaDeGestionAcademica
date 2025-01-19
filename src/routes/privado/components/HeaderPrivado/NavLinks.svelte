@@ -1,5 +1,5 @@
 <script>
-	import { Calendar, FileText, GraduationCap, Home, UserCircle } from 'lucide-svelte';
+	import { Calendar, FileText, GraduationCap, UserCircle } from 'lucide-svelte';
 </script>
 
 <ul class="hidden items-center gap-8 md:flex">
@@ -12,15 +12,7 @@
 			<span>Mi Perfil</span>
 		</a>
 	</li>
-	<li>
-		<a
-			href="/dashboard"
-			class="flex items-center gap-2 text-neutral-600 transition hover:text-neutral-900"
-		>
-			<Home size={18} />
-			<span>Dashboard</span>
-		</a>
-	</li>
+
 	<li>
 		<a
 			href="/horarios"
@@ -30,6 +22,7 @@
 			<span>Horarios</span>
 		</a>
 	</li>
+
 	<li>
 		<a
 			href="/cursos"
