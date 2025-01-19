@@ -12,7 +12,7 @@
 		XCircle,
 		CheckCircle
 	} from 'lucide-svelte';
-	import { fly } from 'svelte/transition';
+	import { blur } from 'svelte/transition';
 
 	let { data, form } = $props();
 	let { perfil } = $derived(data);
@@ -238,8 +238,9 @@
 {#if showEditModal}
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 backdrop-blur-sm"
+		transition:blur
 	>
-		<dialog open class="mx-auto w-full rounded-lg bg-white md:max-w-xl">
+		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
 			<form
 				method="POST"
 				class="flex h-[90vh] flex-col md:h-auto"
@@ -349,11 +350,12 @@
 {#if showChangePasswordModal}
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 backdrop-blur-sm"
+		transition:blur
 	>
-		<dialog open class="mx-auto w-full rounded-lg bg-white md:max-w-xl">
+		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
 			<form
 				method="POST"
-				class="flex h-[90vh] flex-col md:h-auto"
+				class="flex h-[80vh] flex-col md:h-auto"
 				use:enhance={handleChangePassword}
 				action="?/cambiarContrasena"
 			>
