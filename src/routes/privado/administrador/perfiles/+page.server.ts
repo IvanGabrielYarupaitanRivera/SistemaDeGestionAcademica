@@ -8,20 +8,20 @@ import type { RolUsuario } from '$lib/database/perfiles/type';
 
 import { UsuarioDB } from '$lib/database/usuarios/db';
 
-// Cliente Supabase
+// Cliente Admin Supabase
 const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, PRIVATE_SUPABASE_SERVICE_ROLE);
 
 export const actions = {
 	crearUsuario: async ({ request }) => {
 		const formData = await request.formData();
 
+		const rol = formData.get('rol')?.toString() as RolUsuario;
+
 		// Validar datos del formulario
 		const usuario: Usuario = {
-			email: formData.get('email')?.toString() ?? '',
-			password: formData.get('password')?.toString() ?? ''
+			email: formData.get('email') as string,
+			password: formData.get('password') as string
 		};
-
-		const rol = formData.get('rol')?.toString() as RolUsuario;
 
 		try {
 			await UsuarioDB.crearUsuario(supabaseAdmin, usuario, rol);
