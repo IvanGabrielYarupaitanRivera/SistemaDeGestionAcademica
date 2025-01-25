@@ -25,7 +25,9 @@ export const actions = {
 
 		try {
 			await UsuarioDB.registrarUsuario(supabase, usuario, rol);
+
 			perfilStore.set(null);
+
 			return {
 				success: 'Por favor revise su correo electrónico para confirmar su cuenta.'
 			};
@@ -46,6 +48,7 @@ export const actions = {
 
 		try {
 			await UsuarioDB.iniciarSesion(supabase, usuario);
+
 			perfilStore.set(null);
 		} catch (err) {
 			return fail(500, {
