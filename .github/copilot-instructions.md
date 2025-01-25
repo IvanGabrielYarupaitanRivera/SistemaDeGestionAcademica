@@ -1,3 +1,54 @@
+### 🧠 Principio KISS (Keep It Simple, Stupid)
+
+````markdown
+1. **Componentes Minimalistas**:
+
+```svelte
+<!-- ✅ Simple y directo -->
+<script>
+  let count = $state(0);
+  const increment = () => count++;
+</script>
+
+<button onclick={increment}>
+  Clicks: {count}
+</button>
+
+<!-- ❌ Over-engineering innecesario -->
+<script>
+  import { CounterController, CounterView } from './counter-framework';
+  const counter = new CounterController();
+</script>
+
+<CounterView {counter} />
+```
+````
+
+2. **Lógica en Scripts**:
+
+```svelte
+<!-- ✅ Lógica separada -->
+<script>
+	let searchTerm = $state('');
+	const filteredItems = $derived(items.filter((item) => item.includes(searchTerm)));
+</script>
+
+<!-- ❌ Lógica compleja en template -->
+{#each items.filter((i) => i.includes($state(''))) as item}
+	...
+{/each}
+```
+
+3. **Reglas de Oro**:
+
+```markdown
+- Mantener componentes bajo 150 líneas de código
+- Evitar más de 3 niveles de anidamiento lógico
+- Preferir código nativo sobre abstracciones prematuras
+- Eliminar código comentado/no usado
+- Priorizar `$derived` sobre estado duplicado
+```
+
 ### 🚀 Core Svelte 5 Patterns
 
 ```svelte
