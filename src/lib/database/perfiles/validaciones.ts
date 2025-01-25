@@ -21,7 +21,7 @@ export const validar = {
 			throw new Error('El apellido paterno es requerido');
 		}
 
-		const regexApellido = /^[a-zA-Z]+( [a-zA-Z]+)*$/;
+		const regexApellido = /^[a-zA-ZáéíóúÁÉÍÓÚ]+( [a-zA-ZáéíóúÁÉÍÓÚ]+)*$/;
 		if (!regexApellido.test(apellidoPaterno)) {
 			throw new Error(
 				'El apellido paterno solo debe contener letras y un solo espacio entre palabras. Puede ser un apellido compuesto.'
@@ -38,7 +38,7 @@ export const validar = {
 			throw new Error('El apellido materno es requerido');
 		}
 
-		const regexApellido = /^[a-zA-Z]+( [a-zA-Z]+)*$/;
+		const regexApellido = /^[a-zA-ZáéíóúÁÉÍÓÚ]+( [a-zA-ZáéíóúÁÉÍÓÚ]+)*$/;
 		if (!regexApellido.test(apellidoMaterno)) {
 			throw new Error(
 				'El apellido materno solo debe contener letras y un solo espacio entre palabras. Puede ser un apellido compuesto.'
