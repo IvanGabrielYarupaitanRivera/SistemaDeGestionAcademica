@@ -5,10 +5,8 @@ import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 import { PRIVATE_SUPABASE_SERVICE_ROLE } from '$env/static/private';
 import type { Usuario } from '$lib/database/usuarios/type';
 import type { RolUsuario } from '$lib/database/perfiles/type';
-
 import { UsuarioDB } from '$lib/database/usuarios/db';
 
-// Cliente Admin Supabase
 const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, PRIVATE_SUPABASE_SERVICE_ROLE);
 
 export const actions = {
