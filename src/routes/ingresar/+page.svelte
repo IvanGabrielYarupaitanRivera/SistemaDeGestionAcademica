@@ -186,14 +186,14 @@
 									id="signUp-rol"
 									name="rol"
 									required
-									class="mt-1 w-full cursor-pointer appearance-none rounded-md px-4 py-2 shadow-md"
+									class="mt-1 w-full cursor-pointer appearance-none rounded-md border-gray-300 py-2 pl-4 pr-10 shadow-md"
 								>
 									<option value="" disabled selected class="hidden">Seleccione un rol</option>
 									<option value="Estudiante">Estudiante</option>
 									<option value="Profesor">Profesor</option>
 								</select>
 								<ChevronDown
-									class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 transition-colors group-hover:text-gray-700"
+									class="pointer-events-none absolute right-3 top-[55%] h-5 w-5 -translate-y-1/2 transform text-gray-500"
 									aria-hidden="true"
 								/>
 							</div>
