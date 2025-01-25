@@ -34,6 +34,42 @@ export const UsuarioDB = {
 		await PerfilDB.crearPerfil(supabase, perfil);
 	},
 
+	async crearUsuario(supabase: SupabaseClient, { email, password }: Usuario, rol: RolUsuario) {
+		validar.validarRol(rol);
+		validar.validarEmail(email);
+		validar.validarPassword(password);
+
+		const { data, error: authError } = await supabase.auth.admin.createUser({
+			email,
+			password,
+			email_confirm: true,
+			user_metadata: {
+				rol
+			}
+		});
+
+		if (authError) {
+			throw new Error(`Error al crear la cuenta del usuario.`);
+		}
+
+		const userId = data.user?.id;
+		const userEmail = data.user?.email;
+
+		const perfil: Perfil = {
+			id: userId as string,
+			nombres: 'Sin nombres',
+			apellido_paterno: 'Sin apellido paterno',
+			apellido_materno: 'Sin apellido materno',
+			dni: 'Sin DNI',
+			rol,
+			email: userEmail as string,
+			fecha_creacion: new Date().toISOString(),
+			fecha_actualizacion: new Date().toISOString()
+		};
+
+		await PerfilDB.crearPerfil(supabase, perfil);
+	},
+
 	async iniciarSesion(supabase: SupabaseClient, { email, password }: Usuario) {
 		validar.validarEmail(email);
 		// validar.validarPassword(password);
