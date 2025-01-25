@@ -1,5 +1,5 @@
 <script>
-	import { Bell, Calendar, FileText, GraduationCap, HelpCircle, UserCircle } from 'lucide-svelte';
+	import { Bell, Calendar, HelpCircle, UserCircle } from 'lucide-svelte';
 </script>
 
 <ul class="hidden items-center gap-8 md:flex">
@@ -30,6 +30,7 @@
 			<span>Calendario</span>
 		</a>
 	</li>
+
 	<li>
 		<a
 			href="/ayuda"
