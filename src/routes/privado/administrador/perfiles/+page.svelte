@@ -217,7 +217,10 @@
 						>
 							Nombre Completo
 						</th>
-						<th scope="col" class="p-4 text-left text-xs font-medium tracking-wider text-white">
+						<th
+							scope="col"
+							class="w-40 p-4 text-left text-xs font-medium tracking-wider text-white"
+						>
 							Email
 						</th>
 						<th
@@ -233,7 +236,7 @@
 				</thead>
 				<tbody class="divide-y divide-neutral-200">
 					{#each filteredPerfiles as perfil (perfil.id)}
-						<tr class="transition-colors hover:bg-neutral-50">
+						<tr class="transition-colors hover:bg-neutral-100">
 							<td class="whitespace-nowrap p-4 text-sm font-medium text-neutral-900">
 								{perfil.dni}
 							</td>
@@ -242,8 +245,12 @@
 								{perfil.apellido_paterno}
 								{perfil.apellido_materno}
 							</td>
-							<td class="max-w-[200px] truncate p-4 text-sm text-neutral-600">
-								<a href="mailto:{perfil.email}" class="hover:text-neutral-900">
+							<td class="w-40 truncate p-4 text-sm text-neutral-600">
+								<a
+									href="mailto:{perfil.email}"
+									class="block truncate hover:text-neutral-900"
+									title={perfil.email}
+								>
 									{perfil.email}
 								</a>
 							</td>
