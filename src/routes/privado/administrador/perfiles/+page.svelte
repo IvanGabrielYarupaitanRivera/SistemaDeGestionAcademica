@@ -10,7 +10,9 @@
 		XCircle,
 		Mail,
 		User,
-		Lock
+		Lock,
+		Users,
+		ChevronDown
 	} from 'lucide-svelte';
 	import { blur, fly } from 'svelte/transition';
 
@@ -141,11 +143,12 @@
 	<header class="mb-6 flex items-center justify-between">
 		<h1 class="text-2xl font-bold">Perfiles</h1>
 		<button
+			type="button"
 			onclick={toggleCreateModal}
-			class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700"
+			aria-label="Crear nuevo perfil"
 		>
-			<Plus size={18} />
-			<span>Nuevo</span>
+			Nuevo
 		</button>
 	</header>
 
@@ -229,6 +232,29 @@
 				<!-- Contenido scrolleable -->
 				<div class="flex-1 space-y-8 overflow-y-auto p-6">
 					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="rol">
+							<Users class="h-5 w-5" /> <span>Rol</span>
+						</label>
+						<div class="relative">
+							<select
+								bind:value={formData.rol}
+								id="rol"
+								name="rol"
+								required
+								class="mt-1 w-full cursor-pointer appearance-none rounded-md border-gray-300 py-2 pl-4 pr-10 shadow-md"
+							>
+								{#each roles as rol}
+									<option>{rol}</option>
+								{/each}
+							</select>
+							<ChevronDown
+								class="pointer-events-none absolute right-3 top-[55%] h-5 w-5 -translate-y-1/2 transform text-gray-500"
+								aria-hidden="true"
+							/>
+						</div>
+					</div>
+
+					<div>
 						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="email">
 							<Mail class="h-5 w-5" /> <span>Email</span>
 						</label>
@@ -244,37 +270,19 @@
 					</div>
 
 					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="rol">
-							<User class="h-5 w-5" /> <span>Rol</span>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="password">
+							<Lock class="h-5 w-5" /> <span>Contraseña</span>
 						</label>
-						<select
-							bind:value={formData.rol}
-							id="rol"
-							name="rol"
+						<input
+							bind:value={formData.password}
+							placeholder="Ingrese su contraseña"
+							id="password"
+							type="password"
 							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-						>
-							{#each roles as rol}
-								<option>{rol}</option>
-							{/each}
-						</select>
+							name="password"
+							required
+						/>
 					</div>
-
-					{#if !isEditing}
-						<div>
-							<label class="flex items-center space-x-2 text-sm text-neutral-600" for="password">
-								<Lock class="h-5 w-5" /> <span>Contraseña</span>
-							</label>
-							<input
-								bind:value={formData.password}
-								placeholder="Ingrese su contraseña"
-								id="password"
-								type="password"
-								class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-								name="password"
-								required
-							/>
-						</div>
-					{/if}
 				</div>
 
 				<!-- Footer fijo -->
