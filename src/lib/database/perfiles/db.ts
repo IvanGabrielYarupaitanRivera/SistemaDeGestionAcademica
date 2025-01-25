@@ -13,6 +13,19 @@ export const PerfilDB = {
 		return data as Perfil;
 	},
 
+	async obtenerPerfiles(supabase: SupabaseClient) {
+		const { data, error } = await supabase
+			.from('Perfiles')
+			.select()
+			.order('fecha_actualizacion', { ascending: false });
+
+		if (error) {
+			throw new Error('Error al obtener los perfiles.');
+		}
+
+		return data as Perfil[];
+	},
+
 	async crearPerfil(supabase: SupabaseClient, perfil: Perfil) {
 		const { error } = await supabase.from('Perfiles').insert([perfil]);
 

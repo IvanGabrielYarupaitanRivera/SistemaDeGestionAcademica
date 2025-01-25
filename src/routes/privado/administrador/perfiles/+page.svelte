@@ -12,32 +12,34 @@
 		User,
 		Lock,
 		Users,
-		ChevronDown
+		ChevronDown,
+		Loader
 	} from 'lucide-svelte';
 	import { blur, fly } from 'svelte/transition';
 
-	let perfiles = $state([
-		{ id: 1, nombre: 'Juan Pérez', email: 'juan@ejemplo.com', rol: 'Profesor' },
-		{ id: 2, nombre: 'María González', email: 'maria@ejemplo.com', rol: 'Estudiante' },
-		{ id: 3, nombre: 'Admin', email: 'admin@ejemplo.com', rol: 'Administrador' }
-	]);
-
 	let searchQuery = $state('');
-	let showModal = $state(false);
-	let isEditing = $state(false);
-	let selectedUser = $state(null);
 
-	let { form } = $props();
+	let { data, form } = $props();
+
+	let perfiles = $derived(data.perfiles);
 
 	let createShowModal = $state(false);
 	let creando = $state(false);
 	let showToast = $state(false);
 
-	let formData = $state({
-		email: '',
-		password: '',
-		rol: 'Estudiante'
-	});
+	const filteredPerfiles = $derived(
+		searchQuery
+			? perfiles.filter(
+					(p) =>
+						p.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						p.nombres.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						p.apellido_paterno.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						p.apellido_materno.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						p.dni.toLowerCase().includes(searchQuery.toLowerCase()) ||
+						p.rol?.toLowerCase().includes(searchQuery.toLowerCase())
+				)
+			: perfiles
+	);
 
 	const roles = ['Estudiante', 'Profesor', 'Administrador'];
 
@@ -56,14 +58,7 @@
 		};
 	};
 
-	/* const filteredPerfiles = $derived(
-		perfiles.filter(
-			(p) =>
-				p.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				p.email.toLowerCase().includes(searchQuery.toLowerCase())
-		)
-	);
-
+	/*
 	function handleUserAction(user = null) {
 		selectedUser = user;
 		isEditing = !!user;
@@ -139,68 +134,134 @@
 	</div>
 {/if}
 
-<div class="p-6">
-	<header class="mb-6 flex items-center justify-between">
-		<h1 class="text-2xl font-bold">Perfiles</h1>
-		<button
-			type="button"
-			onclick={toggleCreateModal}
-			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700"
-			aria-label="Crear nuevo perfil"
-		>
-			Nuevo
-		</button>
+{#if creando}
+	<div
+		class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
+		role="alert"
+		aria-live="polite"
+	>
+		<div class="flex flex-col items-center gap-2 p-4">
+			<Loader class="animate-spin text-white" size={40} />
+			<p class="font-medium text-white">Creando un nuevo perfil...</p>
+		</div>
+	</div>
+{/if}
+<div class="space-y-4 p-6">
+	<header class="  ">
+		<div class="flex items-center justify-between">
+			<h1 class="text-xl font-semibold text-neutral-900 sm:text-2xl lg:text-3xl">Perfiles</h1>
+
+			<button
+				type="button"
+				onclick={toggleCreateModal}
+				class="inline-flex items-center gap-2 rounded-lg bg-neutral-600 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700 sm:text-base"
+				aria-label="Crear nuevo perfil"
+			>
+				<Plus class="h-5 w-5" aria-hidden="true" />
+				<span>Nuevo Perfil</span>
+			</button>
+		</div>
 	</header>
 
-	<!-- <div class="mb-6 flex gap-4">
-		<div class="relative flex-1">
-			<Search class="absolute left-3 top-2.5 text-gray-400" size={18} />
-			<input
-				type="text"
-				bind:value={searchQuery}
-				placeholder="Buscar..."
-				class="w-full rounded-lg border py-2 pl-10 pr-4"
-			/>
-		</div>
-	</div> -->
+	<section aria-label="Búsqueda">
+		<label class="flex items-center space-x-2 text-sm text-neutral-600" for="search">
+			<Search class="h-5 w-5" /> <span>Buscar</span>
+		</label>
+		<input
+			type="search"
+			bind:value={searchQuery}
+			placeholder="Buscar por nombre, apellidos paternos, maternos, email, DNI o rol..."
+			id="search"
+			name="search"
+			autocomplete="off"
+			aria-label="Campo de búsqueda"
+			class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+		/>
+	</section>
 
-	<!-- <div class="rounded-lg bg-white shadow">
-		<table class="w-full">
-			<thead>
-				<tr class="border-b">
-					<th class="p-4 text-left">Nombre</th>
-					<th class="p-4 text-left">Email</th>
-					<th class="p-4 text-left">Rol</th>
-					<th class="p-4 text-center">Acciones</th>
+	<section class="overflow-x-auto rounded-lg bg-white shadow" aria-label="Lista de perfiles">
+		<table class="min-w-full divide-y divide-gray-200">
+			<thead class="bg-gray-50">
+				<tr>
+					<th
+						scope="col"
+						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 sm:table-cell"
+					>
+						Nombre
+					</th>
+					<th
+						scope="col"
+						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:table-cell"
+					>
+						Apellido Paterno
+					</th>
+					<th
+						scope="col"
+						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 lg:table-cell"
+					>
+						Apellido Materno
+					</th>
+					<th
+						scope="col"
+						class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+					>
+						Email
+					</th>
+					<th
+						scope="col"
+						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 sm:table-cell"
+					>
+						Rol
+					</th>
+					<th
+						scope="col"
+						class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-500"
+					>
+						Acciones
+					</th>
 				</tr>
 			</thead>
-			<tbody>
-				{#each filteredPerfiles as perfil}
-					<tr class="border-b hover:bg-gray-50">
-						<td class="p-4">{perfil.nombre}</td>
-						<td class="p-4">{perfil.email}</td>
-						<td class="p-4">{perfil.rol}</td>
-						<td class="p-4 text-center">
-							<div class="flex justify-center gap-3">
-								<button
-									onclick={() => handleUserAction(perfil)}
-									class="text-blue-600 hover:text-blue-800"
-								>
-									<PencilLine size={18} />
-								</button>
-								<button
-									onclick={() => handleDelete(perfil)}
-									class="text-red-600 hover:text-red-800"
-								>
-									<Trash size={18} />
-								</button>
-							</div>
+			<tbody class="divide-y divide-gray-200 bg-white">
+				{#each filteredPerfiles as perfil (perfil.id)}
+					<tr class="hover:bg-gray-50">
+						<td class="hidden whitespace-nowrap px-6 py-4 sm:table-cell">
+							{perfil.nombres}
+						</td>
+						<td class="hidden whitespace-nowrap px-6 py-4 md:table-cell">
+							{perfil.apellido_paterno}
+						</td>
+						<td class="hidden whitespace-nowrap px-6 py-4 lg:table-cell">
+							{perfil.apellido_materno}
+						</td>
+						<td class="whitespace-nowrap px-6 py-4">
+							{perfil.email}
+						</td>
+						<td class="hidden whitespace-nowrap px-6 py-4 sm:table-cell">
+							{perfil.rol}
+						</td>
+						<td class="flex justify-center gap-2 whitespace-nowrap px-6 py-4">
+							<button
+								type="button"
+								onclick={() => editarPerfil(perfil)}
+								class="rounded p-1 text-neutral-600 hover:bg-neutral-300"
+								aria-label="Editar perfil"
+							>
+								<PencilLine class="h-5 w-5" />
+							</button>
+							<button
+								type="button"
+								onclick={() => eliminarPerfil(perfil.id)}
+								class="rounded p-1 text-neutral-600 hover:bg-neutral-300"
+								aria-label="Eliminar perfil"
+							>
+								<Trash class="h-5 w-5" />
+							</button>
 						</td>
 					</tr>
 				{/each}
 			</tbody>
 		</table>
-	</div> -->
+	</section>
 </div>
 
 {#if createShowModal}
@@ -237,7 +298,6 @@
 						</label>
 						<div class="relative">
 							<select
-								bind:value={formData.rol}
 								id="rol"
 								name="rol"
 								required
@@ -259,7 +319,6 @@
 							<Mail class="h-5 w-5" /> <span>Email</span>
 						</label>
 						<input
-							bind:value={formData.email}
 							placeholder="Ingrese su email"
 							id="email"
 							type="email"
@@ -274,7 +333,6 @@
 							<Lock class="h-5 w-5" /> <span>Contraseña</span>
 						</label>
 						<input
-							bind:value={formData.password}
 							placeholder="Ingrese su contraseña"
 							id="password"
 							type="password"
