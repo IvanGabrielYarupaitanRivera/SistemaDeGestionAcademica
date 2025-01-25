@@ -396,124 +396,165 @@
 		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
 			<form
 				method="POST"
-				class="flex h-[90vh] flex-col md:h-auto"
+				class="flex h-full flex-col overflow-hidden sm:h-auto"
 				use:enhance={handleEdit}
 				action="?/editarUsuario"
 			>
 				<!-- Header fijo -->
-				<div class="border-b p-6">
+				<div class="border-b p-4 sm:p-6">
 					<div class="flex items-center justify-between">
-						<h2 class="text-xl font-semibold">Editar Información</h2>
+						<h2 class="text-lg font-medium sm:text-xl">Editar Información</h2>
 						<button
 							type="button"
 							onclick={toggleEditModal}
-							class="text-gray-500 hover:text-gray-700"
+							class="rounded p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
 						>
-							<X class="h-6 w-6" />
+							<X class="h-5 w-5 sm:h-6 sm:w-6" />
 						</button>
 					</div>
 				</div>
 
 				<!-- Contenido scrolleable -->
-				<div class="flex-1 space-y-8 overflow-y-auto p-6">
-					<input hidden bind:value={selectedPerfil.id} name="id" />
+				<div class="flex-1 space-y-6 overflow-y-auto p-4 sm:p-6">
+					<input type="hidden" bind:value={selectedPerfil.id} name="id" />
 
-					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="nombres">
-							<User class="h-5 w-5" /> <span>Nombres</span>
-						</label>
-						<input
-							bind:value={selectedPerfil.nombres}
-							placeholder="Ingrese sus nombres"
-							id="nombres"
-							type="text"
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-							name="nombres"
-						/>
-					</div>
-					<div>
-						<label
-							class="flex items-center space-x-2 text-sm text-neutral-600"
-							for="apellido_paterno"
-						>
-							<User class="h-5 w-5" /> <span>Apellido Paterno</span>
-						</label>
-						<input
-							bind:value={selectedPerfil.apellido_paterno}
-							placeholder="Ingrese su apellido paterno"
-							id="apellido_paterno"
-							type="text"
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-							name="apellido_paterno"
-						/>
-					</div>
-					<div>
-						<label
-							class="flex items-center space-x-2 text-sm text-neutral-600"
-							for="apellido_materno"
-						>
-							<User class="h-5 w-5" /> <span>Apellido Materno</span>
-						</label>
-						<input
-							bind:value={selectedPerfil.apellido_materno}
-							placeholder="Ingrese su apellido materno"
-							id="apellido_materno"
-							type="text"
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-							name="apellido_materno"
-						/>
-					</div>
-					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="dni">
-							<IdCard class="h-5 w-5" /> <span>DNI</span>
-						</label>
-						<input
-							bind:value={selectedPerfil.dni}
-							placeholder="Ingrese su DNI"
-							id="dni"
-							type="text"
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-							name="dni"
-							maxlength="8"
-						/>
-					</div>
-					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="rol">
-							<Users class="h-5 w-5" /> <span>Rol</span>
-						</label>
-						<div class="relative">
-							<select
-								bind:value={selectedPerfil.rol}
-								id="rol"
-								name="rol"
-								required
-								class="mt-1 w-full cursor-pointer appearance-none rounded-md border-gray-300 py-2 pl-4 pr-10 shadow-md"
+					<div class="space-y-6">
+						<!-- Nombres -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="nombres"
 							>
-								{#each roles as rol}
-									<option>{rol}</option>
-								{/each}
-							</select>
-							<ChevronDown
-								class="pointer-events-none absolute right-3 top-[55%] h-5 w-5 -translate-y-1/2 transform text-gray-500"
-								aria-hidden="true"
+								<User class="h-5 w-5 text-neutral-500" />
+								<span>Nombres</span>
+							</label>
+							<input
+								bind:value={selectedPerfil.nombres}
+								placeholder="Ingrese sus nombres"
+								id="nombres"
+								type="text"
+								class="w-full rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+                       transition duration-200
+                       placeholder:text-neutral-400
+                       focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								name="nombres"
 							/>
+						</div>
+
+						<!-- Apellido Paterno -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="apellido_paterno"
+							>
+								<User class="h-5 w-5 text-neutral-500" />
+								<span>Apellido Paterno</span>
+							</label>
+							<input
+								bind:value={selectedPerfil.apellido_paterno}
+								placeholder="Ingrese apellido paterno"
+								id="apellido_paterno"
+								type="text"
+								class="w-full rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+                       transition duration-200
+                       placeholder:text-neutral-400
+                       focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								name="apellido_paterno"
+							/>
+						</div>
+
+						<!-- Apellido Materno -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="apellido_materno"
+							>
+								<User class="h-5 w-5 text-neutral-500" />
+								<span>Apellido Materno</span>
+							</label>
+							<input
+								bind:value={selectedPerfil.apellido_materno}
+								placeholder="Ingrese apellido materno"
+								id="apellido_materno"
+								type="text"
+								class="w-full rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+                       transition duration-200
+                       placeholder:text-neutral-400
+                       focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								name="apellido_materno"
+							/>
+						</div>
+
+						<!-- DNI -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="dni"
+							>
+								<IdCard class="h-5 w-5 text-neutral-500" />
+								<span>DNI</span>
+							</label>
+							<input
+								bind:value={selectedPerfil.dni}
+								placeholder="Ingrese DNI"
+								id="dni"
+								type="text"
+								maxlength="8"
+								class="w-full rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+                       transition duration-200
+                       placeholder:text-neutral-400
+                       focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								name="dni"
+							/>
+						</div>
+
+						<!-- Rol -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="rol"
+							>
+								<Users class="h-5 w-5 text-neutral-500" />
+								<span>Rol</span>
+							</label>
+							<div class="relative">
+								<select
+									bind:value={selectedPerfil.rol}
+									id="rol"
+									name="rol"
+									required
+									class="w-full appearance-none rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+                           transition duration-200
+                           focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								>
+									{#each roles as rol}
+										<option>{rol}</option>
+									{/each}
+								</select>
+								<ChevronDown
+									class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-500"
+									aria-hidden="true"
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<!-- Footer fijo -->
-				<div class="border-t p-6">
-					<div class="flex justify-end space-x-2">
+				<div class="border-t p-4 sm:p-6">
+					<div class="flex gap-3 sm:justify-end">
 						<button
 							type="button"
 							onclick={toggleEditModal}
-							class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+							class="flex-1 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-neutral-700
+							   ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 sm:flex-none"
 						>
 							Cancelar
 						</button>
 						<button
 							type="submit"
-							class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+							class="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white
+							   hover:bg-neutral-800 sm:flex-none"
 						>
 							Guardar
 						</button>
