@@ -199,97 +199,90 @@
 		/>
 	</section>
 
-	<section class="overflow-x-auto rounded-lg bg-white shadow" aria-label="Lista de perfiles">
-		<table class="min-w-full divide-y divide-gray-200">
-			<thead class="bg-gray-50">
-				<tr>
-					<th
-						scope="col"
-						class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-					>
-						DNI
-					</th>
-					<th
-						scope="col"
-						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 sm:table-cell"
-					>
-						Nombre
-					</th>
-					<th
-						scope="col"
-						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:table-cell"
-					>
-						Apellido Paterno
-					</th>
-					<th
-						scope="col"
-						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 lg:table-cell"
-					>
-						Apellido Materno
-					</th>
-					<th
-						scope="col"
-						class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-					>
-						Email
-					</th>
-					<th
-						scope="col"
-						class="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 sm:table-cell"
-					>
-						Rol
-					</th>
-					<th
-						scope="col"
-						class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-500"
-					>
-						Acciones
-					</th>
-				</tr>
-			</thead>
-			<tbody class="divide-y divide-gray-200 bg-white">
-				{#each filteredPerfiles as perfil (perfil.id)}
-					<tr class="hover:bg-gray-50">
-						<td class="whitespace-nowrap px-6 py-4 text-xs">
-							{perfil.dni}
-						</td>
-						<td class="hidden whitespace-nowrap px-6 py-4 text-xs sm:table-cell">
-							{perfil.nombres}
-						</td>
-						<td class="hidden whitespace-nowrap px-6 py-4 text-xs md:table-cell">
-							{perfil.apellido_paterno}
-						</td>
-						<td class="hidden whitespace-nowrap px-6 py-4 text-xs lg:table-cell">
-							{perfil.apellido_materno}
-						</td>
-						<td class="whitespace-nowrap px-6 py-4 text-xs">
-							{perfil.email}
-						</td>
-						<td class="hidden whitespace-nowrap px-6 py-4 text-xs sm:table-cell">
-							{perfil.rol}
-						</td>
-						<td class="xs flex justify-center gap-2 whitespace-nowrap px-6 py-4">
-							<button
-								type="button"
-								onclick={() => editarPerfil(perfil)}
-								class="rounded p-1 text-neutral-600 hover:bg-neutral-300"
-								aria-label="Editar perfil"
-							>
-								<PencilLine class="h-4 w-4" />
-							</button>
-							<!-- <button
-								type="button"
-								onclick={() => eliminarPerfil(perfil.id)}
-								class="rounded p-1 text-neutral-600 hover:bg-neutral-300"
-								aria-label="Eliminar perfil"
-							>
-								<Trash class="h-5 w-5" />
-							</button> -->
-						</td>
+	<section
+		class="overflow-hidden rounded-lg bg-white shadow-sm"
+		aria-labelledby="tabla-perfiles-heading"
+	>
+		<h2 id="tabla-perfiles-heading" class="sr-only">Lista de perfiles</h2>
+		<div class="overflow-x-auto">
+			<table class="min-w-full divide-y divide-neutral-200">
+				<thead class="bg-neutral-700">
+					<tr>
+						<th scope="col" class="p-4 text-left text-xs font-medium tracking-wider text-white">
+							DNI
+						</th>
+						<th
+							scope="col"
+							class="hidden p-4 text-left text-xs font-medium tracking-wider text-white lg:table-cell"
+						>
+							Nombre Completo
+						</th>
+						<th scope="col" class="p-4 text-left text-xs font-medium tracking-wider text-white">
+							Email
+						</th>
+						<th
+							scope="col"
+							class="hidden p-4 text-left text-xs font-medium tracking-wider text-white sm:table-cell"
+						>
+							Rol
+						</th>
+						<th scope="col" class="p-4 text-center text-xs font-medium tracking-wider text-white">
+							Acciones
+						</th>
 					</tr>
-				{/each}
-			</tbody>
-		</table>
+				</thead>
+				<tbody class="divide-y divide-neutral-200">
+					{#each filteredPerfiles as perfil (perfil.id)}
+						<tr class="transition-colors hover:bg-neutral-50">
+							<td class="whitespace-nowrap p-4 text-sm font-medium text-neutral-900">
+								{perfil.dni}
+							</td>
+							<td class="hidden whitespace-nowrap p-4 text-sm text-neutral-600 lg:table-cell">
+								{perfil.nombres}
+								{perfil.apellido_paterno}
+								{perfil.apellido_materno}
+							</td>
+							<td class="max-w-[200px] truncate p-4 text-sm text-neutral-600">
+								<a href="mailto:{perfil.email}" class="hover:text-neutral-900">
+									{perfil.email}
+								</a>
+							</td>
+							<td class="hidden whitespace-nowrap p-4 text-sm sm:table-cell">
+								{#if perfil.rol === 'Administrador'}
+									<span
+										class="inline-flex rounded-full bg-amber-100 px-2 py-1 text-xs font-medium text-amber-700"
+									>
+										{perfil.rol}
+									</span>
+								{:else if perfil.rol === 'Profesor'}
+									<span
+										class="inline-flex rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700"
+									>
+										{perfil.rol}
+									</span>
+								{:else}
+									<span
+										class="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700"
+									>
+										{perfil.rol}
+									</span>
+								{/if}
+							</td>
+							<td class="p-4 text-center">
+								<button
+									type="button"
+									onclick={() => editarPerfil(perfil)}
+									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-100"
+									aria-label="Editar perfil"
+								>
+									<PencilLine class="h-4 w-4" />
+								</button>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
 	</section>
 </div>
 
