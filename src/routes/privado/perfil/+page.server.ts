@@ -15,6 +15,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	}
 
 	const perfilCached = get(perfilStore);
+
 	if (perfilCached) {
 		console.log('🔄 Perfil obtenido desde el store');
 		return { perfil: perfilCached };
