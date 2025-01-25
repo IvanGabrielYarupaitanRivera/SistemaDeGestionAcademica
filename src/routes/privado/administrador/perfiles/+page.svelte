@@ -1,7 +1,18 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Search, Plus, Trash, PencilLine, X, CheckCircle, XCircle } from 'lucide-svelte';
-	import { fly } from 'svelte/transition';
+	import {
+		Search,
+		Plus,
+		Trash,
+		PencilLine,
+		X,
+		CheckCircle,
+		XCircle,
+		Mail,
+		User,
+		Lock
+	} from 'lucide-svelte';
+	import { blur, fly } from 'svelte/transition';
 
 	let perfiles = $state([
 		{ id: 1, nombre: 'Juan Pérez', email: 'juan@ejemplo.com', rol: 'Profesor' },
@@ -190,65 +201,101 @@
 </div>
 
 {#if createShowModal}
-	<div class="fixed inset-0 flex items-center justify-center bg-black/50">
-		<form
-			method="POST"
-			use:enhance={handleCreate}
-			class="w-full max-w-md rounded-lg bg-white p-6"
-			action="?/crearUsuario"
-		>
-			<header class="mb-6 flex items-center justify-between">
-				<h2 class="text-xl font-bold">
-					{isEditing ? 'Editar' : 'Nuevo'} Usuario
-				</h2>
-				<button type="button" onclick={() => (createShowModal = false)}>
-					<X size={20} />
-				</button>
-			</header>
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 backdrop-blur-sm"
+		transition:blur
+	>
+		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
+			<form
+				method="POST"
+				class="flex h-[90vh] flex-col md:h-auto"
+				use:enhance={handleCreate}
+				action="?/crearUsuario"
+			>
+				<!-- Header fijo -->
+				<div class="border-b p-6">
+					<div class="flex items-center justify-between">
+						<h2 class="text-xl font-semibold">Crear Cuenta</h2>
+						<button
+							type="button"
+							onclick={toggleCreateModal}
+							class="text-gray-500 hover:text-gray-700"
+						>
+							<X class="h-6 w-6" />
+						</button>
+					</div>
+				</div>
 
-			<div class="space-y-4">
-				<label class="block">
-					<span class="text-sm font-medium">Email</span>
-					<input
-						name="email"
-						type="email"
-						bind:value={formData.email}
-						class="mt-1 w-full rounded-lg border p-2"
-						required
-					/>
-				</label>
-
-				<label class="block">
-					<span class="text-sm font-medium">Rol</span>
-					<select name="rol" bind:value={formData.rol} class="mt-1 w-full rounded-lg border p-2">
-						{#each roles as rol}
-							<option>{rol}</option>
-						{/each}
-					</select>
-				</label>
-
-				{#if !isEditing}
-					<label class="block">
-						<span class="text-sm font-medium">Contraseña</span>
+				<!-- Contenido scrolleable -->
+				<div class="flex-1 space-y-8 overflow-y-auto p-6">
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="email">
+							<Mail class="h-5 w-5" /> <span>Email</span>
+						</label>
 						<input
-							name="password"
-							type="password"
-							bind:value={formData.password}
-							class="mt-1 w-full rounded-lg border p-2"
+							bind:value={formData.email}
+							placeholder="Ingrese su email"
+							id="email"
+							type="email"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+							name="email"
 							required
 						/>
-					</label>
-				{/if}
-			</div>
+					</div>
 
-			<div class="mt-6 flex justify-end gap-2">
-				<button type="button" onclick={toggleCreateModal} class="rounded-lg border px-4 py-2">
-					Cancelar
-				</button>
-				<button type="submit" class="rounded-lg bg-blue-600 px-4 py-2 text-white">
-					{creando ? 'Guardar' : 'Crear'}
-				</button>
-			</div>
-		</form>
+					<div>
+						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="rol">
+							<User class="h-5 w-5" /> <span>Rol</span>
+						</label>
+						<select
+							bind:value={formData.rol}
+							id="rol"
+							name="rol"
+							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+						>
+							{#each roles as rol}
+								<option>{rol}</option>
+							{/each}
+						</select>
+					</div>
+
+					{#if !isEditing}
+						<div>
+							<label class="flex items-center space-x-2 text-sm text-neutral-600" for="password">
+								<Lock class="h-5 w-5" /> <span>Contraseña</span>
+							</label>
+							<input
+								bind:value={formData.password}
+								placeholder="Ingrese su contraseña"
+								id="password"
+								type="password"
+								class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
+								name="password"
+								required
+							/>
+						</div>
+					{/if}
+				</div>
+
+				<!-- Footer fijo -->
+				<div class="p-6">
+					<div class="flex justify-end space-x-2">
+						<button
+							type="button"
+							onclick={toggleCreateModal}
+							class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+						>
+							Cancelar
+						</button>
+						<button
+							type="submit"
+							class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+						>
+							{creando ? 'Guardar' : 'Crear'}
+						</button>
+					</div>
+				</div>
+			</form>
+		</dialog>
 	</div>
 {/if}
