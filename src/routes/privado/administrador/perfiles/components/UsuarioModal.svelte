@@ -22,17 +22,9 @@
 
 			<form class="space-y-4">
 				<div>
-					<label class="mb-1 block text-sm font-medium text-gray-700">Nombre completo</label>
+					<label for="email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
 					<input
-						type="text"
-						class="w-full rounded-lg border border-gray-300 p-2"
-						placeholder="Nombre completo"
-					/>
-				</div>
-
-				<div>
-					<label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
-					<input
+						id="email"
 						type="email"
 						class="w-full rounded-lg border border-gray-300 p-2"
 						placeholder="correo@ejemplo.com"
@@ -40,8 +32,11 @@
 				</div>
 
 				<div>
-					<label class="mb-1 block text-sm font-medium text-gray-700">Contraseña</label>
+					<label for="password" class="mb-1 block text-sm font-medium text-gray-700"
+						>Contraseña</label
+					>
 					<input
+						id="password"
 						type="password"
 						class="w-full rounded-lg border border-gray-300 p-2"
 						placeholder="********"
@@ -49,8 +44,8 @@
 				</div>
 
 				<div>
-					<label class="mb-1 block text-sm font-medium text-gray-700">Rol</label>
-					<select class="w-full rounded-lg border border-gray-300 p-2">
+					<label for="rol" class="mb-1 block text-sm font-medium text-gray-700">Rol</label>
+					<select id="rol" class="w-full rounded-lg border border-gray-300 p-2">
 						<option value="estudiante">Estudiante</option>
 						<option value="profesor">Profesor</option>
 						<option value="administrador">Administrador</option>
