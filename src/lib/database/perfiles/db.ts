@@ -1,6 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Perfil } from './type';
 import { validar } from './validaciones';
+import { createClient } from '@supabase/supabase-js';
+import { PUBLIC_SUPABASE_URL } from '$env/static/public';
+import { PRIVATE_SUPABASE_SERVICE_ROLE } from '$env/static/private';
+
+const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, PRIVATE_SUPABASE_SERVICE_ROLE);
 
 export const PerfilDB = {
 	async obtenerPerfilPorID(supabase: SupabaseClient, id: string) {
@@ -44,6 +49,16 @@ export const PerfilDB = {
 
 		if (error) {
 			throw new Error('Error al editar el perfil');
+		}
+
+		const { error: userError } = await supabaseAdmin.auth.admin.updateUserById(id, {
+			user_metadata: { rol: perfil.rol }
+		});
+
+		if (userError) {
+			console.log('Error al actualizar el rol del usuario', userError);
+
+			throw new Error('Error al actualizar el rol del usuario ');
 		}
 	}
 };
