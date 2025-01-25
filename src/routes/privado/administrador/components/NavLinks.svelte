@@ -45,7 +45,7 @@
 			class="flex items-center gap-2 text-neutral-600 transition hover:text-neutral-900"
 		>
 			<UserCog size={18} />
-			<span>Gestión de Perfiles</span>
+			<span>Perfiles</span>
 		</a>
 	</li>
 </ul>
