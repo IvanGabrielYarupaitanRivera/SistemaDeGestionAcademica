@@ -1,7 +1,6 @@
 <script>
 	import { X } from 'lucide-svelte';
 	export let showModal = false;
-	export let usuario = null;
 
 	const handleClose = () => {
 		showModal = false;
