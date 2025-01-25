@@ -80,5 +80,27 @@ export const actions = {
 				error: err instanceof Error ? err.message : 'Error en el servidor'
 			});
 		}
+	},
+
+	eliminarUsuario: async ({ request, locals: { user } }) => {
+		const formData = await request.formData();
+
+		if (!user) {
+			return fail(401, { error: 'No autorizado' });
+		}
+
+		const id = formData.get('id') as string;
+
+		try {
+			await UsuarioDB.eliminarUsuario(supabaseAdmin, id);
+
+			perfilStore.set(null);
+
+			return { success: 'Perfil eliminado correctamente' };
+		} catch (err) {
+			return fail(500, {
+				error: err instanceof Error ? err.message : 'Error en el servidor'
+			});
+		}
 	}
 } satisfies Actions;

@@ -70,6 +70,14 @@ export const UsuarioDB = {
 		await PerfilDB.crearPerfil(supabase, perfil);
 	},
 
+	async eliminarUsuario(supabase: SupabaseClient, id: string) {
+		const { error } = await supabase.auth.admin.deleteUser(id);
+
+		if (error) {
+			throw new Error('Error al eliminar el usuario.');
+		}
+	},
+
 	async iniciarSesion(supabase: SupabaseClient, { email, password }: Usuario) {
 		validar.validarEmail(email);
 		// validar.validarPassword(password);
