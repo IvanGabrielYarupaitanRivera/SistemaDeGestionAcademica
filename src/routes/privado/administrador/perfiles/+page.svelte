@@ -301,90 +301,117 @@
 		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
 			<form
 				method="POST"
-				class="flex h-[90vh] flex-col md:h-auto"
+				class="flex h-full flex-col overflow-hidden sm:h-auto"
 				use:enhance={handleCreate}
 				action="?/crearUsuario"
 			>
 				<!-- Header fijo -->
-				<div class="border-b p-6">
+				<div class="border-b p-4 sm:p-6">
 					<div class="flex items-center justify-between">
-						<h2 class="text-xl font-semibold">Crear Cuenta</h2>
+						<h2 class="text-lg font-medium sm:text-xl">Crear Cuenta</h2>
 						<button
 							type="button"
 							onclick={toggleCreateModal}
-							class="text-gray-500 hover:text-gray-700"
+							class="rounded p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
 						>
-							<X class="h-6 w-6" />
+							<X class="h-5 w-5 sm:h-6 sm:w-6" />
 						</button>
 					</div>
 				</div>
 
 				<!-- Contenido scrolleable -->
-				<div class="flex-1 space-y-8 overflow-y-auto p-6">
-					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="rol">
-							<Users class="h-5 w-5" /> <span>Rol</span>
-						</label>
-						<div class="relative">
-							<select
-								id="rol"
-								name="rol"
-								required
-								class="mt-1 w-full cursor-pointer appearance-none rounded-md border-gray-300 py-2 pl-4 pr-10 shadow-md"
+				<div class="flex-1 space-y-6 overflow-y-auto p-4 sm:p-6">
+					<div class="space-y-6">
+						<!-- Rol -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="rol"
 							>
-								{#each roles as rol}
-									<option>{rol}</option>
-								{/each}
-							</select>
-							<ChevronDown
-								class="pointer-events-none absolute right-3 top-[55%] h-5 w-5 -translate-y-1/2 transform text-gray-500"
-								aria-hidden="true"
+								<Users class="h-5 w-5 text-neutral-500" />
+								<span>Rol</span>
+							</label>
+							<div class="relative">
+								<select
+									id="rol"
+									name="rol"
+									required
+									class="w-full appearance-none rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+						   transition duration-200
+						   focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								>
+									{#each roles as rol}
+										<option>{rol}</option>
+									{/each}
+								</select>
+								<ChevronDown
+									class="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-500"
+									aria-hidden="true"
+								/>
+							</div>
+						</div>
+
+						<!-- Email -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="email"
+							>
+								<Mail class="h-5 w-5 text-neutral-500" />
+								<span>Email</span>
+							</label>
+							<input
+								placeholder="Ingrese su email"
+								id="email"
+								type="email"
+								class="w-full rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+						 transition duration-200
+						 placeholder:text-neutral-400
+						 focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								name="email"
+								required
 							/>
 						</div>
-					</div>
 
-					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="email">
-							<Mail class="h-5 w-5" /> <span>Email</span>
-						</label>
-						<input
-							placeholder="Ingrese su email"
-							id="email"
-							type="email"
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-							name="email"
-							required
-						/>
-					</div>
-
-					<div>
-						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="password">
-							<Lock class="h-5 w-5" /> <span>Contraseña</span>
-						</label>
-						<input
-							placeholder="Ingrese su contraseña"
-							id="password"
-							type="password"
-							class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
-							name="password"
-							required
-						/>
+						<!-- Contraseña -->
+						<div>
+							<label
+								class="mb-1.5 flex items-center gap-2 text-sm font-medium text-neutral-700"
+								for="password"
+							>
+								<Lock class="h-5 w-5 text-neutral-500" />
+								<span>Contraseña</span>
+							</label>
+							<input
+								placeholder="Ingrese su contraseña"
+								id="password"
+								type="password"
+								class="w-full rounded-lg border-neutral-300 px-4 py-2.5 shadow-md
+						 transition duration-200
+						 placeholder:text-neutral-400
+						 focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+								name="password"
+								required
+							/>
+						</div>
 					</div>
 				</div>
 
 				<!-- Footer fijo -->
-				<div class="p-6">
-					<div class="flex justify-end space-x-2">
+				<div class="border-t p-4 sm:p-6">
+					<div class="flex gap-3 sm:justify-end">
 						<button
 							type="button"
 							onclick={toggleCreateModal}
-							class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+							class="flex-1 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-neutral-700
+					   ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 sm:flex-none"
 						>
 							Cancelar
 						</button>
 						<button
 							type="submit"
-							class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+							class="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white
+					   hover:bg-neutral-800 sm:flex-none"
 						>
 							{creando ? 'Guardar' : 'Crear'}
 						</button>
