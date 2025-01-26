@@ -3,6 +3,10 @@ import type { Usuario } from './type';
 import { PerfilDB } from '../perfiles/db';
 import type { Perfil, RolUsuario } from '../perfiles/type';
 import { validar } from './validaciones';
+import { EstudianteDB } from '../estudiantes/db';
+import type { Estudiante } from '../estudiantes/type';
+import type { Profesor } from '../profesores/type';
+import { ProfesorDB } from '../profesores/db';
 
 export const UsuarioDB = {
 	async registrarUsuario(supabase: SupabaseClient, { email, password }: Usuario, rol: RolUsuario) {
@@ -54,7 +58,6 @@ export const UsuarioDB = {
 
 		const userId = data.user?.id;
 		const userEmail = data.user?.email;
-
 		const perfil: Perfil = {
 			id: userId as string,
 			nombres: 'Sin nombres',
@@ -66,8 +69,23 @@ export const UsuarioDB = {
 			fecha_creacion: new Date().toISOString(),
 			fecha_actualizacion: new Date().toISOString()
 		};
-
 		await PerfilDB.crearPerfil(supabase, perfil);
+
+		if (perfil.rol === 'Estudiante') {
+			const estudiante: Estudiante = {
+				id: userId as string,
+				grado: 'Sin grado'
+			};
+			await EstudianteDB.crearEstudiante(supabase, estudiante);
+		}
+
+		if (perfil.rol === 'Profesor') {
+			const profesor: Profesor = {
+				id: userId as string,
+				especialidad: 'Sin especialidad'
+			};
+			await ProfesorDB.crearProfesor(supabase, profesor);
+		}
 	},
 
 	async eliminarUsuario(supabase: SupabaseClient, id: string) {
