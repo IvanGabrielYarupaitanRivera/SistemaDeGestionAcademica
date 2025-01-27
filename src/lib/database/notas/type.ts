@@ -1,7 +1,10 @@
 export interface Nota {
 	id: string;
-	estudiante_id: string;
-	curso_id: string;
-	nota: number;
-	fecha_creacion?: string;
+	inscripcion_id: string;
+	parcial_1: number;
+	parcial_2: number;
+	parcial_3: number;
+	promedio_parciales: number;
+	fecha_creacion: string;
+	fecha_actualizacion: string;
 }
