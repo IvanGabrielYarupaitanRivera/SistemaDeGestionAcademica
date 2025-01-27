@@ -83,7 +83,6 @@
 	};
 
 	let searchQuery = $state('');
-
 	const filteredCursos = $derived(
 		searchQuery
 			? cursos.filter((c) => c.nombre.toLowerCase().includes(searchQuery.toLowerCase()))

@@ -11,13 +11,33 @@ export const EstudianteDB = {
 	},
 
 	async obtenerEstudiantes(supabase: SupabaseClient) {
-		const { data, error } = await supabase.from('Estudiantes').select();
+		const { data, error } = await supabase
+			.from('Estudiantes')
+			.select(
+				`
+			id,
+			grado,
+			Perfiles (
+				nombres,
+				apellido_paterno,
+				apellido_materno,
+				dni,
+				email,
+				fecha_actualizacion
+			)
+		`
+			)
+			.order('grado');
 
 		if (error) {
 			throw new Error('Error al obtener los estudiantes');
 		}
 
-		return data as Estudiante[];
+		return data.map(({ id, grado, Perfiles }) => ({
+			id,
+			grado,
+			...Perfiles
+		})) as Estudiante[];
 	},
 
 	async editarEstudiante(supabase: SupabaseClient, id: string, estudiante: Estudiante) {
