@@ -182,3 +182,31 @@ export const actions = {
 5. Limpiar efectos con return function
 6. No usar on:click, usar onclick
 ```
+
+### Sobre la generación de código
+
+1. Simplicidad y claridad:
+
+- Genera código que sea fácil de entender y mantener.
+- Evita la complejidad innecesaria y usa la metodología KISS.
+
+2. Eficiencia:
+
+- Optimiza el código para que sea eficiente en términos de tiempo y espacio.
+- Evita el uso de operaciones costosas y redundantes.
+
+3. Buenas prácticas:
+
+- Sigue las buenas prácticas de programación como el uso de nombres claros y descriptivos para variables y funciones.
+- Asegúrate de que el código esté bien documentado con comentarios cuando sea necesario.
+- Utiliza estructuras de control y datos apropiadas para cada caso.
+
+4. Evitar sobre ingeniería:
+
+- No añadas características que no sean necesarias para la funcionalidad esencial.
+- Mantén el enfoque en resolver el problema de la manera más directa y simple posible.
+
+5. Modularidad y reutilización:
+
+- Divide el código en funciones y módulos reutilizables.
+- Evita la duplicación de código y promueve la reutilización.
