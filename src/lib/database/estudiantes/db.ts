@@ -10,14 +10,6 @@ export const EstudianteDB = {
 		}
 	},
 
-	async eliminarEstudiante(supabase: SupabaseClient, id: string) {
-		const { error } = await supabase.from('Estudiantes').delete().eq('id', id);
-
-		if (error) {
-			throw new Error('Error al eliminar el estudiante');
-		}
-	},
-
 	async obtenerEstudiantes(supabase: SupabaseClient) {
 		const { data, error } = await supabase.from('Estudiantes').select();
 
