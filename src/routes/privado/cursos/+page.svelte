@@ -242,7 +242,7 @@
 							<td class="p-4 text-sm">
 								{curso.nombre}
 							</td>
-							<td class="p-4 text-sm">
+							<td class="hidden p-4 text-sm md:table-cell">
 								{curso.descripcion}
 							</td>
 							<td class="p-4 text-center">
