@@ -218,14 +218,15 @@
 
 	<section aria-label="Búsqueda">
 		<label class="flex items-center space-x-2 text-sm text-neutral-600" for="search">
-			<Search class="h-5 w-5" /> <span>Buscar</span>
+			<Search class="h-5 w-5" />
+			<span>Buscar</span>
 		</label>
 		<input
 			type="search"
+			name="search"
+			id="search"
 			bind:value={searchQuery}
 			placeholder="Buscar por nombre, apellidos paternos, maternos, email, DNI o rol..."
-			id="search"
-			name="search"
 			autocomplete="off"
 			aria-label="Campo de búsqueda"
 			class="mt-1 w-full rounded-md border-gray-300 px-4 py-2 shadow-md"
@@ -237,7 +238,7 @@
 		aria-labelledby="tabla-perfiles-heading"
 	>
 		<h2 id="tabla-perfiles-heading" class="sr-only">Lista de perfiles</h2>
-		<div class="overflow-x-auto">
+		<div>
 			<table class="min-w-full divide-y divide-neutral-200">
 				<thead class="bg-neutral-700">
 					<tr>
@@ -312,7 +313,7 @@
 								<button
 									type="button"
 									onclick={() => editarPerfil(perfil)}
-									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-100"
+									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
 									aria-label="Editar perfil"
 								>
 									<PencilLine class="h-4 w-4" />
@@ -321,7 +322,7 @@
 								<button
 									type="button"
 									onclick={() => eliminarPerfil(perfil)}
-									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-100"
+									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
 									aria-label="Eliminasr perfil"
 								>
 									<Trash class="h-4 w-4" />
@@ -355,6 +356,7 @@
 							type="button"
 							onclick={toggleCreateModal}
 							class="rounded p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
+							aria-label="Cerrar modal de creación de cuenta"
 						>
 							<X class="h-5 w-5 sm:h-6 sm:w-6" />
 						</button>
