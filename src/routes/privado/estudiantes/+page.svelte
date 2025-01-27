@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { Estudiante } from '$lib/database/estudiantes/type.js';
+	import { InscripcionDB } from '$lib/database/inscripciones/db.js';
 	import {
 		CheckCircle,
 		ChevronDown,
 		GraduationCap,
+		Link,
 		Loader,
 		PencilLine,
 		Search,
@@ -15,6 +17,8 @@
 
 	let { data, form } = $props();
 	let { estudiantes } = $derived(data);
+	let { cursos } = $derived(data);
+	let { supabase } = $derived(data);
 
 	let showToast = $state(false);
 
@@ -40,6 +44,37 @@
 			await update();
 
 			editando = false;
+		};
+	};
+
+	let inscribiendo = $state(false);
+	let cursosInscritos = $state<string[]>([]);
+	let inscribirShowModal = $state(false);
+	function toggleInscribirModal() {
+		inscribirShowModal = !inscribirShowModal;
+	}
+	const inscribirEstudiante = async (estudiante: Estudiante) => {
+		selectedEstudiante = estudiante;
+		toggleInscribirModal();
+
+		try {
+			const inscritos = await InscripcionDB.obtenerInscripcionesPorEstudiante(
+				supabase,
+				estudiante.id
+			);
+			cursosInscritos = inscritos;
+		} catch (err) {
+			console.error('Error al cargar inscripciones:', err);
+		}
+	};
+	const handleInscribir = () => {
+		toggleInscribirModal();
+		inscribiendo = true;
+
+		return async ({ update }: { update: () => Promise<void> }) => {
+			await update();
+
+			inscribiendo = false;
 		};
 	};
 
@@ -108,6 +143,19 @@
 		<div class="flex flex-col items-center gap-2 p-4">
 			<Loader class="animate-spin text-white" size={40} />
 			<p class="font-medium text-white">Editando la Información del Estudiante...</p>
+		</div>
+	</div>
+{/if}
+
+{#if inscribiendo}
+	<div
+		class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
+		role="alert"
+		aria-live="polite"
+	>
+		<div class="flex flex-col items-center gap-2 p-4">
+			<Loader class="animate-spin text-white" size={40} />
+			<p class="font-medium text-white">Inscribiendo al estudiante...</p>
 		</div>
 	</div>
 {/if}
@@ -201,6 +249,14 @@
 									aria-label="Editar estudiante"
 								>
 									<PencilLine class="h-4 w-4" />
+								</button>
+								<button
+									type="button"
+									onclick={() => inscribirEstudiante(estudiante)}
+									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
+									aria-label="Inscribir estudiante en cursos"
+								>
+									<Link class="h-4 w-4" />
 								</button>
 							</td>
 						</tr>
@@ -296,6 +352,81 @@
                             hover:bg-neutral-800 sm:flex-none"
 						>
 							{editando ? 'Guardando...' : 'Guardar'}
+						</button>
+					</div>
+				</div>
+			</form>
+		</dialog>
+	</div>
+{/if}
+
+{#if inscribirShowModal}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 backdrop-blur-sm"
+		transition:blur
+	>
+		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
+			<form
+				method="POST"
+				class="flex h-full flex-col overflow-hidden sm:h-auto"
+				use:enhance={handleInscribir}
+				action="?/inscribirEnCursos"
+			>
+				<!-- Header Fijo -->
+				<div class="border-b p-4 sm:p-6">
+					<div class="flex items-center justify-between">
+						<h2 class="text-lg font-medium sm:text-xl">Inscribir en Cursos</h2>
+						<button
+							type="button"
+							onclick={toggleInscribirModal}
+							class="rounded p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
+							aria-label="Cerrar modal de inscripción"
+						>
+							<X class="h-5 w-5 sm:h-6 sm:w-6" />
+						</button>
+					</div>
+				</div>
+
+				<!-- Contenido scrolleable -->
+				<div class="flex-1 overflow-y-auto p-4 sm:p-6">
+					<input type="hidden" name="estudiante_id" value={selectedEstudiante.id} />
+
+					<div class="flex-1 space-y-4 overflow-y-auto p-4 sm:p-6">
+						{#each cursos as curso}
+							<label class="flex items-center gap-3 rounded-lg border p-4 hover:bg-neutral-50">
+								<input
+									type="checkbox"
+									name="cursos_ids"
+									value={curso.id}
+									checked={cursosInscritos.includes(curso.id)}
+									class="h-4 w-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-500"
+								/>
+								<div class="flex-1">
+									<span class="font-medium text-neutral-900">{curso.nombre}</span>
+									<p class="text-sm text-neutral-500">{curso.descripcion}</p>
+								</div>
+							</label>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Footer fijo -->
+				<div class="border-t p-4 sm:p-6">
+					<div class="flex gap-3 sm:justify-end">
+						<button
+							type="button"
+							onclick={toggleInscribirModal}
+							class="flex-1 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-neutral-700
+						ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 sm:flex-none"
+						>
+							Cancelar
+						</button>
+						<button
+							type="submit"
+							class="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white
+						hover:bg-neutral-800 sm:flex-none"
+						>
+							{inscribiendo ? 'Guardando...' : 'Guardar'}
 						</button>
 					</div>
 				</div>
