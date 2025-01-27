@@ -1,6 +1,7 @@
 import { CursoDB } from '$lib/database/cursos/db';
 import { error, fail, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from '../$types';
+import type { Curso } from '$lib/database/cursos/type';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase } = locals;
@@ -20,7 +21,7 @@ export const actions = {
 	crearCurso: async ({ request, locals: { supabase } }) => {
 		const formData = await request.formData();
 
-		const curso = {
+		const curso: Curso = {
 			id: crypto.randomUUID(),
 			nombre: formData.get('nombre') as string,
 			descripcion: formData.get('descripcion') as string

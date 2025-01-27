@@ -36,6 +36,22 @@ export const UsuarioDB = {
 		};
 
 		await PerfilDB.crearPerfil(supabase, perfil);
+
+		if (perfil.rol === 'Estudiante') {
+			const estudiante: Estudiante = {
+				id: userId as string,
+				grado: 'Sin grado'
+			};
+			await EstudianteDB.crearEstudiante(supabase, estudiante);
+		}
+
+		if (perfil.rol === 'Profesor') {
+			const profesor: Profesor = {
+				id: userId as string,
+				especialidad: 'Sin especialidad'
+			};
+			await ProfesorDB.crearProfesor(supabase, profesor);
+		}
 	},
 
 	async crearUsuario(supabase: SupabaseClient, { email, password }: Usuario, rol: RolUsuario) {
