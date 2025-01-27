@@ -298,7 +298,7 @@
 				</div>
 
 				<!-- Contenido scrolleable -->
-				<div class="flex-1 space-y-6 overflow-y-auto p-4 sm:p-6">
+				<div class="flex-1 overflow-y-auto p-4 sm:p-6">
 					<div class="space-y-6">
 						<!-- Nombre del Curso -->
 						<div>
