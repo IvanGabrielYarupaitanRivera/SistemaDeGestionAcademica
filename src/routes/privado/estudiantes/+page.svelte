@@ -6,11 +6,10 @@
 	import {
 		CheckCircle,
 		ChevronDown,
+		ClipboardList,
 		GraduationCap,
 		Link,
-		ListOrdered,
 		Loader,
-		NotebookTabs,
 		PencilLine,
 		Search,
 		X,
@@ -282,7 +281,7 @@
 									aria-label="Ver notas del estudiante"
 									onclick={() => verNotas(estudiante.id)}
 								>
-									<ListOrdered class="h-5 w-5" />
+									<ClipboardList class="h-5 w-5" />
 								</button>
 							</td>
 						</tr>
