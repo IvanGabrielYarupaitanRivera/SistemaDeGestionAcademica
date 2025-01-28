@@ -1,3 +1,5 @@
+import type { Curso } from '../cursos/type';
+
 export interface Estudiante {
 	id: string;
 	grado: string;
@@ -7,4 +9,5 @@ export interface Estudiante {
 	dni?: string;
 	email?: string;
 	fecha_actualizacion?: string;
+	cursos?: Curso[];
 }

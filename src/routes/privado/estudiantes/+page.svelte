@@ -20,6 +20,8 @@
 	let { cursos } = $derived(data);
 	let { supabase } = $derived(data);
 
+	let cursosPorEstudiante = $state(new Map<string, any[]>());
+
 	let showToast = $state(false);
 
 	let selectedEstudiante: Estudiante = $state({
@@ -217,6 +219,12 @@
 						>
 							Grado
 						</th>
+						<th
+							scope="col"
+							class="hidden p-4 text-left text-xs font-medium tracking-wider text-white sm:table-cell"
+						>
+							Cursos
+						</th>
 						<th scope="col" class="p-4 text-center text-xs font-medium tracking-wider text-white">
 							Acciones
 						</th>
@@ -240,6 +248,9 @@
 							</td>
 							<td class="hidden p-4 text-sm sm:table-cell">
 								{estudiante.grado}
+							</td>
+							<td class="hidden p-4 text-sm sm:table-cell">
+								<span class="font-medium">{estudiante.cursos?.length}</span>
 							</td>
 							<td class="p-4 text-center">
 								<button

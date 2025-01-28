@@ -1,5 +1,16 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Estudiante } from './type';
+import type Perfil from '../../../routes/privado/components/MainPrivado/Perfil.svelte';
+import type { Curso } from '../cursos/type';
+
+interface EstudianteResponse {
+	id: string;
+	grado: string;
+	Perfiles: Perfil;
+	Inscripciones: {
+		Cursos: Curso;
+	}[];
+}
 
 export const EstudianteDB = {
 	async crearEstudiante(supabase: SupabaseClient, estudiante: Estudiante) {
@@ -15,29 +26,41 @@ export const EstudianteDB = {
 			.from('Estudiantes')
 			.select(
 				`
-			id,
-			grado,
-			Perfiles (
-				nombres,
-				apellido_paterno,
-				apellido_materno,
-				dni,
-				email,
-				fecha_actualizacion
+        *,
+        Perfiles (
+            nombres,
+            apellido_paterno,
+            apellido_materno,
+            dni,
+            email,
+            fecha_actualizacion
+        ),
+        Inscripciones (
+            Cursos (
+                id,
+                nombre,
+                descripcion
+            )
+        )
+    `
 			)
-		`
-			)
-			.order('grado');
+			.order('grado')
+			.returns<EstudianteResponse[]>();
 
 		if (error) {
-			throw new Error('Error al obtener los estudiantes');
+			throw new Error('Error al obtener los estudiantes' + error.message);
 		}
 
-		return data.map(({ id, grado, Perfiles }) => ({
-			id,
-			grado,
-			...Perfiles
-		})) as Estudiante[];
+		return (
+			data?.map(
+				(estudiante): Estudiante => ({
+					id: estudiante.id,
+					grado: estudiante.grado,
+					...estudiante.Perfiles,
+					cursos: estudiante.Inscripciones?.map((insc) => insc.Cursos) || []
+				})
+			) || []
+		);
 	},
 
 	async editarEstudiante(supabase: SupabaseClient, id: string, estudiante: Estudiante) {

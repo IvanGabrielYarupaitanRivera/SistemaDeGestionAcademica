@@ -47,5 +47,16 @@ export const InscripcionDB = {
 		const results = await Promise.all(batch);
 		const error = results.find((r) => r.error);
 		if (error) throw new Error('Error al actualizar inscripciones');
+	},
+
+	async obtenerCursosPorEstudiante(supabase: SupabaseClient, estudiante_id: string) {
+		const { data, error } = await supabase
+			.from('Inscripciones')
+			.select(`Cursos : curso_id (nombre)`)
+			.eq('estudiante_id', estudiante_id);
+
+		if (error) throw new Error('Error al obtener los cursos del estudiante');
+
+		return data.map((inscripcion) => inscripcion.Cursos) || [];
 	}
 };
