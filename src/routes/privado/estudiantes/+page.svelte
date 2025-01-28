@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import type { Estudiante } from '$lib/database/estudiantes/type.js';
 	import { InscripcionDB } from '$lib/database/inscripciones/db.js';
 	import {
@@ -7,7 +8,9 @@
 		ChevronDown,
 		GraduationCap,
 		Link,
+		ListOrdered,
 		Loader,
+		NotebookTabs,
 		PencilLine,
 		Search,
 		X,
@@ -112,6 +115,10 @@
 			};
 		}
 	});
+
+	const verNotas = (estudianteId: string) => {
+		goto(`/privado/notas/${estudianteId}`);
+	};
 </script>
 
 {#if showToast && form?.error}
@@ -269,6 +276,14 @@
 								>
 									<Link class="h-4 w-4" />
 								</button>
+								<button
+									type="button"
+									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
+									aria-label="Ver notas del estudiante"
+									onclick={() => verNotas(estudiante.id)}
+								>
+									<ListOrdered class="h-5 w-5" />
+								</button>
 							</td>
 						</tr>
 					{/each}
@@ -399,12 +414,14 @@
 				</div>
 
 				<!-- Contenido scrolleable -->
-				<div class="flex-1 overflow-y-auto p-4 sm:p-6">
+				<div class="flex-1 p-4 sm:p-6">
 					<input type="hidden" name="estudiante_id" value={selectedEstudiante.id} />
 
-					<div class="flex-1 space-y-4 overflow-y-auto p-4 sm:p-6">
+					<div class="max-h-[50vh] space-y-3 overflow-y-auto rounded-lg border p-2">
 						{#each cursos as curso}
-							<label class="flex items-center gap-3 rounded-lg border p-4 hover:bg-neutral-50">
+							<label
+								class="flex items-center gap-3 rounded-lg border bg-white p-3 hover:bg-neutral-50"
+							>
 								<input
 									type="checkbox"
 									name="cursos_ids"
