@@ -1,5 +1,16 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
+interface CursoResponse {
+	id: string;
+	nombre: string;
+	descripcion: string;
+}
+
+interface InscripcionConCurso {
+	id: string;
+	Cursos: CursoResponse;
+}
+
 export const InscripcionDB = {
 	async obtenerInscripcionesPorEstudiante(supabase: SupabaseClient, estudiante_id: string) {
 		const { data, error } = await supabase
@@ -49,14 +60,27 @@ export const InscripcionDB = {
 		if (error) throw new Error('Error al actualizar inscripciones');
 	},
 
-	async obtenerCursosPorEstudiante(supabase: SupabaseClient, estudiante_id: string) {
+	async obtenerCursosPorEstudiante(
+		supabase: SupabaseClient,
+		estudiante_id: string
+	): Promise<InscripcionConCurso[]> {
 		const { data, error } = await supabase
 			.from('Inscripciones')
-			.select(`Cursos : curso_id (nombre)`)
-			.eq('estudiante_id', estudiante_id);
+			.select(
+				`
+				id,
+				Cursos:curso_id (
+					id,
+					nombre,
+					descripcion
+				)
+			`
+			)
+			.eq('estudiante_id', estudiante_id)
+			.returns<InscripcionConCurso[]>();
 
 		if (error) throw new Error('Error al obtener los cursos del estudiante');
 
-		return data.map((inscripcion) => inscripcion.Cursos) || [];
+		return data ?? [];
 	}
 };
