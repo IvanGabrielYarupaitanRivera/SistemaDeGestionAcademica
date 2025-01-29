@@ -35,14 +35,33 @@ export const InscripcionDB = {
 		const batch = [];
 
 		if (cursosNuevos.length > 0) {
-			batch.push(
-				supabase.from('Inscripciones').insert(
+			// 1. Insertar nuevas inscripciones y obtener sus IDs
+			const { data: nuevasInscripciones, error: errorInscripciones } = await supabase
+				.from('Inscripciones')
+				.insert(
 					cursosNuevos.map((curso_id) => ({
 						estudiante_id,
 						curso_id
 					}))
 				)
-			);
+				.select('id');
+
+			if (errorInscripciones) throw new Error('Error al crear inscripciones');
+
+			// 2. Crear registros de notas para las nuevas inscripciones
+			if (nuevasInscripciones) {
+				batch.push(
+					supabase.from('Notas').insert(
+						nuevasInscripciones.map((inscripcion) => ({
+							inscripcion_id: inscripcion.id,
+							parcial_1: 0,
+							parcial_2: 0,
+							parcial_3: 0,
+							promedio_parciales: 0
+						}))
+					)
+				);
+			}
 		}
 
 		if (cursosEliminar.length > 0) {
