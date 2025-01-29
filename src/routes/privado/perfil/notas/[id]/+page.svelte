@@ -4,8 +4,6 @@
 	let { data } = $props();
 	let { cursosConNotas } = $derived(data);
 
-	const getEstadoNota = (promedio: number) => promedio >= 11;
-
 	const EVALUACIONES = [
 		{ label: 'Parcial 1', key: 'parcial_1' },
 		{ label: 'Parcial 2', key: 'parcial_2' },
@@ -26,11 +24,15 @@
 			>
 				<header class="border-b p-4">
 					<div class="flex items-center justify-between gap-4">
-						<h2 class="line-clamp-1 font-medium text-neutral-900" title={curso.nombre}>
-							{curso.nombre}
-						</h2>
+						<div class="flex-1">
+							<h2 class="line-clamp-1 font-medium text-neutral-900" title={curso.nombre}>
+								{curso.nombre}
+							</h2>
+							<p class="mt-1 line-clamp-1 text-sm text-neutral-500">{curso.descripcion}</p>
+						</div>
 						<span
-							class="rounded-full px-2.5 py-1 text-xs font-medium {notas.promedio_parciales >= 11
+							class="shrink-0 rounded-full px-2.5 py-1 text-xs font-medium {notas.promedio_parciales >=
+							11
 								? 'bg-green-50 text-green-700'
 								: 'bg-red-50 text-red-700'}"
 						>
@@ -43,11 +45,11 @@
 					<table class="w-full text-sm">
 						<tbody class="divide-y divide-neutral-100">
 							{#each EVALUACIONES as { label, key }}
-								<tr>
+								<tr class={key === 'promedio_parciales' ? 'bg-neutral-200' : ''}>
 									<th scope="row" class="py-2.5 text-neutral-500">
 										{label}
 									</th>
-									<td class="py-2.5 text-right font-medium">
+									<td class="px-4 py-2.5 text-right font-medium text-neutral-900">
 										{notas[key]}
 									</td>
 								</tr>
