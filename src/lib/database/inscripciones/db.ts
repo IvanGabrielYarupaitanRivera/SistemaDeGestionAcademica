@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-interface CursoResponse {
+export interface CursoResponse {
 	id: string;
 	nombre: string;
 	descripcion: string;
@@ -57,7 +57,8 @@ export const InscripcionDB = {
 							parcial_1: 0,
 							parcial_2: 0,
 							parcial_3: 0,
-							promedio_parciales: 0
+							promedio_parciales: 0,
+							fecha_creacion: new Date().toISOString()
 						}))
 					)
 				);

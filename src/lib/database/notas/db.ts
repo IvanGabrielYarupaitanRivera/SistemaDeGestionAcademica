@@ -20,5 +20,13 @@ export const NotaDB = {
 		if (error) throw new Error('Error al obtener notas' + error.message);
 
 		return data as Nota;
+	},
+
+	async editarNota(supabase: SupabaseClient, id: string, nota: Nota) {
+		const { error } = await supabase.from('Notas').update(nota).eq('id', id);
+
+		if (error) {
+			throw new Error('Error al editar la nota' + error.message);
+		}
 	}
 };
