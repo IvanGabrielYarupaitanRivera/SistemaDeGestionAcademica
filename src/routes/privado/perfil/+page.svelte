@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import {
 		User,
 		Mail,
@@ -11,7 +12,8 @@
 		Loader,
 		XCircle,
 		CheckCircle,
-		Pencil
+		Pencil,
+		ClipboardList
 	} from 'lucide-svelte';
 	import { blur, fly } from 'svelte/transition';
 
@@ -99,6 +101,27 @@
 			};
 		}
 	});
+
+	const verNotas = (estudianteId: string) => {
+		goto(`/privado/perfil/notas/${estudianteId}`);
+	};
+
+	const DATOS_PERSONALES = $derived([
+		{ label: 'Nombres', value: perfil.nombres },
+		{ label: 'Apellido Paterno', value: perfil.apellido_paterno },
+		{ label: 'Apellido Materno', value: perfil.apellido_materno },
+		{ label: 'DNI', value: perfil.dni }
+	]);
+
+	const DATOS_CUENTA = $derived([
+		{ label: 'Rol', value: perfil.rol, icon: Shield },
+		{ label: 'Creación', value: formatFechaPeruana(perfil.fecha_creacion), icon: Calendar },
+		{
+			label: 'Actualización',
+			value: formatFechaPeruana(perfil.fecha_actualizacion),
+			icon: Calendar
+		}
+	]);
 </script>
 
 {#if showToast && form?.error}
@@ -125,7 +148,9 @@
 
 {#if editando}
 	<div
-		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+		class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
+		role="alert"
+		aria-live="polite"
 	>
 		<Loader class="animate-spin  text-white" size={40} />
 		<p class="mt-2 font-medium text-white">Editando su información...</p>
@@ -134,14 +159,16 @@
 
 {#if cambiandoContraseña}
 	<div
-		class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+		class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
+		role="alert"
+		aria-live="polite"
 	>
 		<Loader class="animate-spin  text-white" size={40} />
 		<p class="mt-2 font-medium text-white">Cambiando su contraseña...</p>
 	</div>
 {/if}
 
-<section class="space-y-4 p-6">
+<section class="space-y-6 p-6">
 	<header>
 		<div class="flex items-center justify-between">
 			<h1 class="text-xl font-semibold text-neutral-900 sm:text-2xl lg:text-3xl">Perfil</h1>
@@ -165,81 +192,82 @@
 					<Lock class="h-4 w-4" />
 					<span class="hidden sm:inline"> Cambiar Contraseña </span>
 				</button>
+
+				{#if perfil.rol === 'Estudiante'}
+					<button
+						type="button"
+						onclick={() => verNotas(perfil.id)}
+						class="inline-flex items-center gap-2 rounded-md bg-neutral-600 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700"
+						aria-label="Ver mis Notas"
+					>
+						<ClipboardList class="h-4 w-4" />
+						<span class="hidden sm:inline"> Ver mis Notas </span>
+					</button>
+				{/if}
 			</div>
 		</div>
 	</header>
 
-	<div class="mx-0 md:mx-32">
-		<section aria-labelledby="datos-personales" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
-			<h2 id="datos-personales" class="sr-only">Datos Personales</h2>
+	<main class="mx-auto max-w-4xl space-y-6">
+		<!-- Datos Personales -->
+		<section class="rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+			<div class="mb-8 border-b pb-4">
+				<h2 class="text-lg font-medium text-neutral-900">Información Personal</h2>
+			</div>
+
 			<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<User class="h-5 w-5" /> <span>Nombres</span>
+				{#each DATOS_PERSONALES as { label, value }}
+					<div class="group rounded-lg p-4 transition-colors hover:bg-neutral-50">
+						<dt class="flex items-center gap-3 text-sm text-neutral-600">
+							<User class="h-5 w-5 text-neutral-400" />
+							{label}
+						</dt>
+						<dd class="mt-2 pl-8 font-medium text-neutral-900">{value}</dd>
+					</div>
+				{/each}
+			</dl>
+		</section>
+
+		<!-- Datos de Contacto -->
+		<section class="rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+			<div class="mb-8 border-b pb-4">
+				<h2 class="text-lg font-medium text-neutral-900">Información de Contacto</h2>
+			</div>
+
+			<dl class="space-y-6">
+				<div class="group rounded-lg p-4 transition-colors hover:bg-neutral-50">
+					<dt class="flex items-center gap-3 text-sm text-neutral-600">
+						<Mail class="h-5 w-5 text-neutral-400" />
+						Email
 					</dt>
-					<dd class="ml-7 text-neutral-800">{perfil.nombres}</dd>
-				</div>
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<User class="h-5 w-5" /> <span>Apellido Paterno</span>
-					</dt>
-					<dd class="ml-7 text-neutral-800">{perfil.apellido_paterno}</dd>
-				</div>
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<User class="h-5 w-5" /> <span>Apellido Materno</span>
-					</dt>
-					<dd class="ml-7 text-neutral-800">{perfil.apellido_materno}</dd>
-				</div>
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<IdCard class="h-5 w-5" /> <span>DNI</span>
-					</dt>
-					<dd class="ml-7 text-neutral-800">{perfil.dni}</dd>
+					<dd class="mt-2 pl-8 font-medium text-neutral-900">{perfil.email}</dd>
 				</div>
 			</dl>
 		</section>
 
-		<hr class="my-8 border-neutral-300" />
+		<!-- Datos de Cuenta -->
+		<section class="rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+			<div class="mb-8 border-b pb-4">
+				<h2 class="text-lg font-medium text-neutral-900">Información de Cuenta</h2>
+			</div>
 
-		<section aria-labelledby="datos-contacto" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
-			<h2 id="datos-contacto" class="sr-only">Datos de Contacto</h2>
 			<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<Mail class="h-5 w-5" /> <span>Email</span>
-					</dt>
-					<dd class="ml-7 text-neutral-800">{perfil.email}</dd>
-				</div>
+				{#each DATOS_CUENTA as dato}
+					<div class="group rounded-lg p-4 transition-colors hover:bg-neutral-50">
+						<dt class="flex items-center gap-3 text-sm text-neutral-600">
+							{#if dato.icon === Shield}
+								<Shield class="h-5 w-5 text-neutral-400" />
+							{:else}
+								<Calendar class="h-5 w-5 text-neutral-400" />
+							{/if}
+							{dato.label}
+						</dt>
+						<dd class="mt-2 pl-8 font-medium text-neutral-900">{dato.value}</dd>
+					</div>
+				{/each}
 			</dl>
 		</section>
-
-		<hr class="my-8 border-neutral-300" />
-
-		<section aria-labelledby="datos-cuenta" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
-			<h2 id="datos-cuenta" class="sr-only">Datos de la Cuenta</h2>
-			<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<Shield class="h-5 w-5" /> <span>Rol de Usuario</span>
-					</dt>
-					<dd class="ml-7 text-neutral-800">{perfil.rol}</dd>
-				</div>
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<Calendar class="h-5 w-5" /> <span>Fecha de Creación de la Cuenta</span>
-					</dt>
-					<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_creacion)}</dd>
-				</div>
-				<div class="space-y-2">
-					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-						<Calendar class="h-5 w-5" /> <span>Fecha de Actualización de la Cuenta</span>
-					</dt>
-					<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_actualizacion)}</dd>
-				</div>
-			</dl>
-		</section>
-	</div>
+	</main>
 </section>
 
 {#if showEditModal}
@@ -250,7 +278,7 @@
 		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
 			<form
 				method="POST"
-				class="flex h-[90vh] flex-col md:h-auto"
+				class="flex h-full flex-col overflow-hidden sm:h-auto"
 				use:enhance={handleEdit}
 				action="?/editarPerfil"
 			>
@@ -261,15 +289,16 @@
 						<button
 							type="button"
 							onclick={toggleEditModal}
-							class="text-gray-500 hover:text-gray-700"
+							class="rounded p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
+							aria-label="Cerrar modal de edición de perfil"
 						>
-							<X class="h-6 w-6" />
+							<X class="h-5 w-5 sm:h-6 sm:w-6" />
 						</button>
 					</div>
 				</div>
 
 				<!-- Contenido scrolleable -->
-				<div class="flex-1 space-y-8 overflow-y-auto p-6">
+				<div class="max-h-[50vh] flex-1 space-y-6 overflow-y-auto rounded-lg border p-4 sm:p-6">
 					<div>
 						<label class="flex items-center space-x-2 text-sm text-neutral-600" for="nombres">
 							<User class="h-5 w-5" /> <span>Nombres</span>
@@ -332,18 +361,20 @@
 				</div>
 
 				<!-- Footer fijo -->
-				<div class="border-t p-6">
-					<div class="flex justify-end space-x-2">
+				<div class="border-t p-4 sm:p-6">
+					<div class="flex gap-3 sm:justify-end">
 						<button
 							type="button"
 							onclick={toggleEditModal}
-							class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+							class="flex-1 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-neutral-700
+						ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 sm:flex-none"
 						>
 							Cancelar
 						</button>
 						<button
 							type="submit"
-							class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+							class="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white
+						hover:bg-neutral-800 sm:flex-none"
 						>
 							Guardar
 						</button>
@@ -362,7 +393,7 @@
 		<dialog open class="mx-auto w-11/12 rounded-lg bg-white md:max-w-xl">
 			<form
 				method="POST"
-				class="flex h-[80vh] flex-col md:h-auto"
+				class="flex h-full flex-col overflow-hidden sm:h-auto"
 				use:enhance={handleChangePassword}
 				action="?/cambiarContrasena"
 			>
@@ -373,15 +404,16 @@
 						<button
 							type="button"
 							onclick={toggleChangePasswordModal}
-							class="text-gray-500 hover:text-gray-700"
+							class="rounded p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
+							aria-label="Cerrar modal de edición de perfil"
 						>
-							<X class="h-6 w-6" />
+							<X class="h-5 w-5 sm:h-6 sm:w-6" />
 						</button>
 					</div>
 				</div>
 
 				<!-- Contenido scrolleable -->
-				<div class="flex-1 space-y-8 overflow-y-auto p-6">
+				<div class="max-h-[50vh] flex-1 space-y-6 overflow-y-auto rounded-lg border p-4 sm:p-6">
 					<div>
 						<label
 							class="flex items-center space-x-2 text-sm text-neutral-600"
@@ -427,18 +459,20 @@
 				</div>
 
 				<!-- Footer fijo -->
-				<div class="border-t p-6">
-					<div class="flex justify-end space-x-2">
+				<div class="border-t p-4 sm:p-6">
+					<div class="flex gap-3 sm:justify-end">
 						<button
 							type="button"
 							onclick={toggleChangePasswordModal}
-							class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+							class="flex-1 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-neutral-700
+						ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 sm:flex-none"
 						>
 							Cancelar
 						</button>
 						<button
 							type="submit"
-							class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+							class="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white
+						hover:bg-neutral-800 sm:flex-none"
 						>
 							Cambiar
 						</button>
