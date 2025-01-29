@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Check, CheckCircle, Loader, PencilLine, X, XCircle } from 'lucide-svelte';
+	import { BookOpen, Check, CheckCircle, Loader, PencilLine, X, XCircle } from 'lucide-svelte';
 	import type { CursoResponse } from '$lib/database/inscripciones/db.js';
 	import type { Nota } from '$lib/database/notas/type.js';
 	import { blur, fly } from 'svelte/transition';
@@ -107,10 +107,46 @@
 	</div>
 {/if}
 
-<main class="space-y-6">
+<main class="space-y-6 p-6">
 	<header>
-		<h1 class="text-2xl font-semibold text-neutral-900">Notas por Curso</h1>
+		<div class="flex items-center justify-between">
+			<h1 class="text-xl font-semibold text-neutral-900 sm:text-2xl lg:text-3xl">
+				Notas por Curso
+			</h1>
+		</div>
 	</header>
+
+	<section class="grid grid-cols-3 gap-6">
+		<article class="col-span-3 rounded-lg bg-white p-4 ring-1 ring-neutral-200 sm:col-span-1">
+			<div class="flex items-center justify-between">
+				<h2 class="text-sm font-medium text-neutral-500">Total de Cursos</h2>
+				<BookOpen class="h-5 w-5 text-neutral-400" />
+			</div>
+			<p class="mt-1 text-2xl font-semibold text-neutral-900">{cursosConNotas.length}</p>
+		</article>
+
+		<article class="col-span-3 rounded-lg bg-white p-4 ring-1 ring-neutral-200 sm:col-span-1">
+			<div class="flex items-center justify-between">
+				<h2 class="text-sm font-medium text-neutral-500">Cursos Aprobados</h2>
+				<CheckCircle class="h-5 w-5 text-neutral-400" />
+			</div>
+			<p class="mt-1 text-2xl font-semibold text-green-600">
+				{cursosConNotas.filter((c) => c.notas.promedio_parciales >= 11).length}
+			</p>
+		</article>
+
+		<article class="col-span-3 rounded-lg bg-white p-4 ring-1 ring-neutral-200 sm:col-span-1">
+			<div class="flex items-center justify-between">
+				<h2 class="text-sm font-medium text-neutral-500">Cursos Desaprobados</h2>
+				<XCircle class="h-5 w-5 text-neutral-400" />
+			</div>
+			<p class="mt-1 text-2xl font-semibold text-red-600">
+				{cursosConNotas.filter((c) => c.notas.promedio_parciales < 11).length}
+			</p>
+		</article>
+	</section>
+
+	<hr />
 
 	<section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		{#each cursosConNotas as { curso, notas }}

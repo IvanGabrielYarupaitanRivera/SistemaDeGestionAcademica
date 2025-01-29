@@ -26,7 +26,13 @@ export const load = (async ({ params, locals: { supabase } }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	editarNota: async ({ request, locals: { supabase } }) => {
+	editarNota: async ({ request, locals: { supabase, user } }) => {
+		if (user?.user_metadata.rol == 'Estudiante') {
+			return fail(403, {
+				error: 'No tienes permisos para realizar esta acción'
+			});
+		}
+
 		const formData = await request.formData();
 
 		const parcial_1 = Number(formData.get('parcial_1'));
