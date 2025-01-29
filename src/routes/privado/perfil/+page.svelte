@@ -10,7 +10,8 @@
 		Lock,
 		Loader,
 		XCircle,
-		CheckCircle
+		CheckCircle,
+		Pencil
 	} from 'lucide-svelte';
 	import { blur, fly } from 'svelte/transition';
 
@@ -100,8 +101,6 @@
 	});
 </script>
 
-<h1 class="mb-8 text-center text-xl font-bold text-neutral-800 sm:text-2xl">Mi Perfil</h1>
-
 {#if showToast && form?.error}
 	<div
 		transition:fly={{ x: 20 }}
@@ -142,98 +141,106 @@
 	</div>
 {/if}
 
-<div class="mx-0 md:mx-32">
-	<section aria-labelledby="datos-personales" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
-		<h2 id="datos-personales" class="sr-only">Datos Personales</h2>
-		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<User class="h-5 w-5" /> <span>Nombres</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{perfil.nombres}</dd>
-			</div>
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<User class="h-5 w-5" /> <span>Apellido Paterno</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{perfil.apellido_paterno}</dd>
-			</div>
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<User class="h-5 w-5" /> <span>Apellido Materno</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{perfil.apellido_materno}</dd>
-			</div>
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<IdCard class="h-5 w-5" /> <span>DNI</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{perfil.dni}</dd>
-			</div>
-		</dl>
-	</section>
+<section class="space-y-4 p-6">
+	<header>
+		<div class="flex items-center justify-between">
+			<h1 class="text-xl font-semibold text-neutral-900 sm:text-2xl lg:text-3xl">Perfil</h1>
 
-	<hr class="my-8 border-neutral-300" />
-
-	<section aria-labelledby="datos-contacto" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
-		<h2 id="datos-contacto" class="sr-only">Datos de Contacto</h2>
-		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<Mail class="h-5 w-5" /> <span>Email</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{perfil.email}</dd>
+			<div class="space-x-4">
+				<button
+					type="button"
+					onclick={toggleEditModal}
+					class="inline-flex items-center gap-2 rounded-md bg-neutral-600 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700"
+					aria-label="Editar Información"
+				>
+					<Pencil class="h-4 w-4" />
+					<span class="hidden sm:inline">Editar Información</span>
+				</button>
+				<button
+					type="button"
+					onclick={toggleChangePasswordModal}
+					class="inline-flex items-center gap-2 rounded-md bg-neutral-600 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700"
+					aria-label="Cambiar Contraseña"
+				>
+					<Lock class="h-4 w-4" />
+					<span class="hidden sm:inline"> Cambiar Contraseña </span>
+				</button>
 			</div>
-		</dl>
-	</section>
+		</div>
+	</header>
 
-	<hr class="my-8 border-neutral-300" />
+	<div class="mx-0 md:mx-32">
+		<section aria-labelledby="datos-personales" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
+			<h2 id="datos-personales" class="sr-only">Datos Personales</h2>
+			<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<User class="h-5 w-5" /> <span>Nombres</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{perfil.nombres}</dd>
+				</div>
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<User class="h-5 w-5" /> <span>Apellido Paterno</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{perfil.apellido_paterno}</dd>
+				</div>
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<User class="h-5 w-5" /> <span>Apellido Materno</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{perfil.apellido_materno}</dd>
+				</div>
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<IdCard class="h-5 w-5" /> <span>DNI</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{perfil.dni}</dd>
+				</div>
+			</dl>
+		</section>
 
-	<section aria-labelledby="datos-cuenta" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
-		<h2 id="datos-cuenta" class="sr-only">Datos de la Cuenta</h2>
-		<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<Shield class="h-5 w-5" /> <span>Rol de Usuario</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{perfil.rol}</dd>
-			</div>
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<Calendar class="h-5 w-5" /> <span>Fecha de Creación de la Cuenta</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_creacion)}</dd>
-			</div>
-			<div class="space-y-2">
-				<dt class="flex items-center space-x-2 text-sm text-neutral-600">
-					<Calendar class="h-5 w-5" /> <span>Fecha de Actualización de la Cuenta</span>
-				</dt>
-				<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_actualizacion)}</dd>
-			</div>
-		</dl>
-	</section>
+		<hr class="my-8 border-neutral-300" />
 
-	<hr class="my-8 border-neutral-300" />
+		<section aria-labelledby="datos-contacto" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
+			<h2 id="datos-contacto" class="sr-only">Datos de Contacto</h2>
+			<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<Mail class="h-5 w-5" /> <span>Email</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{perfil.email}</dd>
+				</div>
+			</dl>
+		</section>
 
-	<footer class="mt-8 flex justify-end space-x-2">
-		<button
-			type="button"
-			onclick={toggleEditModal}
-			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700"
-			aria-label="Editar Información"
-		>
-			Editar Información
-		</button>
-		<button
-			type="button"
-			onclick={toggleChangePasswordModal}
-			class="rounded-md bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700"
-			aria-label="Cambiar Contraseña"
-		>
-			Cambiar Contraseña
-		</button>
-	</footer>
-</div>
+		<hr class="my-8 border-neutral-300" />
+
+		<section aria-labelledby="datos-cuenta" class="rounded-md bg-neutral-100 p-4 sm:p-6 lg:p-8">
+			<h2 id="datos-cuenta" class="sr-only">Datos de la Cuenta</h2>
+			<dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<Shield class="h-5 w-5" /> <span>Rol de Usuario</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{perfil.rol}</dd>
+				</div>
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<Calendar class="h-5 w-5" /> <span>Fecha de Creación de la Cuenta</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_creacion)}</dd>
+				</div>
+				<div class="space-y-2">
+					<dt class="flex items-center space-x-2 text-sm text-neutral-600">
+						<Calendar class="h-5 w-5" /> <span>Fecha de Actualización de la Cuenta</span>
+					</dt>
+					<dd class="ml-7 text-neutral-800">{formatFechaPeruana(perfil.fecha_actualizacion)}</dd>
+				</div>
+			</dl>
+		</section>
+	</div>
+</section>
 
 {#if showEditModal}
 	<div
