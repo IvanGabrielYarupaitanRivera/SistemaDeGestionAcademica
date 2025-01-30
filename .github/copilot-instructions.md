@@ -47,6 +47,7 @@
 - Preferir código nativo sobre abstracciones prematuras
 - Eliminar código comentado/no usado
 - Priorizar `$derived` sobre estado duplicado
+- `<svelte:component>` is deprecated in runes mode — components are dynamic by default
 ```
 
 ### 🚀 Core Svelte 5 Patterns

@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Estudiante } from './type';
-import type Perfil from '../../../routes/privado/components/MainPrivado/Perfil.svelte';
 import type { Curso } from '../cursos/type';
+import type { Perfil } from '../perfiles/type';
 
 interface EstudianteResponse {
 	id: string;
@@ -26,40 +26,42 @@ export const EstudianteDB = {
 			.from('Estudiantes')
 			.select(
 				`
-        *,
-        Perfiles (
-            nombres,
-            apellido_paterno,
-            apellido_materno,
-            dni,
-            email,
-            fecha_actualizacion
-        ),
-        Inscripciones (
-            Cursos (
-                id,
-                nombre,
-                descripcion
-            )
-        )
-    `
+				id,
+				grado,
+				Perfiles (
+					nombres,
+					apellido_paterno,
+					apellido_materno,
+					dni,
+					email,
+					fecha_actualizacion
+				),
+				Inscripciones (
+					Cursos (
+						id,
+						nombre, 
+						descripcion
+					)
+				)
+			`
 			)
 			.order('grado')
 			.returns<EstudianteResponse[]>();
 
-		if (error) {
-			throw new Error('Error al obtener los estudiantes' + error.message);
-		}
+		if (error) throw new Error('Error al obtener estudiantes');
 
 		return (
-			data?.map(
-				(estudiante): Estudiante => ({
-					id: estudiante.id,
-					grado: estudiante.grado,
-					...estudiante.Perfiles,
-					cursos: estudiante.Inscripciones?.map((insc) => insc.Cursos) || []
-				})
-			) || []
+			data?.map(({ id, grado, Perfiles, Inscripciones }) => ({
+				id, // id del estudiante
+				grado,
+				nombres: Perfiles.nombres,
+				apellido_paterno: Perfiles.apellido_paterno,
+				apellido_materno: Perfiles.apellido_materno,
+				dni: Perfiles.dni,
+				email: Perfiles.email,
+				fecha_actualizacion: Perfiles.fecha_actualizacion,
+				cursos: Inscripciones?.map((insc) => insc.Cursos) || []
+			})) || []
 		);
 	},
 

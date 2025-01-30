@@ -7,13 +7,31 @@ import { get } from 'svelte/store';
 export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase, user } = locals;
 
+	//Obtener el total de estudiante
+	const { data: estudiantesData } = await supabase
+		.from('Perfiles')
+		.select('id')
+		.eq('rol', 'Estudiante');
+	const totalEstudiantes = estudiantesData?.length;
+
+	//Obtener el total de profesores
+	const { data: profesoresData } = await supabase
+		.from('Perfiles')
+		.select('id')
+		.eq('rol', 'Profesor');
+	const totalProfesores = profesoresData?.length;
+
+	//Obtener el total de cursos
+	const { data: cursosData } = await supabase.from('Cursos').select('id');
+	const totalCursos = cursosData?.length;
+
 	if (!user) {
 		throw error(500, 'Error al obtener el perfil.');
 	}
 
 	const perfilCached = get(perfilStore);
 	if (perfilCached) {
-		return { perfil: perfilCached };
+		return { perfil: perfilCached, totalEstudiantes, totalProfesores, totalCursos };
 	}
 
 	try {
@@ -24,7 +42,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 		}
 
 		perfilStore.set(perfil);
-		return { perfil };
+
+		return { perfil, totalEstudiantes, totalProfesores, totalCursos };
 	} catch (err) {
 		console.error('❌ Error al obtener el perfil:', err);
 		throw error(500, 'Error al obtener el perfil.');
