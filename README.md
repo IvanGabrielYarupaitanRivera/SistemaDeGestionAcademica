@@ -1,4 +1,4 @@
-# 📚 Notas por Hacer
+# 📚 Sistema de Gestión Académica
 
 _Sistema Académico Demo - Proyecto de Portafolio Técnico_
 
@@ -105,8 +105,8 @@ Proyecto demostrativo para exhibir habilidades en:
 
 ## 🌐 Demo
 
-🔗 Demostración en Vivo: [sistema-de-gestion-academica.vercel.app](https://sistema-de-gestion-academica.vercel.app/)
-📂 Código Fuente: [github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
+- 🔗 Demostración en Vivo: [sistema-de-gestion-academica.vercel.app](https://sistema-de-gestion-academica.vercel.app/)
+- 📂 Código Fuente: [github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
 
 ---
 
