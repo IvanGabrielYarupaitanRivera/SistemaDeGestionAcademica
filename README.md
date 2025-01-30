@@ -1,40 +1,84 @@
-# 🎓 Sistema de Gestión Académica
+# Sistema Académico Demo - Gestión de Calificaciones
 
-¡Hola! 👋 Bienvenido a mi proyecto full-stack de gestión académica.  
-Este sistema quiere modernizar la gestión educativa, facilitando la vida de estudiantes, profesores y administradores.
+## 🎯 Descripción
 
-## 💡 ¿Qué es esto?
+Plataforma educativa full-stack con autenticación granular y roles diferenciados para gestión académica. Proyecto demostrativo con enfoque en arquitectura moderna y mejores prácticas.
 
-- Autenticación con Supabase para iniciar sesión
-- Rutas protegidas según el rol de usuario
-- El usuario puede editar su información personal (nombres, apellidos, DNI)
-- Puede cambiar su contraseña
+## ⚡ Características Principales
 
-## 🚀 Tecnologías Principales
+### 🔐 Autenticación y Roles
 
-- **Frontend**: SvelteKit 5 + TypeScript
-- **Estilos**: Tailwind CSS
-- **Backend**: Supabase
-- **Iconos**: Lucide
+- Cuentas demo preconfiguradas (estudiante/profesor)
+- Registro con verificación de email
+- Roles: Administrador | Profesor | Estudiante
 
-## 🏗️ Arquitectura y Estructura
+### 👥 Funcionalidades por Rol
 
-- **routes/**: Contiene las páginas de la aplicación
-- **lib/**: Código reutilizable y utilidades
-- **database/**: Manejo de datos y consultas a Supabase
+#### Administrador
 
-## 🏃‍♂️ Inicio Rápido
+- CRUD completo de usuarios
+- Gestión de roles y datos académicos
+- Administración de cursos
+- Control de inscripciones
+
+#### Profesor
+
+- Gestión de calificaciones (3 parciales + promedio)
+- Consulta de estudiantes asignados
+- Visualización de cuerpo docente
+
+#### Estudiante
+
+- Consulta de calificaciones personales
+- Listado de profesores asignados
+
+## 🛠️ Stack Tecnológico
+
+| Capa     | Tecnologías                                         |
+| -------- | --------------------------------------------------- |
+| Frontend | Svelte 5, SvelteKit, Tailwind CSS, TypeScript (90%) |
+| Backend  | Supabase (PostgreSQL), Row Level Security           |
+| Deploy   | Vercel, Dominio predeterminado                      |
+
+## 🔒 Seguridad Implementada
+
+- Row Level Security (RLS) en Supabase
+- Validaciones duales (cliente/servidor)
+- Autenticación JWT
+- Permisos granulares por rol
+
+## 💡 Aspectos Destacados
+
+- Arquitectura modular y escalable
+- UI/UX responsive (mobile-first)
+- Feedback visual con toasts
+- Flujos de autenticación optimizados
+- TypeScript para tipado seguro
+
+## 🚧 Roadmap
+
+- Sistema de notificaciones
+- Dashboard analítico por rol
+- Gestión avanzada de cursos
+
+## 🔗 Enlaces
+
+- Demo: [URL](https://sistema-de-gestion-academica.vercel.app/)
+- Repo: [GitHub](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
+
+## 💻 Desarrollo Local
 
 ```bash
-npm install    # Instalar dependencias
-npm run dev    # Iniciar servidor de desarrollo
+git clone [repo-url]
+cd [proyecto]
+pnpm install
+pnpm dev
 ```
 
-## 👨‍💻 Contribuir
+## 📝 Notas Técnicas
 
-1. Haz un fork o clona el repositorio
-2. Crea tu rama (feature/nueva-funcionalidad)
-3. Realiza tus cambios
-4. Envía un pull request
-
-¡Y si te gusta este proyecto, no olvides dejar una estrella!
+- Implementación de estados complejos con Svelte stores
+- Integración BaaS mediante Supabase
+- Políticas de seguridad escalables
+- Arquitectura orientada a componentes
+- Proyecto de portafolio técnico demostrando implementación de sistema multirol con arquitectura moderna. `
