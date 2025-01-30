@@ -105,10 +105,8 @@ Proyecto demostrativo para exhibir habilidades en:
 
 ## 🌐 Demo
 
-```bash
 🔗 Demostración en Vivo: [sistema-de-gestion-academica.vercel.app](https://sistema-de-gestion-academica.vercel.app/)
 📂 Código Fuente: [github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
-```
 
 ---
 
@@ -121,9 +119,9 @@ Puede experimentar limitaciones de rendimiento en entornos de alta demanda._
 ✨ **Créditos & Contacto**  
 💻 **Desarrollador:** Yarupaitan Rivera Ivan Gabriel  
 📧 **Colaboraciones:**  
-[![Email](https://img.shields.io/badge/Contacto-tu@email.com-%23007EC6?style=flat&logo=gmail)](mailto:ivangyr321@gmail.com)  
+[![Email](https://img.shields.io/badge/Contacto-ivangyr321@gmail.com-%23007EC6?style=flat&logo=gmail)](mailto:ivangyr321@gmail.com)  
 [![LinkedIn](https://img.shields.io/badge/Perfil_Profesional-LinkedIn-%230A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/ivan-yarupaitan-rivera/)  
-[![GitHub](https://img.shields.io/badge/Portafolio-GitHub-%23181717?style=flat&logo=github)](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
+[![GitHub](https://img.shields.io/badge/Portafolio-GitHub-%23181717?style=flat&logo=github)](https://github.com/IvanGabrielYarupaitanRivera)
 
 🚀 **¿Quieres contribuir o reportar un bug?**  
 ¡Me encantaría escuchar tus ideas! Puedes:  
