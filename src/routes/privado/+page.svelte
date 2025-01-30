@@ -16,3 +16,4 @@
 	nombres={perfil.nombres}
 	rol={perfil.rol}
 />
+<div class="mb-24"></div>
