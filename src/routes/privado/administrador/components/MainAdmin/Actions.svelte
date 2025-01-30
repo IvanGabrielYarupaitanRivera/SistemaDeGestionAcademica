@@ -44,16 +44,5 @@
 			<h3 class="text-xl font-semibold text-neutral-800">Profesores</h3>
 			<p class="mt-4 text-neutral-600">Gestiona el personal docente y sus cursos académicos.</p>
 		</a>
-
-		<a
-			href="/privado/notas"
-			class="group flex flex-col items-center rounded-lg border border-neutral-200 p-8 text-center shadow-sm transition-all duration-200 hover:border-neutral-300 hover:shadow-md"
-		>
-			<ClipboardList size={32} className="mb-4 text-neutral-600" />
-			<h3 class="text-xl font-semibold text-neutral-800">Notas</h3>
-			<p class="mt-4 text-neutral-600">
-				Supervisa y gestiona el registro de notas de los estudiantes.
-			</p>
-		</a>
 	</div>
 </section>
