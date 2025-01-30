@@ -63,6 +63,10 @@
 	let isMobileMenuOpen = $state(false);
 </script>
 
+<svelte:head>
+	<title>Sistema de gestión Académica</title>
+</svelte:head>
+
 <div class="flex min-h-screen">
 	<button
 		class="fixed left-4 top-4 z-50 rounded bg-neutral-800 p-2 text-white lg:hidden"
