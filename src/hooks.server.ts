@@ -14,8 +14,8 @@ const PROTECTED_ROUTES = {
 	PUBLIC: ['/', '/ingresar'],
 	PRIVATE: '/privado',
 	ADMIN: '/privado/administrador',
-	PROFESOR: '/privado/profesor',
-	ESTUDIANTE: '/privado/estudiante',
+	PROFESOR: '/privado/profesor/',
+	ESTUDIANTE: '/privado/estudiante/',
 	AUTH: '/ingresar'
 } as const;
 

@@ -10,12 +10,14 @@
 		Plus,
 		Search,
 		Trash,
+		User,
 		X,
 		XCircle
 	} from 'lucide-svelte';
 	import { blur, fly } from 'svelte/transition';
 
 	let { data, form } = $props();
+	let { user } = $derived(data);
 	let { cursos } = $derived(data);
 
 	let showToast = $state(false);
@@ -253,14 +255,16 @@
 								>
 									<PencilLine class="h-4 w-4" />
 								</button>
-								<button
-									type="button"
-									onclick={() => eliminarCurso(curso)}
-									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
-									aria-label="Eliminar curso"
-								>
-									<Trash class="h-4 w-4" />
-								</button>
+								{#if user?.user_metadata.rol === 'Administrador'}
+									<button
+										type="button"
+										onclick={() => eliminarCurso(curso)}
+										class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
+										aria-label="Eliminar curso"
+									>
+										<Trash class="h-4 w-4" />
+									</button>
+								{/if}
 							</td>
 						</tr>
 					{/each}

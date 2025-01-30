@@ -14,7 +14,7 @@
 	import { blur, fly } from 'svelte/transition';
 
 	let { data, form } = $props();
-	let { profesores } = $derived(data);
+	let { profesores, user } = $derived(data);
 
 	let showToast = $state(false);
 
@@ -170,9 +170,12 @@
 						>
 							Especialidad
 						</th>
-						<th scope="col" class="p-4 text-center text-xs font-medium tracking-wider text-white">
-							Acciones
-						</th>
+
+						{#if user?.user_metadata.rol === 'Administrador'}
+							<th scope="col" class="p-4 text-center text-xs font-medium tracking-wider text-white">
+								Acciones
+							</th>
+						{/if}
 					</tr>
 				</thead>
 
@@ -195,16 +198,18 @@
 							<td class="hidden p-4 text-sm sm:table-cell">
 								{profesor.especialidad}
 							</td>
-							<td class="p-4 text-center">
-								<button
-									type="button"
-									onclick={() => editarProfesor(profesor)}
-									class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
-									aria-label="Editar profesor"
-								>
-									<PencilLine class="h-4 w-4" />
-								</button>
-							</td>
+							{#if user?.user_metadata.rol === 'Administrador'}
+								<td class="p-4 text-center">
+									<button
+										type="button"
+										onclick={() => editarProfesor(profesor)}
+										class="rounded-md p-2 text-neutral-600 transition-colors hover:bg-neutral-200"
+										aria-label="Editar profesor"
+									>
+										<PencilLine class="h-4 w-4" />
+									</button>
+								</td>
+							{/if}
 						</tr>
 					{/each}
 				</tbody>
