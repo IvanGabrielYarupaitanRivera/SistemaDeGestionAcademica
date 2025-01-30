@@ -1,84 +1,132 @@
-# Sistema Académico Demo - Gestión de Calificaciones
+# 📚 Notas por Hacer
 
-## 🎯 Descripción
+_Sistema Académico Demo - Proyecto de Portafolio Técnico_
 
-Plataforma educativa full-stack con autenticación granular y roles diferenciados para gestión académica. Proyecto demostrativo con enfoque en arquitectura moderna y mejores prácticas.
+![Tech Stack](https://img.shields.io/badge/Stack-SvelteKit%20%2B%20Supabase%20%2B%20Vercel-blueviolet) ![License](https://img.shields.io/badge/License-MIT-green)
 
-## ⚡ Características Principales
+## 🚀 Descripción del Proyecto
 
-### 🔐 Autenticación y Roles
+Sistema de gestión académica multirol para demostrar habilidades full-stack, con:
 
-- Cuentas demo preconfiguradas (estudiante/profesor)
-- Registro con verificación de email
-- Roles: Administrador | Profesor | Estudiante
+- ✅ 3 roles de usuario: **Administrador**, **Profesor**, **Estudiante**
+- 🔐 Autenticación con cuentas demo (acceso rápido) y registro personalizado
+- 📧 Verificación de correo electrónico para cuentas nuevas
+- 🏫 Contexto ficticio para colegio imaginario
 
-### 👥 Funcionalidades por Rol
+## 👥 Funcionalidades por Rol
 
-#### Administrador
+### 🔑 Usuarios Autenticados
 
-- CRUD completo de usuarios
-- Gestión de roles y datos académicos
-- Administración de cursos
-- Control de inscripciones
+- ✏️ Editar perfil personal y cambiar contraseña
+- 📊 Panel `/privado` con estadísticas generales:
+  - Total de estudiantes registrados
+  - Cantidad de cursos activos
+  - Número de profesores
 
-#### Profesor
+### ⚡ Administradores
 
-- Gestión de calificaciones (3 parciales + promedio)
-- Consulta de estudiantes asignados
-- Visualización de cuerpo docente
+- 👤 **Gestión de Usuarios:**
+  - Crear/eliminar cuentas
+  - Modificar roles y datos personales
+- 🎓 **Control Académico:**
+  - Crear cursos (nombre + descripción)
+  - Inscribir estudiantes a cursos
+  - Editar información de profesores/estudiantes
 
-#### Estudiante
+### 🎓 Profesores
 
-- Consulta de calificaciones personales
-- Listado de profesores asignados
+- 📝 **Registro de Calificaciones:**
+  - Editar notas (Parcial 1, Parcial 2, Parcial 3, Promedio)
+- 👀 **Visualización:**
+  - Listado completo de estudiantes
+  - Catálogo de cursos
+  - Directorio de profesores (solo lectura)
+- ⛔ Restricciones:
+  - No puede crear usuarios
 
-## 🛠️ Stack Tecnológico
+### 🧑🎓 Estudiantes
 
-| Capa     | Tecnologías                                         |
-| -------- | --------------------------------------------------- |
-| Frontend | Svelte 5, SvelteKit, Tailwind CSS, TypeScript (90%) |
-| Backend  | Supabase (PostgreSQL), Row Level Security           |
-| Deploy   | Vercel, Dominio predeterminado                      |
+- 📉 Consultar propias calificaciones
+- 👨🏫 Ver listado de profesores
+- ⛔ Acceso limitado a otras secciones
 
-## 🔒 Seguridad Implementada
+## 🛠️ Tecnologías Usadas
 
-- Row Level Security (RLS) en Supabase
-- Validaciones duales (cliente/servidor)
-- Autenticación JWT
-- Permisos granulares por rol
+| **Categoría**  | **Tecnologías**                                                                      |
+| -------------- | ------------------------------------------------------------------------------------ |
+| **Frontend**   | Svelte 5 • SvelteKit (Routing, Actions) • Tailwind CSS • TypeScript (90%)            |
+| **Backend**    | Supabase (PostgreSQL) • RLS (Row Level Security) • Autenticación JWT                 |
+| **Despliegue** | Vercel (Dominio predeterminado)                                                      |
+| **UX/UI**      | Diseño Responsive (Mobile-First) • Toasts interactivos • Validaciones en tiempo real |
 
-## 💡 Aspectos Destacados
+## 🎯 Objetivo del Proyecto
 
-- Arquitectura modular y escalable
-- UI/UX responsive (mobile-first)
-- Feedback visual con toasts
-- Flujos de autenticación optimizados
-- TypeScript para tipado seguro
+Proyecto demostrativo para exhibir habilidades en:
 
-## 🚧 Roadmap
+- **Arquitectura full-stack** con componentes modulares
+- **Gestión de permisos granulares** (RLS de Supabase)
+- **Integración de servicios modernos** (BaaS + Serverless)
+- **Buenas prácticas** (TypeScript, Validaciones duales, CI/CD)
 
-- Sistema de notificaciones
-- Dashboard analítico por rol
-- Gestión avanzada de cursos
-
-## 🔗 Enlaces
-
-- Demo: [URL](https://sistema-de-gestion-academica.vercel.app/)
-- Repo: [GitHub](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
-
-## 💻 Desarrollo Local
+## 🌟 Características Destacadas
 
 ```bash
-git clone [repo-url]
-cd [proyecto]
-pnpm install
-pnpm dev
+✔️ Sistema multirol con políticas de seguridad
+✔️ Autenticación con cuentas demo (sin configuración)
+✔️ Interfaz responsive optimizada para móviles
+✔️ Feedback visual con toasts y mensajes contextuales
+✔️ Validaciones en frontend y backend
 ```
 
-## 📝 Notas Técnicas
+## 🚧 Estado Actual & Futuras Mejoras
 
-- Implementación de estados complejos con Svelte stores
-- Integración BaaS mediante Supabase
-- Políticas de seguridad escalables
-- Arquitectura orientada a componentes
-- Proyecto de portafolio técnico demostrando implementación de sistema multirol con arquitectura moderna. `
+### ✅ Implementado
+
+- **Núcleo funcional de gestión académica**
+- **CRUD completo para administradores**
+- **Flujos de autenticación robustos** (cuentas demo + registro personalizado)
+
+### ⏳ En Consideración
+
+- 📊 Dashboards analíticos por rol (gráficos de progreso/estadísticas)
+- 🔔 Sistema de notificaciones en tiempo real
+- 📁 Gestión de materiales de curso (subir archivos/recursos)
+- 🔄 Recuperación de contraseña vía email
+- 📅 Calendario académico integrado
+
+## 📦 Detalles Técnicos
+
+- **TypeScript**: Implementación mayoritaria con tipado estricto (>90% del código)
+- **Seguridad**:
+  - Row Level Security (RLS) en todas las tablas de Supabase
+  - Cifrado JWT para autenticación
+- **Contraseñas**: Cambio desde perfil (sin recuperación externa actualmente)
+- **Cuentas Demo**: Datos preconfigurados sin restricciones de tiempo
+
+## 🌐 Demo
+
+```bash
+🔗 Demostración en Vivo: [sistema-de-gestion-academica.vercel.app](https://sistema-de-gestion-academica.vercel.app/)
+📂 Código Fuente: [github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
+```
+
+---
+
+📌 **Nota importante:**  
+_Este proyecto utiliza el plan gratuito de Vercel con fines demostrativos.  
+Puede experimentar limitaciones de rendimiento en entornos de alta demanda._
+
+---
+
+✨ **Créditos & Contacto**  
+💻 **Desarrollador:** Yarupaitan Rivera Ivan Gabriel  
+📧 **Colaboraciones:**  
+[![Email](https://img.shields.io/badge/Contacto-tu@email.com-%23007EC6?style=flat&logo=gmail)](mailto:ivangyr321@gmail.com)  
+[![LinkedIn](https://img.shields.io/badge/Perfil_Profesional-LinkedIn-%230A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/ivan-yarupaitan-rivera/)  
+[![GitHub](https://img.shields.io/badge/Portafolio-GitHub-%23181717?style=flat&logo=github)](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica)
+
+🚀 **¿Quieres contribuir o reportar un bug?**  
+¡Me encantaría escuchar tus ideas! Puedes:  
+1️⃣ Abrir un [nuevo issue](https://github.com/IvanGabrielYarupaitanRivera/SistemaDeGestionAcademica/issues)  
+2️⃣ Enviar un pull request  
+3️⃣ Contactarme directamente por email
