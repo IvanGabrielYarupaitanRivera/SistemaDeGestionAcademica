@@ -3,13 +3,27 @@
 	import { goto } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { fly } from 'svelte/transition';
-	import { CheckCircle, ChevronDown, Loader, Lock, Mail, Users, XCircle } from 'lucide-svelte';
+	import {
+		CheckCircle,
+		ChevronDown,
+		GraduationCap,
+		Key,
+		Loader,
+		Lock,
+		Mail,
+		User,
+		Users,
+		XCircle
+	} from 'lucide-svelte';
 
 	let activeTab = $state('login');
 	let ingresando = $state(false);
 	let creando = $state(false);
 	let { form } = $props();
 	let showToast = $state(false);
+
+	let email = $state('');
+	let password = $state('');
 
 	$effect(() => {
 		if (form?.error) {
@@ -126,7 +140,7 @@
 
 		{#if activeTab === 'login'}
 			<section aria-labelledby="login-title">
-				<form method="POST" action="?/login" class="space-y-6" use:enhance={handleLogin}>
+				<form method="POST" action="?/login" class="space-y-4" use:enhance={handleLogin}>
 					<fieldset class="space-y-4">
 						<legend class="sr-only">Credenciales de acceso</legend>
 
@@ -140,6 +154,7 @@
 								name="email"
 								type="email"
 								required
+								bind:value={email}
 								class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
 							/>
 						</div>
@@ -157,10 +172,60 @@
 								name="password"
 								type="password"
 								required
+								bind:value={password}
 								class="mt-1 w-full rounded-md px-4 py-2 shadow-md"
 							/>
 						</div>
 					</fieldset>
+
+					<div class="space-y-2">
+						<div class="flex items-center gap-2 text-sm text-neutral-600">
+							<Key class="h-5 w-5" />
+							<span>Cuentas Demo</span>
+						</div>
+
+						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+							<button
+								type="button"
+								onclick={() => {
+									email = 'estudiante01@gmail.com';
+									password = '123123123';
+								}}
+								class="group flex items-center justify-center gap-3 rounded-lg border border-neutral-200
+									   bg-white p-3 text-sm font-medium text-neutral-700 shadow-sm
+									   transition-all hover:bg-neutral-50 hover:shadow-md
+									   active:scale-[0.98]"
+							>
+								<img
+									src="/logo/logo-estudiante.webp"
+									alt="Estudiante"
+									class="h-5 w-5 object-contain"
+									loading="lazy"
+								/>
+								<span>Estudiante Demo</span>
+							</button>
+
+							<button
+								type="button"
+								onclick={() => {
+									email = 'profesor01@gmail.com';
+									password = '123123123';
+								}}
+								class="group flex items-center justify-center gap-3 rounded-lg border border-neutral-200
+									   bg-white p-3 text-sm font-medium text-neutral-700 shadow-sm
+									   transition-all hover:bg-neutral-50 hover:shadow-md
+									   active:scale-[0.98]"
+							>
+								<img
+									src="/logo/logo-profesor.webp"
+									alt="Profesor"
+									class="h-5 w-5 object-contain"
+									loading="lazy"
+								/>
+								<span>Profesor Demo</span>
+							</button>
+						</div>
+					</div>
 
 					<button
 						type="submit"
