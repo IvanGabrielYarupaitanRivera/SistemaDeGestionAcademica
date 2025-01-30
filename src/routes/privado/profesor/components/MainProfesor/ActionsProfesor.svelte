@@ -1,5 +1,5 @@
 <script>
-	import { BookOpen, Users, GraduationCap, ClipboardList, UserCog } from 'lucide-svelte';
+	import { BookOpen, Users, GraduationCap } from 'lucide-svelte';
 </script>
 
 <section class="py-16" aria-labelledby="actions-title">
