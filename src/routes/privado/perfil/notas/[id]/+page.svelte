@@ -162,7 +162,7 @@
 							<p class="mt-1 line-clamp-1 text-sm text-neutral-500">{curso.descripcion}</p>
 						</div>
 						<div class="flex items-center gap-3">
-							{#if user?.user_metadata.rol === 'Docente' || user?.user_metadata.rol === 'Administrador'}
+							{#if user?.user_metadata.rol === 'Profesor' || user?.user_metadata.rol === 'Administrador'}
 								<button
 									type="button"
 									onclick={() => editarNota(notas)}
